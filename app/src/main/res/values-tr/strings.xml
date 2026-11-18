@@ -1,4 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="team0">Özenti terminatörler</string>
+	<string name="team1">Ölü Süleymanlar</string>
+	<string name="team2">Dodo çetesi</string>
+	<string name="team3">Güneş ölümcül bir lazer</string>
+	<string name="team4">Sadece hayranlar</string>
+	<string name="team5">Sağcı tavuk kanatları</string>
+	<string name="team6">Pisicikler</string>
+	<string name="team7">Mutlu ördekler ve Tome takımı</string>
+	<string name="team8">Marie Curie ve Pierre Curie</string>
+	<string name="team9">Hakikat aurası</string>
+	<string name="team10">Hadi kumar oynayalım</string>
+	<string name="team11">Allahu ekber</string>
+	<string name="team12">Birinci Tvrtkolar</string>
+	<string name="team13">Jüri</string>
+	<string name="team14">Şeytan kıçları</string>
+	<string name="team15">MIJOC</string>
+	<string name="team16">Şampinyonlar</string>
 	<string name="name1">Çok kolay kelimeler</string>
 	<string name="description1">Çocukların bile tahmin edebileceği basit kelimeler</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

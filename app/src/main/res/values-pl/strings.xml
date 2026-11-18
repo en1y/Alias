@@ -1,4 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="team0">Niedoszli terminatorzy</string>
+	<string name="team1">Martwi Sulejmani</string>
+	<string name="team2">Gang dodo</string>
+	<string name="team3">Słońce to śmiercionośny laser</string>
+	<string name="team4">Tylko dla fanów</string>
+	<string name="team5">Prawicowe skrzydełka</string>
+	<string name="team6">Kiciusie</string>
+	<string name="team7">Oddział wesołych kaczek i Tome</string>
+	<string name="team8">Maria Skłodowska-Curie i Piotr Curie</string>
+	<string name="team9">Aura prawdy</string>
+	<string name="team10">Chodźmy hazardować</string>
+	<string name="team11">Allahu akbar</string>
+	<string name="team12">Tvrtkowie Pierwsi</string>
+	<string name="team13">Jury</string>
+	<string name="team14">Diabelskie tyłki</string>
+	<string name="team15">MIJOC</string>
+	<string name="team16">Pieczarki</string>
 	<string name="name1">Bardzo proste słowa</string>
 	<string name="description1">Proste słowa, które nawet dzieci mogą odgadnąć</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

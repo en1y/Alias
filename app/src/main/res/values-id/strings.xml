@@ -1,4 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="team0">Calon terminator</string>
+	<string name="team1">Suleiman-Suleiman yang mati</string>
+	<string name="team2">Geng dodo</string>
+	<string name="team3">Matahari adalah laser mematikan</string>
+	<string name="team4">Khusus penggemar</string>
+	<string name="team5">Sayap ayam kanan</string>
+	<string name="team6">Kucing manis</string>
+	<string name="team7">Pasukan bebek bahagia dan Tome</string>
+	<string name="team8">Marie Curie dan Pierre Curie</string>
+	<string name="team9">Aura kebenaran</string>
+	<string name="team10">Ayo berjudi</string>
+	<string name="team11">Allahu akbar</string>
+	<string name="team12">Tvrtko yang Pertama</string>
+	<string name="team13">Juri</string>
+	<string name="team14">Pantat iblis</string>
+	<string name="team15">MIJOC</string>
+	<string name="team16">Jamur kancing</string>
 	<string name="name1">Kata-kata yang sangat mudah</string>
 	<string name="description1">Kata-kata sederhana yang bisa ditebak anak-anak</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

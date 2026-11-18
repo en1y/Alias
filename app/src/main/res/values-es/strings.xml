@@ -1,4 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="team0">Aspirantes a terminator</string>
+	<string name="team1">Suleimanes muertos</string>
+	<string name="team2">La banda de los dodos</string>
+	<string name="team3">El sol es un láser mortal</string>
+	<string name="team4">Solo fans</string>
+	<string name="team5">Alitas de pollo de derechas</string>
+	<string name="team6">Gatitos</string>
+	<string name="team7">El escuadrón de patos felices y Tome</string>
+	<string name="team8">Marie Curie y Pierre Curie</string>
+	<string name="team9">Aura de la verdad</string>
+	<string name="team10">Vamos a apostar</string>
+	<string name="team11">Allahu akbar</string>
+	<string name="team12">Tvrtkos el Primero</string>
+	<string name="team13">El jurado</string>
+	<string name="team14">Culos del diablo</string>
+	<string name="team15">MIJOC</string>
+	<string name="team16">Champiñones</string>
 	<string name="name1">Palabras muy fáciles</string>
 	<string name="description1">Palabras sencillas que hasta los niños pueden adivinar</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

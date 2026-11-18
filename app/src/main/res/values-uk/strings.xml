@@ -1,4 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="team0">Недотермінатори</string>
+	<string name="team1">Мертві Сулеймани</string>
+	<string name="team2">Банда додо</string>
+	<string name="team3">Сонце — смертельний лазер</string>
+	<string name="team4">Тільки для фанатів</string>
+	<string name="team5">Праві курячі крильця</string>
+	<string name="team6">Котики</string>
+	<string name="team7">Загін веселих качок і Томе</string>
+	<string name="team8">Марія Кюрі та П\'єр Кюрі</string>
+	<string name="team9">Аура правди</string>
+	<string name="team10">Ходімо грати в азарт</string>
+	<string name="team11">Аллаху акбар</string>
+	<string name="team12">Твртко Перші</string>
+	<string name="team13">Журі</string>
+	<string name="team14">Дияволові дупи</string>
+	<string name="team15">MIJOC</string>
+	<string name="team16">Печериці</string>
 	<string name="name1">Ну дуже прості слова</string>
 	<string name="description1">Прості слова, які навіть діти можуть вгадати</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

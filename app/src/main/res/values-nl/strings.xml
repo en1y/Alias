@@ -1,4 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="team0">Wannabe-terminators</string>
+	<string name="team1">Dode Suleimans</string>
+	<string name="team2">De dodobende</string>
+	<string name="team3">De zon is een dodelijke laser</string>
+	<string name="team4">Alleen voor fans</string>
+	<string name="team5">Rechtse kippenvleugels</string>
+	<string name="team6">Poesjes</string>
+	<string name="team7">Het team van blije eendjes en Tome</string>
+	<string name="team8">Marie Curie en Pierre Curie</string>
+	<string name="team9">Aura van waarheid</string>
+	<string name="team10">Laten we gokken</string>
+	<string name="team11">Allahu akbar</string>
+	<string name="team12">Tvrtko de Eerste</string>
+	<string name="team13">De jury</string>
+	<string name="team14">Duivelskonten</string>
+	<string name="team15">MIJOC</string>
+	<string name="team16">Champignons</string>
 	<string name="name1">Heel makkelijke woorden</string>
 	<string name="description1">Eenvoudige woorden die zelfs kinderen kunnen raden</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
