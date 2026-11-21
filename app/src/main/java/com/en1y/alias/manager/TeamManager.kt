@@ -11,12 +11,25 @@ class TeamManager {
         if (s > 0) teams.removeAt(teams.lastIndex)
     }
 
+    fun removeTeam(id: Int) {
+        val s = teams.size
+        if (-1 < id && id < s) {
+            teams.removeAt(id)
+        }
+    }
+
     fun addTeam(): Team? {
         val s = teams.size
         if (s < MaxTeamsSize) {
-            val t = Team()
-            teams.add(t)
-            return t
+            var t = Team()
+            while (true) {
+                if (t in teams)
+                    t = Team()
+                else {
+                    teams.add(t)
+                    return t
+                }
+            }
         }
         return null
     }
