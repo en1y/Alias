@@ -1,20 +1,24 @@
 package com.en1y.alias.manager
 
+import androidx.compose.runtime.mutableStateListOf
 import com.en1y.alias.data.Team
+import com.en1y.alias.data.TeamInfo
 import com.en1y.alias.logic.MaxTeamsSize
 
 class TeamManager {
-    private val teams = mutableListOf(Team(), Team())
+    val teams = mutableStateListOf<Team>()
+
+    constructor() {addTeam(); addTeam()}
+
 
     fun removeTeam() {
         val s = teams.size
         if (s > 0) teams.removeAt(teams.lastIndex)
     }
 
-    fun removeTeam(id: Int) {
-        val s = teams.size
-        if (-1 < id && id < s) {
-            teams.removeAt(id)
+    fun removeTeam(team: Team) {
+        if (team in teams) {
+            teams.remove(team)
         }
     }
 
@@ -22,8 +26,10 @@ class TeamManager {
         val s = teams.size
         if (s < MaxTeamsSize) {
             var t = Team()
+            val teamInfos = mutableSetOf<TeamInfo>()
+            teams.forEach { t -> teamInfos.add(t.info) }
             while (true) {
-                if (t in teams)
+                if (t.info in teamInfos)
                     t = Team()
                 else {
                     teams.add(t)

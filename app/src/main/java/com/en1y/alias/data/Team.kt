@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import com.en1y.alias.data.TeamInfo.Companion.random
 
 class Team {
-    private val info = random()
+    val info = random()
     var points: Int = 0
         private set
 
