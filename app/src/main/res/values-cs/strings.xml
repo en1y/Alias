@@ -16,6 +16,35 @@
 	<string name="team14">Ďáblovy zadky</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Žampiony</string>
+	<string-array name="languages">
+		<item>Chorvatština</item>
+		<item>Čeština</item>
+		<item>Dánština</item>
+		<item>Nizozemština</item>
+		<item>Angličtina</item>
+		<item>Finština</item>
+		<item>Francouzština</item>
+		<item>Němčina</item>
+		<item>Řečtina</item>
+		<item>Maďarština</item>
+		<item>Indonéština</item>
+		<item>Italština</item>
+		<item>Norština (bokmål)</item>
+		<item>Polština</item>
+		<item>Portugalština</item>
+		<item>Rumunština</item>
+		<item>Ruština</item>
+		<item>Slovenština</item>
+		<item>Španělština</item>
+		<item>Švédština</item>
+		<item>Turečtina</item>
+		<item>Ukrajinština</item>
+	</string-array>
+	<string name="welcome_message">Vítejte v Aliasu!</string>
+	<string name="choose_language">Vyberte si jazyk</string>
+	<string name="choose_language_description">Tento jazyk bude použit pro aplikaci i pro slova, která budete hádat</string>
+	<string name="continue_button">Pokračovat</string>
+	<string name="press_back_again">Pro ukončení stiskněte Zpět ještě jednou</string>
 	<string name="name1">Velmi jednoduchá slova</string>
 	<string name="description1">Jednoduchá slova, která mohou uhádnout i děti</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

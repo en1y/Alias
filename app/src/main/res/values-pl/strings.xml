@@ -16,6 +16,35 @@
 	<string name="team14">Diabelskie tyłki</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Pieczarki</string>
+	<string-array name="languages">
+		<item>Chorwacki</item>
+		<item>Czeski</item>
+		<item>Duński</item>
+		<item>Niderlandzki</item>
+		<item>Angielski</item>
+		<item>Fiński</item>
+		<item>Francuski</item>
+		<item>Niemiecki</item>
+		<item>Grecki</item>
+		<item>Węgierski</item>
+		<item>Indonezyjski</item>
+		<item>Włoski</item>
+		<item>Norweski (bokmål)</item>
+		<item>Polski</item>
+		<item>Portugalski</item>
+		<item>Rumuński</item>
+		<item>Rosyjski</item>
+		<item>Słowacki</item>
+		<item>Hiszpański</item>
+		<item>Szwedzki</item>
+		<item>Turecki</item>
+		<item>Ukraiński</item>
+	</string-array>
+	<string name="welcome_message">Witaj w Alias!</string>
+	<string name="choose_language">Wybierz swój język</string>
+	<string name="choose_language_description">Ten język będzie używany w aplikacji i w słowach, które będziesz zgadywać</string>
+	<string name="continue_button">Dalej</string>
+	<string name="press_back_again">Naciśnij ponownie Wstecz, aby wyjść</string>
 	<string name="name1">Bardzo proste słowa</string>
 	<string name="description1">Proste słowa, które nawet dzieci mogą odgadnąć</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

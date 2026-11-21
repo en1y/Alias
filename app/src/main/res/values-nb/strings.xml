@@ -16,6 +16,35 @@
 	<string name="team14">Djevlerumper</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Sjampinjonger</string>
+	<string-array name="languages">
+		<item>Kroatisk</item>
+		<item>Tsjekkisk</item>
+		<item>Dansk</item>
+		<item>Nederlandsk</item>
+		<item>Engelsk</item>
+		<item>Finsk</item>
+		<item>Fransk</item>
+		<item>Tysk</item>
+		<item>Gresk</item>
+		<item>Ungarsk</item>
+		<item>Indonesisk</item>
+		<item>Italiensk</item>
+		<item>Norsk bokmål</item>
+		<item>Polsk</item>
+		<item>Portugisisk</item>
+		<item>Rumensk</item>
+		<item>Russisk</item>
+		<item>Slovakisk</item>
+		<item>Spansk</item>
+		<item>Svensk</item>
+		<item>Tyrkisk</item>
+		<item>Ukrainsk</item>
+	</string-array>
+	<string name="welcome_message">Velkommen til Alias!</string>
+	<string name="choose_language">Velg språket ditt</string>
+	<string name="choose_language_description">Dette språket brukes i appen og for ordene du skal gjette</string>
+	<string name="continue_button">Fortsett</string>
+	<string name="press_back_again">Trykk tilbake igjen for å avslutte</string>
 	<string name="name1">Veldig enkle ord</string>
 	<string name="description1">Enkle ord som selv barn kan gjette</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

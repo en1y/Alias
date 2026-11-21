@@ -16,6 +16,35 @@
 	<string name="team14">Fesses du diable</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Champignons de Paris</string>
+	<string-array name="languages">
+		<item>Croate</item>
+		<item>Tchèque</item>
+		<item>Danois</item>
+		<item>Néerlandais</item>
+		<item>Anglais</item>
+		<item>Finnois</item>
+		<item>Français</item>
+		<item>Allemand</item>
+		<item>Grec</item>
+		<item>Hongrois</item>
+		<item>Indonésien</item>
+		<item>Italien</item>
+		<item>Norvégien bokmål</item>
+		<item>Polonais</item>
+		<item>Portugais</item>
+		<item>Roumain</item>
+		<item>Russe</item>
+		<item>Slovaque</item>
+		<item>Espagnol</item>
+		<item>Suédois</item>
+		<item>Turc</item>
+		<item>Ukrainien</item>
+	</string-array>
+	<string name="welcome_message">Bienvenue dans Alias !</string>
+	<string name="choose_language">Choisis ta langue</string>
+	<string name="choose_language_description">Cette langue sera utilisée pour l\'application et pour les mots que tu devras deviner</string>
+	<string name="continue_button">Continuer</string>
+	<string name="press_back_again">Appuie encore sur Retour pour quitter</string>
 	<string name="name1">Mots très simples</string>
 	<string name="description1">Des mots simples que même les enfants peuvent deviner</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

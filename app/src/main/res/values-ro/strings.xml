@@ -16,6 +16,35 @@
 	<string name="team14">Funduri de drac</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Ciuperci champignon</string>
+	<string-array name="languages">
+		<item>Croată</item>
+		<item>Cehă</item>
+		<item>Daneză</item>
+		<item>Neerlandeză</item>
+		<item>Engleză</item>
+		<item>Finlandeză</item>
+		<item>Franceză</item>
+		<item>Germană</item>
+		<item>Greacă</item>
+		<item>Maghiară</item>
+		<item>Indoneziană</item>
+		<item>Italiană</item>
+		<item>Norvegiană bokmål</item>
+		<item>Poloneză</item>
+		<item>Portugheză</item>
+		<item>Română</item>
+		<item>Rusă</item>
+		<item>Slovacă</item>
+		<item>Spaniolă</item>
+		<item>Suedeză</item>
+		<item>Turcă</item>
+		<item>Ucraineană</item>
+	</string-array>
+	<string name="welcome_message">Bine ai venit în Alias!</string>
+	<string name="choose_language">Alege-ți limba</string>
+	<string name="choose_language_description">Această limbă va fi folosită în aplicație și pentru cuvintele pe care le vei ghici</string>
+	<string name="continue_button">Continuă</string>
+	<string name="press_back_again">Apasă din nou Înapoi pentru a ieși</string>
 	<string name="name1">Cuvinte foarte simple</string>
 	<string name="description1">Cuvinte simple pe care chiar și copiii le pot ghici</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

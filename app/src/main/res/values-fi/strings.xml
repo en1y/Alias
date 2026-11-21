@@ -16,6 +16,35 @@
 	<string name="team14">Paholaisen peput</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Herkkusienet</string>
+	<string-array name="languages">
+		<item>Kroatia</item>
+		<item>Tšekki</item>
+		<item>Tanska</item>
+		<item>Hollanti</item>
+		<item>Englanti</item>
+		<item>Suomi</item>
+		<item>Ranska</item>
+		<item>Saksa</item>
+		<item>Kreikka</item>
+		<item>Unkari</item>
+		<item>Indonesia</item>
+		<item>Italia</item>
+		<item>Norjan bokmål</item>
+		<item>Puola</item>
+		<item>Portugali</item>
+		<item>Romania</item>
+		<item>Venäjä</item>
+		<item>Slovakki</item>
+		<item>Espanja</item>
+		<item>Ruotsi</item>
+		<item>Turkki</item>
+		<item>Ukraina</item>
+	</string-array>
+	<string name="welcome_message">Tervetuloa Aliakseen!</string>
+	<string name="choose_language">Valitse kieli</string>
+	<string name="choose_language_description">Tätä kieltä käytetään sovelluksessa ja arvattavissa sanoissa</string>
+	<string name="continue_button">Jatka</string>
+	<string name="press_back_again">Poistu painamalla Takaisin uudelleen</string>
 	<string name="name1">Tosi helpot sanat</string>
 	<string name="description1">Helppoja sanoja, jotka lapsetkin osaavat arvata</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

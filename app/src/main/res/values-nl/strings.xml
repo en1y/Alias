@@ -16,6 +16,35 @@
 	<string name="team14">Duivelskonten</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Champignons</string>
+	<string-array name="languages">
+		<item>Kroatisch</item>
+		<item>Tsjechisch</item>
+		<item>Deens</item>
+		<item>Nederlands</item>
+		<item>Engels</item>
+		<item>Fins</item>
+		<item>Frans</item>
+		<item>Duits</item>
+		<item>Grieks</item>
+		<item>Hongaars</item>
+		<item>Indonesisch</item>
+		<item>Italiaans</item>
+		<item>Noors - Bokmål</item>
+		<item>Pools</item>
+		<item>Portugees</item>
+		<item>Roemeens</item>
+		<item>Russisch</item>
+		<item>Slowaaks</item>
+		<item>Spaans</item>
+		<item>Zweeds</item>
+		<item>Turks</item>
+		<item>Oekraïens</item>
+	</string-array>
+	<string name="welcome_message">Welkom bij Alias!</string>
+	<string name="choose_language">Kies je taal</string>
+	<string name="choose_language_description">Deze taal wordt gebruikt voor de app en voor de woorden die je gaat raden</string>
+	<string name="continue_button">Doorgaan</string>
+	<string name="press_back_again">Druk nogmaals op terug om af te sluiten</string>
 	<string name="name1">Heel makkelijke woorden</string>
 	<string name="description1">Eenvoudige woorden die zelfs kinderen kunnen raden</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

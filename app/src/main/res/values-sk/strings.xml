@@ -16,6 +16,35 @@
 	<string name="team14">Diablove zadky</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Šampiňóny</string>
+	<string-array name="languages">
+		<item>Chorvátčina</item>
+		<item>Čeština</item>
+		<item>Dánčina</item>
+		<item>Holandčina</item>
+		<item>Angličtina</item>
+		<item>Fínčina</item>
+		<item>Francúzština</item>
+		<item>Nemčina</item>
+		<item>Gréčtina</item>
+		<item>Maďarčina</item>
+		<item>Indonézština</item>
+		<item>Taliančina</item>
+		<item>Nórčina (bokmal)</item>
+		<item>Poľština</item>
+		<item>Portugalčina</item>
+		<item>Rumunčina</item>
+		<item>Ruština</item>
+		<item>Slovenčina</item>
+		<item>Španielčina</item>
+		<item>Švédčina</item>
+		<item>Turečtina</item>
+		<item>Ukrajinčina</item>
+	</string-array>
+	<string name="welcome_message">Vitajte v Aliase!</string>
+	<string name="choose_language">Vyberte si jazyk</string>
+	<string name="choose_language_description">Tento jazyk sa použije v aplikácii aj pre slová, ktoré budete hádať</string>
+	<string name="continue_button">Pokračovať</string>
+	<string name="press_back_again">Pre ukončenie stlačte Späť ešte raz</string>
 	<string name="name1">Veľmi jednoduché slová</string>
 	<string name="description1">Jednoduché slová, ktoré môžu uhádnuť aj deti</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

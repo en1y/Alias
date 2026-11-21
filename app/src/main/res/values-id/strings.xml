@@ -16,6 +16,35 @@
 	<string name="team14">Pantat iblis</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Jamur kancing</string>
+	<string-array name="languages">
+		<item>Kroasia</item>
+		<item>Ceko</item>
+		<item>Dansk</item>
+		<item>Belanda</item>
+		<item>Inggris</item>
+		<item>Suomi</item>
+		<item>Prancis</item>
+		<item>Jerman</item>
+		<item>Yunani</item>
+		<item>Hungaria</item>
+		<item>Indonesia</item>
+		<item>Italia</item>
+		<item>Bokmål Norwegia</item>
+		<item>Polski</item>
+		<item>Portugis</item>
+		<item>Rumania</item>
+		<item>Rusia</item>
+		<item>Slovak</item>
+		<item>Spanyol</item>
+		<item>Swedia</item>
+		<item>Turki</item>
+		<item>Ukraina</item>
+	</string-array>
+	<string name="welcome_message">Selamat datang di Alias!</string>
+	<string name="choose_language">Pilih bahasamu</string>
+	<string name="choose_language_description">Bahasa ini akan dipakai di aplikasi dan untuk kata-kata yang akan kamu tebak</string>
+	<string name="continue_button">Lanjut</string>
+	<string name="press_back_again">Tekan kembali sekali lagi untuk keluar</string>
 	<string name="name1">Kata-kata yang sangat mudah</string>
 	<string name="description1">Kata-kata sederhana yang bisa ditebak anak-anak</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

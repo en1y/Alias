@@ -16,6 +16,35 @@
 	<string name="team14">Дияволові дупи</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Печериці</string>
+	<string-array name="languages">
+		<item>Хорватська</item>
+		<item>Чеська</item>
+		<item>Данська</item>
+		<item>Нідерландська</item>
+		<item>Англійська</item>
+		<item>Фінська</item>
+		<item>Французька</item>
+		<item>Німецька</item>
+		<item>Грецька</item>
+		<item>Угорська</item>
+		<item>Індонезійська</item>
+		<item>Італійська</item>
+		<item>Норвезька (букмол)</item>
+		<item>Польська</item>
+		<item>Португальська</item>
+		<item>Румунська</item>
+		<item>Російська</item>
+		<item>Словацька</item>
+		<item>Іспанська</item>
+		<item>Шведська</item>
+		<item>Турецька</item>
+		<item>Українська</item>
+	</string-array>
+	<string name="welcome_message">Ласкаво просимо до Alias!</string>
+	<string name="choose_language">Оберіть мову</string>
+	<string name="choose_language_description">Ця мова використовуватиметься в застосунку та для слів, які ви вгадуватимете</string>
+	<string name="continue_button">Продовжити</string>
+	<string name="press_back_again">Натисніть «Назад» ще раз, щоб вийти</string>
 	<string name="name1">Ну дуже прості слова</string>
 	<string name="description1">Прості слова, які навіть діти можуть вгадати</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

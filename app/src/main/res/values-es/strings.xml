@@ -16,6 +16,35 @@
 	<string name="team14">Culos del diablo</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Champiñones</string>
+	<string-array name="languages">
+		<item>Croata</item>
+		<item>Checo</item>
+		<item>Danés</item>
+		<item>Neerlandés</item>
+		<item>Inglés</item>
+		<item>Finés</item>
+		<item>Francés</item>
+		<item>Alemán</item>
+		<item>Griego</item>
+		<item>Húngaro</item>
+		<item>Indonesio</item>
+		<item>Italiano</item>
+		<item>Noruego bokmal</item>
+		<item>Polaco</item>
+		<item>Portugués</item>
+		<item>Rumano</item>
+		<item>Ruso</item>
+		<item>Eslovaco</item>
+		<item>Español</item>
+		<item>Sueco</item>
+		<item>Turco</item>
+		<item>Ucraniano</item>
+	</string-array>
+	<string name="welcome_message">¡Bienvenido a Alias!</string>
+	<string name="choose_language">Elige tu idioma</string>
+	<string name="choose_language_description">Este idioma se usará en la aplicación y en las palabras que tendrás que adivinar</string>
+	<string name="continue_button">Continuar</string>
+	<string name="press_back_again">Pulsa atrás otra vez para salir</string>
 	<string name="name1">Palabras muy fáciles</string>
 	<string name="description1">Palabras sencillas que hasta los niños pueden adivinar</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

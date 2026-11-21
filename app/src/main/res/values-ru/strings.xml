@@ -16,6 +16,35 @@
 	<string name="team14">Дьявольские задницы</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Шампиньоны</string>
+	<string-array name="languages">
+		<item>Хорватский</item>
+		<item>Чешский</item>
+		<item>Датский</item>
+		<item>Нидерландский</item>
+		<item>Английский</item>
+		<item>Финский</item>
+		<item>Французский</item>
+		<item>Немецкий</item>
+		<item>Греческий</item>
+		<item>Венгерский</item>
+		<item>Индонезийский</item>
+		<item>Итальянский</item>
+		<item>Норвежский букмол</item>
+		<item>Польский</item>
+		<item>Португальский</item>
+		<item>Румынский</item>
+		<item>Русский</item>
+		<item>Словацкий</item>
+		<item>Испанский</item>
+		<item>Шведский</item>
+		<item>Турецкий</item>
+		<item>Украинский</item>
+	</string-array>
+	<string name="welcome_message">Добро пожаловать в Alias!</string>
+	<string name="choose_language">Выберите язык</string>
+	<string name="choose_language_description">Этот язык будет использоваться в приложении и для слов, которые вы будете угадывать</string>
+	<string name="continue_button">Продолжить</string>
+	<string name="press_back_again">Нажмите «Назад» ещё раз, чтобы выйти</string>
 	<string name="name1">Ну очень простые слова</string>
 	<string name="description1">Простые слова, которые даже дети могут угадать</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

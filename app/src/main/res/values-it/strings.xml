@@ -16,6 +16,35 @@
 	<string name="team14">Culi del diavolo</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Champignon</string>
+	<string-array name="languages">
+		<item>Croato</item>
+		<item>Ceco</item>
+		<item>Danese</item>
+		<item>Olandese</item>
+		<item>Inglese</item>
+		<item>Finlandese</item>
+		<item>Francese</item>
+		<item>Tedesco</item>
+		<item>Greco</item>
+		<item>Ungherese</item>
+		<item>Indonesiano</item>
+		<item>Italiano</item>
+		<item>Norvegese bokmål</item>
+		<item>Polacco</item>
+		<item>Portoghese</item>
+		<item>Rumeno</item>
+		<item>Russo</item>
+		<item>Slovacco</item>
+		<item>Spagnolo</item>
+		<item>Svedese</item>
+		<item>Turco</item>
+		<item>Ucraino</item>
+	</string-array>
+	<string name="welcome_message">Benvenuto in Alias!</string>
+	<string name="choose_language">Scegli la tua lingua</string>
+	<string name="choose_language_description">Questa lingua verrà usata per l\'app e per le parole che dovrai indovinare</string>
+	<string name="continue_button">Continua</string>
+	<string name="press_back_again">Premi di nuovo Indietro per uscire</string>
 	<string name="name1">Parole facilissime</string>
 	<string name="description1">Parole semplici che anche i bambini possono indovinare</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

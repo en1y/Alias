@@ -16,6 +16,35 @@
 	<string name="team14">Ördögfenekek</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Csiperkék</string>
+	<string-array name="languages">
+		<item>Horvát</item>
+		<item>Cseh</item>
+		<item>Dán</item>
+		<item>Holland</item>
+		<item>Angol</item>
+		<item>Finn</item>
+		<item>Francia</item>
+		<item>Német</item>
+		<item>Görög</item>
+		<item>Magyar</item>
+		<item>Indonéz</item>
+		<item>Olasz</item>
+		<item>Norvég (bokmål)</item>
+		<item>Lengyel</item>
+		<item>Portugál</item>
+		<item>Román</item>
+		<item>Orosz</item>
+		<item>Szlovák</item>
+		<item>Spanyol</item>
+		<item>Svéd</item>
+		<item>Török</item>
+		<item>Ukrán</item>
+	</string-array>
+	<string name="welcome_message">Üdvözlünk az Aliasban!</string>
+	<string name="choose_language">Válaszd ki a nyelvet</string>
+	<string name="choose_language_description">Ezt a nyelvet használja az alkalmazás, és ezen a nyelven lesznek a kitalálandó szavak is</string>
+	<string name="continue_button">Tovább</string>
+	<string name="press_back_again">Nyomd meg újra a Vissza gombot a kilépéshez</string>
 	<string name="name1">Nagyon könnyű szavak</string>
 	<string name="description1">Egyszerű szavak, amelyeket még a gyerekek is kitalálhatnak</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

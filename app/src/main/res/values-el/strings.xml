@@ -16,6 +16,35 @@
 	<string name="team14">Διαβολοκώλοι</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Μανιτάρια</string>
+	<string-array name="languages">
+		<item>Κροατικά</item>
+		<item>Τσεχικά</item>
+		<item>Δανικά</item>
+		<item>Ολλανδικά</item>
+		<item>Αγγλικά</item>
+		<item>Φινλανδικά</item>
+		<item>Γαλλικά</item>
+		<item>Γερμανικά</item>
+		<item>Ελληνικά</item>
+		<item>Ουγγρικά</item>
+		<item>Ινδονησιακά</item>
+		<item>Ιταλικά</item>
+		<item>Νορβηγικά Μποκμάλ</item>
+		<item>Πολωνικά</item>
+		<item>Πορτογαλικά</item>
+		<item>Ρουμανικά</item>
+		<item>Ρωσικά</item>
+		<item>Σλοβακικά</item>
+		<item>Ισπανικά</item>
+		<item>Σουηδικά</item>
+		<item>Τουρκικά</item>
+		<item>Ουκρανικά</item>
+	</string-array>
+	<string name="welcome_message">Καλώς ήρθατε στο Alias!</string>
+	<string name="choose_language">Επιλέξτε τη γλώσσα σας</string>
+	<string name="choose_language_description">Αυτή η γλώσσα θα χρησιμοποιείται στην εφαρμογή και στις λέξεις που θα μαντεύετε</string>
+	<string name="continue_button">Συνέχεια</string>
+	<string name="press_back_again">Πατήστε ξανά Πίσω για έξοδο</string>
 	<string name="name1">Πολύ εύκολες λέξεις</string>
 	<string name="description1">Απλές λέξεις που μπορούν να μαντέψουν ακόμα και τα παιδιά</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

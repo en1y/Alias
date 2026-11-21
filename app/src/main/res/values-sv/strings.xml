@@ -16,6 +16,35 @@
 	<string name="team14">Djävulsrumpor</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Champinjoner</string>
+	<string-array name="languages">
+		<item>Kroatiska</item>
+		<item>Tjeckiska</item>
+		<item>Danska</item>
+		<item>Nederländska</item>
+		<item>Engelska</item>
+		<item>Finska</item>
+		<item>Franska</item>
+		<item>Tyska</item>
+		<item>Grekiska</item>
+		<item>Ungerska</item>
+		<item>Indonesiska</item>
+		<item>Italienska</item>
+		<item>Norskt bokmål</item>
+		<item>Polska</item>
+		<item>Portugisiska</item>
+		<item>Rumänska</item>
+		<item>Ryska</item>
+		<item>Slovakiska</item>
+		<item>Spanska</item>
+		<item>Svenska</item>
+		<item>Turkiska</item>
+		<item>Ukrainska</item>
+	</string-array>
+	<string name="welcome_message">Välkommen till Alias!</string>
+	<string name="choose_language">Välj ditt språk</string>
+	<string name="choose_language_description">Det här språket används i appen och för orden som du ska gissa</string>
+	<string name="continue_button">Fortsätt</string>
+	<string name="press_back_again">Tryck på tillbaka igen för att avsluta</string>
 	<string name="name1">Väldigt enkla ord</string>
 	<string name="description1">Enkla ord som till och med barn kan gissa</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">

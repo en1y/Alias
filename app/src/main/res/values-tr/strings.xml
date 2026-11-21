@@ -16,6 +16,35 @@
 	<string name="team14">Şeytan kıçları</string>
 	<string name="team15">MIJOC</string>
 	<string name="team16">Şampinyonlar</string>
+	<string-array name="languages">
+		<item>Hırvatça</item>
+		<item>Çekçe</item>
+		<item>Danca</item>
+		<item>Felemenkçe</item>
+		<item>İngilizce</item>
+		<item>Fince</item>
+		<item>Fransızca</item>
+		<item>Almanca</item>
+		<item>Yunanca</item>
+		<item>Macarca</item>
+		<item>Endonezce</item>
+		<item>İtalyanca</item>
+		<item>Norveççe Bokmål</item>
+		<item>Lehçe</item>
+		<item>Portekizce</item>
+		<item>Rumence</item>
+		<item>Rusça</item>
+		<item>Slovakça</item>
+		<item>İspanyolca</item>
+		<item>İsveççe</item>
+		<item>Türkçe</item>
+		<item>Ukraynaca</item>
+	</string-array>
+	<string name="welcome_message">Alias\'a hoş geldin!</string>
+	<string name="choose_language">Dilini seç</string>
+	<string name="choose_language_description">Bu dil uygulamada ve tahmin edeceğin kelimelerde kullanılacak</string>
+	<string name="continue_button">Devam</string>
+	<string name="press_back_again">Çıkmak için tekrar geri tuşuna bas</string>
 	<string name="name1">Çok kolay kelimeler</string>
 	<string name="description1">Çocukların bile tahmin edebileceği basit kelimeler</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
