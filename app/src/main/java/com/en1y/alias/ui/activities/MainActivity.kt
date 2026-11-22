@@ -2,8 +2,11 @@ package com.en1y.alias.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.Text
+import com.en1y.alias.ui.theme.AliasTheme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +21,9 @@ class MainActivity : AppCompatActivity() {
             finish()
             return
         } else {
-            println("You have been welcomed")
+            startActivity(Intent(this, GameActivity::class.java))
+            finish()
+            return
         }
 
     }

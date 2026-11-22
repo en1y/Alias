@@ -2,7 +2,7 @@ package com.en1y.alias.logic
 
 import android.content.res.Resources
 
-const val MaxTeamsSize = 6
+const val MaxTeamsSize = 8
 
 
 val SupportedLanguages = listOf(

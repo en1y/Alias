@@ -1,6 +1,7 @@
 package com.en1y.alias.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -68,7 +69,10 @@ class WelcomeActivity : AppCompatActivity() {
             }
             when (step) {
                 0 -> Greeting(onNext = {step = 1})
-                1 -> ChooseLanguageScreen()
+                1 -> ChooseLanguageScreen(onNext = {
+                    startActivity(Intent(this, GameActivity::class.java))
+                    finish()
+                })
             }
         }
     }
@@ -169,9 +173,9 @@ fun ChooseLanguageScreen(onNext: () -> Unit = {}) {
             }
             Button(
                 onClick = {
-                        context.getSharedPreferences("settings", Context.MODE_PRIVATE).edit {
-                            putBoolean("welcomed", true)
-                        }
+                    context.getSharedPreferences("settings", Context.MODE_PRIVATE).edit {
+                        putBoolean("welcomed", true)
+                    }
                     onNext()
                 },
                 modifier = Modifier.fillMaxWidth(),
