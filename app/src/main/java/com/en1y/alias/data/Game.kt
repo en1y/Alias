@@ -41,6 +41,14 @@ class Game(
         points.forEach { max = Math.max(max, it) }
         return teamsOrder[points.indexOf(max)]
     }
+
+    fun getRound(): Int {
+        val rounds = mutableSetOf<Int>()
+        teamsOrder.forEach { rounds.add(it.roundNum) }
+        var min = Int.MAX_VALUE
+        rounds.forEach { min = Math.min(min, it) }
+        return min
+    }
 }
 
 @Composable
