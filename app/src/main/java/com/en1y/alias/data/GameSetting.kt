@@ -1,5 +1,7 @@
 package com.en1y.alias.data
 
+import android.content.Context
+import com.en1y.alias.R
 import com.en1y.alias.logic.MaxTeamsSize
 import com.en1y.alias.logic.MinTeamsSize
 import com.en1y.alias.manager.TeamManager
@@ -16,13 +18,13 @@ class GameSetting(
         return wordPacks.isNotEmpty() && tm.teams.size in MinTeamsSize..MaxTeamsSize
     }
 
-    fun gameStartupCheck(): String {
+    fun gameStartupCheck(context: Context): String {
         if (wordPacks.isEmpty())
-            return "At least one word pack must be selected"
+            return context.getString(R.string.error_no_word_packs)
         if (tm.teams.size < MinTeamsSize)
-            return "Number of teams should be at least %d".format(MinTeamsSize)
-        if (tm.teams.size < MaxTeamsSize)
-            return "Number of teams can not be over %d".format(MaxTeamsSize)
+            return context.getString(R.string.error_too_few_teams, MinTeamsSize)
+        if (tm.teams.size > MaxTeamsSize)
+            return context.getString(R.string.error_too_many_teams, MaxTeamsSize)
         return ""
     }
 

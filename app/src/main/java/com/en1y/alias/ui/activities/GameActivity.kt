@@ -53,6 +53,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -152,7 +153,7 @@ fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, remove: () -> Uni
         verticalAlignment = Alignment.CenterVertically
     )
     {
-        Image(painter = team.teamImage, contentDescription = "Team %s image".format(team.teamName))
+        Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
         Text(modifier = Modifier.weight(1f),
             text = team.teamName,
             color = MaterialTheme.colorScheme.onSecondary)
@@ -183,8 +184,8 @@ fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamM
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Teams", color = MaterialTheme.colorScheme.onBackground)
-            Text("Add and remove teams to prepare for your game", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.teams), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.teams_description), color = MaterialTheme.colorScheme.onBackground)
 
             Column(
                 modifier = Modifier
@@ -209,7 +210,7 @@ fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamM
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )) {
-                    Text("Remove team")
+                    Text(stringResource(R.string.remove_team))
                 }
                 Button(
                     onClick = {tm.addTeam()},
@@ -217,7 +218,7 @@ fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamM
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )) {
-                    Text("Add team")
+                    Text(stringResource(R.string.add_team))
                 }
             }
             Button(
@@ -251,8 +252,8 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier, onPrevious: () -> Unit = 
             )) {
                 Text("<")
             }
-            Text("Theme", color = MaterialTheme.colorScheme.onBackground)
-            Text("Choose your theme color", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.theme), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.theme_description), color = MaterialTheme.colorScheme.onBackground)
             // TODO: Implement theme color changing
         }
     }
@@ -286,7 +287,7 @@ fun AppSettings(
             )) {
                 Text("<")
             }
-            Text("Settings", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.settings), color = MaterialTheme.colorScheme.onBackground)
 
             Column(
                 modifier = Modifier
@@ -300,7 +301,7 @@ fun AppSettings(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text("Language", color = MaterialTheme.colorScheme.onPrimary)
+                    Text(stringResource(R.string.language), color = MaterialTheme.colorScheme.onPrimary)
                     Button(onClick = onLanguageChange, colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary)) {
@@ -313,7 +314,7 @@ fun AppSettings(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text("Choose theme", color = MaterialTheme.colorScheme.onPrimary)
+                    Text(stringResource(R.string.choose_theme), color = MaterialTheme.colorScheme.onPrimary)
                     Button(onClick = onThemeChange, colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary)) {
@@ -321,7 +322,7 @@ fun AppSettings(
                     }
                 }
             }
-            Text("External links", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.external_links), color = MaterialTheme.colorScheme.onBackground)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -334,7 +335,7 @@ fun AppSettings(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text("App's GitHub page", color = MaterialTheme.colorScheme.onPrimary)
+                    Text(stringResource(R.string.github_page), color = MaterialTheme.colorScheme.onPrimary)
                     Button(onClick = {
                         val urlIntent = Intent(
                             Intent.ACTION_VIEW,
@@ -353,7 +354,7 @@ fun AppSettings(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text("Creator's page", color = MaterialTheme.colorScheme.onPrimary)
+                    Text(stringResource(R.string.creator_page), color = MaterialTheme.colorScheme.onPrimary)
                     Button(onClick = {
                         val urlIntent = Intent(
                             Intent.ACTION_VIEW,
@@ -399,8 +400,8 @@ fun WordPacksSettings(
             )) {
                 Text("<")
             }
-            Text("Word packs", color = MaterialTheme.colorScheme.onBackground)
-            Text("Choose one or multiple word packs", color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.word_packs), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.word_packs_description), color = MaterialTheme.colorScheme.onBackground)
             @Composable fun WordPackElement(
                 wordPack: WordPack,
                 name: String,
@@ -421,7 +422,7 @@ fun WordPacksSettings(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ){
                             Text(name, color = MaterialTheme.colorScheme.onPrimary)
-                            Text("%d words".format(words.size), color = MaterialTheme.colorScheme.onPrimary)
+                            Text(pluralStringResource(R.plurals.words_count, words.size, words.size), color = MaterialTheme.colorScheme.onPrimary)
                         }
                         Text(description, color = MaterialTheme.colorScheme.onPrimary)
                     }
@@ -460,6 +461,7 @@ fun GameSettings(
     var skippedWordSetting by remember { mutableStateOf(true) }
 
     var showDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     if (showDialog) {
         AliasTheme {
@@ -478,13 +480,13 @@ fun GameSettings(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ){
-                        Text(text = "Start a new game?")
-                        Text(text = "This will reset this game completely, including both the scores and the rounds")
+                        Text(text = stringResource(R.string.new_game_title))
+                        Text(text = stringResource(R.string.new_game_description))
                         Button({}) {
-                            Text("New Game")
+                            Text(stringResource(R.string.new_game))
                         }
                         Button({showDialog = false}) {
-                            Text("Cancel")
+                            Text(stringResource(R.string.cancel))
                         }
                     }
                 }
@@ -515,7 +517,7 @@ fun GameSettings(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(modifier = Modifier.padding(end = 10.dp), text = "Game Settings", color = MaterialTheme.colorScheme.onBackground)
+                Text(modifier = Modifier.padding(end = 10.dp), text = stringResource(R.string.game_settings), color = MaterialTheme.colorScheme.onBackground)
                 Button(
                     onClick = {showDialog = true},
                     colors = ButtonDefaults.buttonColors(
@@ -523,7 +525,7 @@ fun GameSettings(
                         contentColor = MaterialTheme.colorScheme.onSecondary
                     )
                 ) {
-                    Text("Reset")
+                    Text(stringResource(R.string.reset))
                 }
                 Button(
                     onClick = onSettings,
@@ -532,7 +534,7 @@ fun GameSettings(
                         contentColor = MaterialTheme.colorScheme.onSecondary
                     )
                 ) {
-                    Text("Settings")
+                    Text(stringResource(R.string.settings))
                 }
             }
             Button(
@@ -550,11 +552,11 @@ fun GameSettings(
                     Column (
                         horizontalAlignment = Alignment.Start
                     ){
-                        Text("Word packs")
+                        Text(stringResource(R.string.word_packs))
                         if (selectedWordPacks.isEmpty())
-                            Text("Choose word packs")
+                            Text(stringResource(R.string.choose_word_packs))
                         else
-                            Text("Amount of selected word packs: %d".format(selectedWordPacks.size))
+                            Text(stringResource(R.string.selected_word_packs, selectedWordPacks.size))
                     }
                     Column (
                         verticalArrangement = Arrangement.Center
@@ -569,9 +571,9 @@ fun GameSettings(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Text("Teams", color = MaterialTheme.colorScheme.onBackground)
+                    Text(stringResource(R.string.teams), color = MaterialTheme.colorScheme.onBackground)
                     Button(onClick = onTeamSelect) {
-                        Text("Edit")
+                        Text(stringResource(R.string.edit))
                     }
                 }
                 Column (
@@ -587,7 +589,7 @@ fun GameSettings(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text("Round length", color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(R.string.round_length), color = MaterialTheme.colorScheme.onBackground)
                 Slider(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     value = roundLengthSliderPosition,
@@ -599,9 +601,9 @@ fun GameSettings(
                     ),
                     steps = 6,
                     valueRange = 30f..240f)
-                Text("%.0fs".format(roundLengthSliderPosition), color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(R.string.seconds_short, roundLengthSliderPosition.toInt()), color = MaterialTheme.colorScheme.onBackground)
 
-                Text("Words required for winning", color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(R.string.words_to_win), color = MaterialTheme.colorScheme.onBackground)
                 Slider(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     value = wordsRequiredForWinningSliderPosition,
@@ -613,13 +615,13 @@ fun GameSettings(
                     ),
                     steps = 8,
                     valueRange = 25f..250f)
-                Text("%.0f words".format(wordsRequiredForWinningSliderPosition), color = MaterialTheme.colorScheme.onBackground)
+                Text(pluralStringResource(R.plurals.words_count, wordsRequiredForWinningSliderPosition.toInt(), wordsRequiredForWinningSliderPosition.toInt()), color = MaterialTheme.colorScheme.onBackground)
             }
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text("Rules", color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(R.string.rules), color = MaterialTheme.colorScheme.onBackground)
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ){
@@ -635,8 +637,8 @@ fun GameSettings(
                                 .weight(1f)
                                 .fillMaxWidth()
                         ){
-                            Text("Last word", color = MaterialTheme.colorScheme.onPrimary)
-                            Text("Any team can guess the last word after the time runs out", color = MaterialTheme.colorScheme.onPrimary)
+                            Text(stringResource(R.string.last_word), color = MaterialTheme.colorScheme.onPrimary)
+                            Text(stringResource(R.string.last_word_description), color = MaterialTheme.colorScheme.onPrimary)
                         }
                         Switch(checked = lastWordSetting, onCheckedChange = {lastWordSetting = it})
                     }
@@ -649,14 +651,14 @@ fun GameSettings(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Column{
-                            Text("Skipped word", color = MaterialTheme.colorScheme.onPrimary)
-                            Text("-1 point for each skipped word", color = MaterialTheme.colorScheme.onPrimary)
+                            Text(stringResource(R.string.skipped_word), color = MaterialTheme.colorScheme.onPrimary)
+                            Text(stringResource(R.string.skipped_word_description), color = MaterialTheme.colorScheme.onPrimary)
                         }
                         Switch(checked = skippedWordSetting, onCheckedChange = {skippedWordSetting = it})
                     }
                 }
             }
-            var errorLabel by remember { mutableStateOf("Initial text") }
+            var errorLabel by remember { mutableStateOf("") }
             var errorVisible by remember { mutableStateOf(false) }
             if (errorVisible)
                 Text(errorLabel, color = Color.Red)
@@ -673,7 +675,7 @@ fun GameSettings(
                     if (gameSetting.canStartUpGame())
                         onStartGame(gameSetting)
                     else {
-                        errorLabel = gameSetting.gameStartupCheck()
+                        errorLabel = gameSetting.gameStartupCheck(context)
                         errorVisible = true
                     }
                 },
@@ -682,7 +684,7 @@ fun GameSettings(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text(text = "Start game")
+                Text(text = stringResource(R.string.start_game))
             }
         }
     }
@@ -720,20 +722,20 @@ fun PreRoundScreen(
             Column {
                 Row {
                     Button({}) {
-                        Text("End Game")
+                        Text(stringResource(R.string.end_game))
                     }
-                    Text("Round %d".format(game.getRound()))
+                    Text(stringResource(R.string.round_number, game.getRound()))
                 }
                 val team: Team = remember { game.getCurrentTeam() }
 
-                Image(painter = team.teamImage, contentDescription = "Team %s image".format(team.teamName))
+                Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
 
                 if (t != null) {
-                    Text("Team %s won!!!".format(t.teamName))
+                    Text(stringResource(R.string.team_won, t.teamName))
                 } else {
-                    Text("Next team is:")
+                    Text(stringResource(R.string.next_team))
                     Text(team.teamName)
-                    Text("Pick who explains and hand them the phone")
+                    Text(stringResource(R.string.hand_phone))
                 }
             }
             Column{
@@ -741,8 +743,8 @@ fun PreRoundScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Text("Standings:")
-                    Text("To %d".format(game.gameSetting.wordsWinCondition))
+                    Text(stringResource(R.string.standings))
+                    Text(stringResource(R.string.to_points, game.gameSetting.wordsWinCondition))
                 }
                 Column (
                     modifier = Modifier
@@ -756,8 +758,8 @@ fun PreRoundScreen(
                     if (t == null) onNext()
                     else onPrevious()
                 }) {
-                    if (t != null)Text("Start round")
-                    else Text("Go back to the menu")
+                    if (t != null)Text(stringResource(R.string.start_round))
+                    else Text(stringResource(R.string.back_to_menu))
                 }
             }
         }
@@ -827,11 +829,11 @@ fun RoundScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(counter.toString())
-                Text("↑ guessed")
+                Text(stringResource(R.string.guessed_hint))
             }
             Text(word)
             Row {
-                Text("↓ skipped")
+                Text(stringResource(R.string.skipped_hint))
             }
         }
     }
@@ -854,14 +856,14 @@ fun RoundScreen(
                     Text("<")
                 }
                 Text(round.currentTeam.teamName)
-                Text("%d pts".format(round.countPoints()))
+                Text(stringResource(R.string.points_short, round.countPoints()))
             }
             Row {
                 CountdownTimer(round.gameSetting.timePerRound, isRunning = isRunning, onFinish = {isRunning = false})
             }
             Column {
                 if (started && !isRunning)
-                    Text("Last word")
+                    Text(stringResource(R.string.last_word))
                 if (started) WordCard(round.currentWord, round.counter) else WordCard()
             }
             Row {
@@ -872,7 +874,7 @@ fun RoundScreen(
                         round.end()
                     }
                 }) {
-                    Text("Skip")
+                    Text(stringResource(R.string.skip))
                 }
                 Text(round.countPoints().toString())
                 Button({
@@ -884,7 +886,7 @@ fun RoundScreen(
                         onNext()
                     }
                 }) {
-                    Text("Guessed")
+                    Text(stringResource(R.string.guessed))
                 }
             }
         }
@@ -901,9 +903,9 @@ fun RoundScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("Swipe up if guessed, swipe down to skip")
+                    Text(stringResource(R.string.swipe_hint))
                     Button({ started = true; isRunning = true; round.start()}) {
-                        Text("Start")
+                        Text(stringResource(R.string.start))
                     }
                 }
             }
@@ -946,15 +948,15 @@ fun PostRoundScreen(
                         }
                         Image(
                             painter = round.currentTeam.teamImage,
-                            contentDescription = "Team %s image".format(round.currentTeam.teamName)
+                            contentDescription = stringResource(R.string.team_image_description, round.currentTeam.teamName)
                         )
                         Text(round.currentTeam.teamName)
-                        Text("Round %d".format(game.getRound()))
+                        Text(stringResource(R.string.round_number, game.getRound()))
                     }
                     Row {
                         Column {
-                            Text("Round review")
-                            Text("Review your guesses")
+                            Text(stringResource(R.string.round_review))
+                            Text(stringResource(R.string.review_guesses))
                         }
                         // roundWords is a state map, so this recomputes whenever a status is toggled
                         val points = round.countPoints()
@@ -981,12 +983,12 @@ fun PostRoundScreen(
                         game.endRound()
                         onNext()
                     }) {
-                        Text("Next")
+                        Text(stringResource(R.string.next))
                     }
                 }
             }
             else {
-                Text("Some shit happened, game broke")
+                Text(stringResource(R.string.game_error))
             }
         }
     }
