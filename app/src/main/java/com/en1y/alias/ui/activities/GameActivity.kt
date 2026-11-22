@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -93,6 +94,7 @@ class GameActivity: AppCompatActivity(){
                     selectedWordPacks = selectedWordPacks,
                     onStartGame = { setting -> activeGameSetting = setting }
                 )
+                2 -> PreRoundScreen()
                 10 -> AppSettings(onPrevious = {step = 1}, onLanguageChange = {step = 101}, onThemeChange = {step = 102})
                 11 -> WordPacksSettings(
                     onPrevious = {step = 1},
@@ -337,7 +339,7 @@ fun AppSettings(
     }
 }
 
-@Composable @Preview
+@Composable
 fun WordPacksSettings(
     modifier: Modifier = Modifier,
     onPrevious: () -> Unit = {},
@@ -596,7 +598,9 @@ fun GameSettings(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Column(
-                            modifier = Modifier.weight(1f).fillMaxWidth()
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
                         ){
                             Text("Last word", color = MaterialTheme.colorScheme.onPrimary)
                             Text("Any team can guess the last word after the time runs out", color = MaterialTheme.colorScheme.onPrimary)
@@ -646,6 +650,79 @@ fun GameSettings(
                 )
             ) {
                 Text(text = "Start game")
+            }
+        }
+    }
+}
+
+@Composable @Preview
+fun PreRoundScreen(
+    modifier: Modifier = Modifier,
+    game: Game = remember { Game(GameSetting(
+        wordPacks = mutableListOf(WordPack.pack1),
+        tm = TeamManager(),
+        timePerRound = 60,
+        wordsWinCondition = 100,
+        lastWordCanBeGuessed = false,
+        skippedWordSubtractsPoints = true
+    ), mutableListOf("a"))},
+    onNext: () -> Unit = {}
+) {
+    val scrollState = rememberScrollState()
+    val t = game.gameOver()
+
+    AliasTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(all = 16.dp)
+                .padding(top = 30.dp)
+                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Column {
+                Row {
+                    Button({}) {
+                        Text("End Game")
+                    }
+                    Text("Round %d".format(game.getRound()))
+                }
+                val team: Team = remember { game.getCurrentTeam() }
+
+                Image(painter = team.teamImage, contentDescription = "Team %s image".format(team.teamName))
+
+                if (t != null) {
+                    Text("Team %s won!!!".format(t.teamName))
+                } else {
+                    Text("Next team is:")
+                    Text(team.teamName)
+                    Text("Pick who explains and hand them the phone")
+                }
+            }
+            Column{
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ){
+                    Text("Standings:")
+                    Text("To %d".format(game.gameSetting.wordsWinCondition))
+                }
+                Column (
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+
+                ){
+                    game.gameSetting.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
+                }
+                Button(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
+                    if (t == null) onNext()
+                }) {
+                    Text("Start round")
+                }
             }
         }
     }
