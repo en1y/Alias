@@ -6,14 +6,19 @@ import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +27,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -29,6 +35,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
@@ -40,7 +48,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,8 +63,11 @@ import com.en1y.alias.ui.theme.AliasTheme
 import androidx.core.net.toUri
 import com.en1y.alias.data.Game
 import com.en1y.alias.data.GameSetting
+import com.en1y.alias.data.Round
 import com.en1y.alias.data.WordPack
 import com.en1y.alias.data.rememberGame
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 class GameActivity: AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +95,7 @@ class GameActivity: AppCompatActivity(){
 
             var activeGameSetting by remember { mutableStateOf<GameSetting?>(null) }
             val game = activeGameSetting?.let { rememberGame(it) }
-
+            var round: Round? = null
             when (step) {
                 0 -> TeamSelect(onNext = {step = 1}, tm = tm)
                 1 -> GameSettings(
@@ -92,9 +105,24 @@ class GameActivity: AppCompatActivity(){
                     onWordPackSelect = {step = 11},
                     tm = tm,
                     selectedWordPacks = selectedWordPacks,
-                    onStartGame = { setting -> activeGameSetting = setting }
+                    onStartGame = {
+                        setting -> activeGameSetting = setting
+                        step = 2
+                    }
                 )
-                2 -> PreRoundScreen()
+                2 -> {
+                    val activeGame = game
+                        ?: return@setContent
+
+                    PreRoundScreen(game = activeGame, onNext = {step = 3})
+                }
+                3 -> {
+                    val activeGame = game
+                        ?: return@setContent
+                    round = remember { activeGame.createRound() }
+                    RoundScreen(round, onNext = {step = 4})
+                }
+                4 -> PostRoundScreen()
                 10 -> AppSettings(onPrevious = {step = 1}, onLanguageChange = {step = 101}, onThemeChange = {step = 102})
                 11 -> WordPacksSettings(
                     onPrevious = {step = 1},
@@ -655,7 +683,7 @@ fun GameSettings(
     }
 }
 
-@Composable @Preview
+@Composable
 fun PreRoundScreen(
     modifier: Modifier = Modifier,
     game: Game = remember { Game(GameSetting(
@@ -724,6 +752,187 @@ fun PreRoundScreen(
                     Text("Start round")
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinish: () -> Unit = {}) {
+    var remainingSeconds by remember { mutableIntStateOf(initialSeconds) }
+
+    LaunchedEffect(isRunning, remainingSeconds) {
+        if (isRunning && remainingSeconds > 0) {
+            delay(1000L.milliseconds)
+            remainingSeconds--
+        } else if (isRunning && remainingSeconds == 0) {
+            onFinish()
+        }
+    }
+
+    Column {
+        Text(text = "%d:%02d".format(remainingSeconds / 60, remainingSeconds % 60))
+        val rawProgress = if (initialSeconds > 0) {
+            remainingSeconds.toFloat() / initialSeconds.toFloat()
+        } else {
+            0f
+        }
+
+        val animatedProgress by animateFloatAsState(
+            targetValue = rawProgress,
+            animationSpec = tween(durationMillis = 1000, easing = LinearEasing),
+            label = "TimerProgress"
+        )
+
+        LinearProgressIndicator(
+            progress = { animatedProgress },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .clip(RoundedCornerShape(4.dp))
+        )
+    }
+}
+
+@Composable @Preview
+fun RoundScreen(
+    round: Round = Round(
+        gameSetting = GameSetting(
+            wordPacks = mutableListOf(WordPack.pack1),
+            tm = TeamManager(),
+            timePerRound = 60,
+            wordsWinCondition = 100,
+            lastWordCanBeGuessed = false,
+            skippedWordSubtractsPoints = true
+        ),
+        words = mutableListOf("a"),
+        currentTeam = Team()),
+    onNext: () -> Unit = {}
+) {
+
+    @Composable
+    fun WordCard(word: String = "word", counter: Int = 0) {
+        Column(
+            verticalArrangement = Arrangement.SpaceEvenly
+        ){
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(counter.toString())
+                Text("↑ guessed")
+            }
+            Text(word)
+            Row {
+                Text("↓ skipped")
+            }
+        }
+    }
+
+    var isRunning by remember { mutableStateOf(false) }
+    var started by remember { mutableStateOf(false) }
+
+    AliasTheme { Box {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(all = 16.dp)
+                .padding(top = 30.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row {
+                Button({}) {
+                    Text("<")
+                }
+                Text(round.currentTeam.teamName)
+                Text("%d pts".format(round.countPoints()))
+            }
+            Row {
+                CountdownTimer(round.gameSetting.timePerRound, isRunning = isRunning, onFinish = {isRunning = false})
+            }
+            Column {
+                if (started && !isRunning)
+                    Text("Last word")
+                if (started) WordCard(round.currentWord, round.counter) else WordCard()
+            }
+            Row {
+                Button({
+                    round.skipped()
+                    if(!isRunning) {
+                        onNext()
+                        round.end()
+                    }
+                }) {
+                    Text("Skip")
+                }
+                Text(round.countPoints().toString())
+                Button({
+                    if (!isRunning && round.gameSetting.lastWordCanBeGuessed) {
+                        //TODO: handle last word can be guessed
+                    } else round.guessed()
+                    if(!isRunning) {
+                        round.end()
+                        onNext()
+                    }
+                }) {
+                    Text("Guessed")
+                }
+            }
+        }
+        if (!started) Box(
+            modifier = Modifier
+                .matchParentSize()
+                .background(Color.Black.copy(alpha = 0.6f))
+                .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
+            contentAlignment = Alignment.Center
+        ) {
+            Surface(shape = RoundedCornerShape(12.dp), shadowElevation = 6.dp) {
+                Column(
+                    modifier = Modifier.padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text("Swipe up if guessed, swipe down to skip")
+                    Button({ started = true; isRunning = true; round.start()}) {
+                        Text("Start")
+                    }
+                }
+            }
+        }
+    } }
+}
+
+@Composable @Preview
+fun PostRoundScreen(
+    round: Round = Round(
+        gameSetting = GameSetting(
+            wordPacks = mutableListOf(WordPack.pack1),
+            tm = TeamManager(),
+            timePerRound = 60,
+            wordsWinCondition = 100,
+            lastWordCanBeGuessed = false,
+            skippedWordSubtractsPoints = true
+        ),
+        words = mutableListOf("a"),
+        currentTeam = Team()),
+    onNext: () -> Unit = {}
+) {
+    val scrollState = rememberScrollState()
+
+    AliasTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(all = 16.dp)
+                .padding(top = 30.dp)
+                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
+        ) {
+
         }
     }
 }
