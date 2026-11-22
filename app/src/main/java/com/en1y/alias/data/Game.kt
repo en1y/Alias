@@ -26,7 +26,7 @@ class Game(
     }
 
     fun endRound() {
-        currentRound?.end()
+        currentRound?.commit()
         teamsOrder.add(teamsOrder.removeAt(0))
     }
 
