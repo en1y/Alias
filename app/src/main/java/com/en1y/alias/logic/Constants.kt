@@ -3,7 +3,7 @@ package com.en1y.alias.logic
 import android.content.res.Resources
 
 const val MaxTeamsSize = 8
-
+const val MinTeamsSize = 1;
 
 val SupportedLanguages = listOf(
     "hr", "cs", "da", "nl", "en", "fi", "fr", "de", "el", "hu", "id",

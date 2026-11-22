@@ -6,7 +6,7 @@ import com.en1y.alias.data.TeamInfo
 import com.en1y.alias.logic.MaxTeamsSize
 
 class TeamManager {
-    val teams = mutableStateListOf<Team>()
+    val teams = mutableListOf<Team>()
 
     constructor() {addTeam(); addTeam()}
 

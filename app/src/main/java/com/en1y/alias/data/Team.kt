@@ -8,9 +8,15 @@ class Team {
     val info = random()
     var points: Int = 0
         private set
+    var roundNum: Int = 0
+        private set
 
     fun addPoints(pointsToAdd: Int) {
         points += pointsToAdd
+    }
+
+    fun addRoundPlayed() {
+        roundNum++
     }
 
     val teamName: String
