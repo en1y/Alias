@@ -26,6 +26,7 @@
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.GameActivity"
+                android:configChanges="locale|layoutDirection"
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.MainActivity"
