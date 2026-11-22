@@ -34,6 +34,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -114,7 +115,7 @@ class GameActivity: AppCompatActivity(){
                     val activeGame = game
                         ?: return@setContent
 
-                    PreRoundScreen(game = activeGame, onNext = {step = 3})
+                    PreRoundScreen(game = activeGame, onNext = {step = 3}, onPrevious = {step = 1})
                 }
                 3 -> {
                     val activeGame = game
@@ -122,7 +123,11 @@ class GameActivity: AppCompatActivity(){
                     round = remember { activeGame.createRound() }
                     RoundScreen(round, onNext = {step = 4})
                 }
-                4 -> PostRoundScreen()
+                4 -> {
+                    val activeGame = game
+                        ?: return@setContent
+                    PostRoundScreen(game = activeGame, onNext = {step = 2})
+                }
                 10 -> AppSettings(onPrevious = {step = 1}, onLanguageChange = {step = 101}, onThemeChange = {step = 102})
                 11 -> WordPacksSettings(
                     onPrevious = {step = 1},
@@ -694,7 +699,8 @@ fun PreRoundScreen(
         lastWordCanBeGuessed = false,
         skippedWordSubtractsPoints = true
     ), mutableListOf("a"))},
-    onNext: () -> Unit = {}
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     val t = game.gameOver()
@@ -748,8 +754,10 @@ fun PreRoundScreen(
                 }
                 Button(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
                     if (t == null) onNext()
+                    else onPrevious()
                 }) {
-                    Text("Start round")
+                    if (t != null)Text("Start round")
+                    else Text("Go back to the menu")
                 }
             }
         }
@@ -905,17 +913,14 @@ fun RoundScreen(
 
 @Composable @Preview
 fun PostRoundScreen(
-    round: Round = Round(
-        gameSetting = GameSetting(
-            wordPacks = mutableListOf(WordPack.pack1),
-            tm = TeamManager(),
-            timePerRound = 60,
-            wordsWinCondition = 100,
-            lastWordCanBeGuessed = false,
-            skippedWordSubtractsPoints = true
-        ),
-        words = mutableListOf("a"),
-        currentTeam = Team()),
+    game: Game = remember { Game(GameSetting(
+        wordPacks = mutableListOf(WordPack.pack1),
+        tm = TeamManager(),
+        timePerRound = 60,
+        wordsWinCondition = 100,
+        lastWordCanBeGuessed = false,
+        skippedWordSubtractsPoints = true
+    ), mutableListOf("a"))},
     onNext: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -932,7 +937,57 @@ fun PostRoundScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
+            val round = game.currentRound
+            if (round != null) {
+                Column {
+                    Row {
+                        Button({}) {
+                            Text("<")
+                        }
+                        Image(
+                            painter = round.currentTeam.teamImage,
+                            contentDescription = "Team %s image".format(round.currentTeam.teamName)
+                        )
+                        Text(round.currentTeam.teamName)
+                        Text("Round %d".format(game.getRound()))
+                    }
+                    Row {
+                        Column {
+                            Text("Round review")
+                            Text("Review your guesses")
+                        }
+                        // roundWords is a state map, so this recomputes whenever a status is toggled
+                        val points = round.countPoints()
+                        Text("${if (points > 0) "+" else ""}$points")
+                    }
+                    Column {
+                        round.roundWords.forEach { (string, status) ->
+                            Row {
+                                Text(string)
+                                TextButton({
+                                    round.roundWords[string] = Round.GuessStatus.Guessed
+                                }) { Text(text = "✓", modifier = Modifier.background(if (status == Round.GuessStatus.Guessed) Color.Green else Color.Transparent)) }
+                                TextButton({
+                                    round.roundWords[string] = Round.GuessStatus.Skipped
+                                }) { Text(text = "x", modifier = Modifier.background(if (status == Round.GuessStatus.Skipped) Color.Red else Color.Transparent)) }
+                                TextButton({
+                                    round.roundWords[string] = Round.GuessStatus.Deleted
+                                }) { Text(text = "\uD83D\uDDD1", modifier = Modifier.background(if (status == Round.GuessStatus.Deleted) Color.Gray else Color.Transparent)) }
+                            }
 
+                        }
+                    }
+                    Button({
+                        game.endRound()
+                        onNext()
+                    }) {
+                        Text("Next")
+                    }
+                }
+            }
+            else {
+                Text("Some shit happened, game broke")
+            }
         }
     }
 }

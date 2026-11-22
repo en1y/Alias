@@ -8,7 +8,8 @@ class Game(
     val words: List<String>
 ) {
     val teamManager get() = gameSetting.tm
-    val teamsOrder get() = teamManager.teams.toMutableList()
+    // snapshot once: a getter would return a fresh copy on every access, so rotating it did nothing
+    val teamsOrder = teamManager.teams.toMutableList()
 
     var currentRound: Round? = null
         private set
@@ -34,11 +35,11 @@ class Game(
         val points = mutableListOf<Int>()
         val rounds = mutableSetOf<Int>()
         teamsOrder.forEach { points.add(it.points); rounds.add(it.roundNum) }
-        if (points.size != setOf(points).size) return null
-        if (rounds.size != 1) return null
+        if (rounds.size != 1) return null // not everyone has played the same number of rounds yet
 
-        var max = Int.MIN_VALUE
-        points.forEach { max = Math.max(max, it) }
+        val max = points.max()
+        if (max < gameSetting.wordsWinCondition) return null
+        if (points.count { it == max } > 1) return null // tie: play another round
         return teamsOrder[points.indexOf(max)]
     }
 
@@ -47,7 +48,7 @@ class Game(
         teamsOrder.forEach { rounds.add(it.roundNum) }
         var min = Int.MAX_VALUE
         rounds.forEach { min = Math.min(min, it) }
-        return min
+        return min + 1
     }
 }
 
