@@ -1,14 +1,17 @@
 package com.en1y.alias.data
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
 import com.en1y.alias.data.TeamInfo.Companion.random
 
 class Team {
     val info = random()
-    var points: Int = 0
+    var points by mutableIntStateOf(0)
         private set
-    var roundNum: Int = 0
+    var roundNum by mutableIntStateOf(0)
         private set
 
     fun addPoints(pointsToAdd: Int) {

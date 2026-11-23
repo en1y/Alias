@@ -1,5 +1,6 @@
 package com.en1y.alias.data
 
+import android.content.res.Resources
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -21,4 +22,5 @@ enum class WordPack(private val titleId: Int, private val descriptionId: Int, pr
     val description: String @Composable get() = stringResource(descriptionId)
     val words: List<String> @Composable get() = stringArrayResource(wordsId).toMutableList()
     val wordsNum: Int @Composable get() = words.size
+    fun words(res: Resources) = res.getStringArray(wordsId).toList()
 }

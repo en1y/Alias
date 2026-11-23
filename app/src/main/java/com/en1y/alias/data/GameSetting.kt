@@ -1,18 +1,22 @@
 package com.en1y.alias.data
 
 import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.en1y.alias.R
 import com.en1y.alias.logic.MaxTeamsSize
 import com.en1y.alias.logic.MinTeamsSize
 import com.en1y.alias.manager.TeamManager
 
-class GameSetting(
-    val wordPacks: List<WordPack>,
-    val tm: TeamManager,
-    val timePerRound: Int,
-    val wordsWinCondition: Int,
-    val lastWordCanBeGuessed: Boolean,
-    val skippedWordSubtractsPoints: Boolean) {
+class GameSetting {
+    var wordPacks by mutableStateOf(emptySet<WordPack>())
+    val tm = TeamManager()
+    var timePerRound by mutableIntStateOf(60)
+    var wordsWinCondition by mutableIntStateOf(100)
+    var lastWordCanBeGuessed by mutableStateOf(false)
+    var skippedWordSubtractsPoints by mutableStateOf(true)
 
     fun canStartUpGame(): Boolean {
         return wordPacks.isNotEmpty() && tm.teams.size in MinTeamsSize..MaxTeamsSize

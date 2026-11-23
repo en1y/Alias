@@ -2,9 +2,11 @@ package com.en1y.alias.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -27,15 +29,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import com.en1y.alias.R
 import com.en1y.alias.data.Team
-import com.en1y.alias.manager.TeamManager
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.en1y.alias.ui.theme.AliasIcon
 import com.en1y.alias.ui.theme.Icon
@@ -68,21 +66,22 @@ import com.en1y.alias.ui.theme.secondaryColors
 import com.en1y.alias.ui.theme.verticalScrollWithBar
 import androidx.core.net.toUri
 import com.en1y.alias.data.Game
-import com.en1y.alias.data.GameSetting
 import com.en1y.alias.data.Round
 import com.en1y.alias.data.WordPack
-import com.en1y.alias.data.rememberGame
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 
+private var step by mutableIntStateOf(0)
+
 class GameActivity: AppCompatActivity(){
+    private val game: Game by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) step = 0
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContent {
-            var step by rememberSaveable { mutableIntStateOf(0) }
-            val tm = remember { TeamManager() }
-            var selectedWordPacks by remember { mutableStateOf(emptySet<WordPack>()) }
-
             var lastBackPress by remember { mutableLongStateOf(0L) }
             BackHandler {
                 if (step == 0) {
@@ -99,48 +98,16 @@ class GameActivity: AppCompatActivity(){
                 } else step--
             }
 
-            var activeGameSetting by remember { mutableStateOf<GameSetting?>(null) }
-            val game = activeGameSetting?.let { rememberGame(it) }
-            var round: Round? = null
             when (step) {
-                0 -> TeamSelect(onNext = {step = 1}, tm = tm)
-                1 -> GameSettings(
-                    onNext = {step = 1},
-                    onSettings = {step = 10},
-                    onTeamSelect = {step = 0},
-                    onWordPackSelect = {step = 11},
-                    tm = tm,
-                    selectedWordPacks = selectedWordPacks,
-                    onStartGame = {
-                        setting -> activeGameSetting = setting
-                        step = 2
-                    }
-                )
-                2 -> {
-                    val activeGame = game
-                        ?: return@setContent
-
-                    PreRoundScreen(game = activeGame, onNext = {step = 3}, onPrevious = {step = 1})
-                }
-                3 -> {
-                    val activeGame = game
-                        ?: return@setContent
-                    round = remember { activeGame.createRound() }
-                    RoundScreen(round, onNext = {step = 4})
-                }
-                4 -> {
-                    val activeGame = game
-                        ?: return@setContent
-                    PostRoundScreen(game = activeGame, onNext = {step = 2})
-                }
-                10 -> AppSettings(onPrevious = {step = 1}, onLanguageChange = {step = 101}, onThemeChange = {step = 102})
-                11 -> WordPacksSettings(
-                    onPrevious = {step = 1},
-                    selectedWordPacks = selectedWordPacks,
-                    onSelectionChange = { selectedWordPacks = it }
-                )
+                0 -> TeamSelect(game)
+                1 -> GameSettings(game)
+                2 -> PreRoundScreen(game = game)
+                3 -> RoundScreen(game)
+                4 -> PostRoundScreen(game)
+                10 -> AppSettings()
+                11 -> WordPacksSettings(game)
                 101 -> ChooseLanguageScreen(onNext = {step = 10})
-                102 -> ThemeChoosingScreen(onPrevious = {step = 10})
+                102 -> ThemeChoosingScreen()
             }
         }
     }
@@ -167,7 +134,8 @@ fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, remove: () -> Uni
 }
 
 @Composable
-fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamManager() }, onNext: () -> Unit = {}) {
+fun TeamSelect(game: Game = remember { Game() }) {
+    val tm = game.teamManager
 
     AliasTheme {
         Column(
@@ -203,7 +171,7 @@ fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamM
                 }
             }
             AliasButton(
-                onClick = onNext
+                onClick = {step = 1}
             ) {
                 Text(text = stringResource(R.string.continue_button))
             }
@@ -212,7 +180,7 @@ fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamM
 }
 
 @Composable
-fun ThemeChoosingScreen(modifier: Modifier = Modifier, onPrevious: () -> Unit = {}) {
+fun ThemeChoosingScreen(modifier: Modifier = Modifier) {
     AliasTheme {
         Column(
             modifier = Modifier
@@ -220,7 +188,7 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier, onPrevious: () -> Unit = 
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            AliasButton(onClick = onPrevious) {
+            AliasButton(onClick = {step = 10}) {
                 Icon(AliasIcon.Back, null)
             }
             Text(stringResource(R.string.theme))
@@ -231,12 +199,7 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier, onPrevious: () -> Unit = 
 }
 
 @Composable
-fun AppSettings(
-    modifier: Modifier = Modifier,
-    onPrevious: () -> Unit = {},
-    onLanguageChange: () -> Unit = {},
-    onThemeChange: () -> Unit = {}
-) {
+fun AppSettings(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     AliasTheme {
@@ -247,7 +210,7 @@ fun AppSettings(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            AliasButton(onClick = onPrevious) {
+            AliasButton(onClick = {step = 1}) {
                 Icon(AliasIcon.Back, null)
             }
             Text(stringResource(R.string.settings))
@@ -262,7 +225,7 @@ fun AppSettings(
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(stringResource(R.string.language))
-                    AliasButton(onClick = onLanguageChange, colors = ButtonDefaults.secondaryColors()) {
+                    AliasButton(onClick = {step = 101}, colors = ButtonDefaults.secondaryColors()) {
                         Icon(AliasIcon.Forward, null)
                     }
                 }
@@ -273,7 +236,7 @@ fun AppSettings(
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(stringResource(R.string.choose_theme))
-                    AliasButton(onClick = onThemeChange, colors = ButtonDefaults.secondaryColors()) {
+                    AliasButton(onClick = {step = 102}, colors = ButtonDefaults.secondaryColors()) {
                         Icon(AliasIcon.Forward, null)
                     }
                 }
@@ -324,11 +287,10 @@ fun AppSettings(
 
 @Composable
 fun WordPacksSettings(
-    modifier: Modifier = Modifier,
-    onPrevious: () -> Unit = {},
-    selectedWordPacks: Set<WordPack> = mutableSetOf(),
-    onSelectionChange: (Set<WordPack>) -> Unit = {}
+    game: Game = remember { Game() },
+    modifier: Modifier = Modifier
 ){
+    val s = game.settings
 
     AliasTheme {
         Column(
@@ -338,7 +300,7 @@ fun WordPacksSettings(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            AliasButton(onClick = onPrevious) {
+            AliasButton(onClick = {step = 1}) {
                 Icon(AliasIcon.Back, null)
             }
             Text(stringResource(R.string.word_packs))
@@ -366,12 +328,9 @@ fun WordPacksSettings(
                         Text(description)
                     }
                     AliasCheckbox(
-                        checked = selectedWordPacks.contains(wordPack),
+                        checked = wordPack in s.wordPacks,
                         onCheckedChange = { checked ->
-                            val updatedSelection = selectedWordPacks.toMutableSet()
-                            if (checked) updatedSelection.add(wordPack)
-                            else updatedSelection.remove(wordPack)
-                            onSelectionChange(updatedSelection)
+                            if (checked) s.wordPacks += wordPack else s.wordPacks -= wordPack
                         }
                     )
                 } }
@@ -385,19 +344,9 @@ fun WordPacksSettings(
 
 @Composable
 fun GameSettings(
-    modifier: Modifier = Modifier,
-    tm: TeamManager = remember { TeamManager() },
-    onNext: () -> Unit = {},
-    onSettings: () -> Unit = {},
-    onTeamSelect: () -> Unit = {},
-    onWordPackSelect: () -> Unit = {},
-    selectedWordPacks: Set<WordPack> = emptySet(),
-    onStartGame: (GameSetting) -> Unit = {}
+    game: Game = remember { Game() }
 ) {
-    var roundLengthSliderPosition by remember { mutableFloatStateOf(60f) }
-    var wordsRequiredForWinningSliderPosition by remember { mutableFloatStateOf(100f) }
-    var lastWordSetting by remember { mutableStateOf(false) }
-    var skippedWordSetting by remember { mutableStateOf(true) }
+    val s = game.settings
 
     var showDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -453,14 +402,14 @@ fun GameSettings(
                 AliasButton(onClick = {showDialog = true}, colors = ButtonDefaults.secondaryColors()) {
                     Icon(AliasIcon.Reset, stringResource(R.string.reset))
                 }
-                AliasButton(onClick = onSettings, colors = ButtonDefaults.secondaryColors()) {
+                AliasButton(onClick = {step = 10}, colors = ButtonDefaults.secondaryColors()) {
                     Icon(AliasIcon.Settings, stringResource(R.string.settings))
                 }
             } }
             AliasButton(
                 modifier = Modifier
                     .fillMaxWidth(),
-                onClick = onWordPackSelect
+                onClick = {step = 11}
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth()
@@ -469,10 +418,10 @@ fun GameSettings(
                         horizontalAlignment = Alignment.Start
                     ){
                         Text(stringResource(R.string.word_packs))
-                        if (selectedWordPacks.isEmpty())
+                        if (s.wordPacks.isEmpty())
                             Text(stringResource(R.string.choose_word_packs))
                         else
-                            Text(stringResource(R.string.selected_word_packs, selectedWordPacks.size))
+                            Text(stringResource(R.string.selected_word_packs, s.wordPacks.size))
                     }
                     Column (
                         verticalArrangement = Arrangement.Center
@@ -488,7 +437,7 @@ fun GameSettings(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
                     Text(stringResource(R.string.teams))
-                    AliasButton(onClick = onTeamSelect) {
+                    AliasButton(onClick = {step = 0}) {
                         Text(stringResource(R.string.edit))
                     }
                 }
@@ -498,7 +447,7 @@ fun GameSettings(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
 
                 ){
-                    tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
+                    s.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
                 }
             }
             Column(
@@ -507,19 +456,19 @@ fun GameSettings(
             ){
                 Text(stringResource(R.string.round_length))
                 AliasSlider(
-                    value = roundLengthSliderPosition,
-                    onValueChange = {roundLengthSliderPosition = it},
+                    value = s.timePerRound.toFloat(),
+                    onValueChange = {s.timePerRound = it.roundToInt()},
                     steps = 6,
                     valueRange = 30f..240f)
-                Text(stringResource(R.string.seconds_short, roundLengthSliderPosition.toInt()))
+                Text(stringResource(R.string.seconds_short, s.timePerRound))
 
                 Text(stringResource(R.string.words_to_win))
                 AliasSlider(
-                    value = wordsRequiredForWinningSliderPosition,
-                    onValueChange = {wordsRequiredForWinningSliderPosition = it},
+                    value = s.wordsWinCondition.toFloat(),
+                    onValueChange = {s.wordsWinCondition = it.roundToInt()},
                     steps = 8,
                     valueRange = 25f..250f)
-                Text(pluralStringResource(R.plurals.words_count, wordsRequiredForWinningSliderPosition.toInt(), wordsRequiredForWinningSliderPosition.toInt()))
+                Text(pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition))
             }
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -541,7 +490,7 @@ fun GameSettings(
                             Text(stringResource(R.string.last_word))
                             Text(stringResource(R.string.last_word_description))
                         }
-                        AliasSwitch(checked = lastWordSetting, onCheckedChange = {lastWordSetting = it})
+                        AliasSwitch(checked = s.lastWordCanBeGuessed, onCheckedChange = {s.lastWordCanBeGuessed = it})
                     } }
                     HorizontalDivider(thickness = 2.dp)
                     Panel(Modifier.padding(horizontal = 30.dp)) { Row(
@@ -552,7 +501,7 @@ fun GameSettings(
                             Text(stringResource(R.string.skipped_word))
                             Text(stringResource(R.string.skipped_word_description))
                         }
-                        AliasSwitch(checked = skippedWordSetting, onCheckedChange = {skippedWordSetting = it})
+                        AliasSwitch(checked = s.skippedWordSubtractsPoints, onCheckedChange = {s.skippedWordSubtractsPoints = it})
                     } }
                 }
             }
@@ -562,18 +511,11 @@ fun GameSettings(
                 Text(errorLabel, color = MaterialTheme.colorScheme.error)
             AliasButton(
                 onClick = {
-                    val gameSetting = GameSetting(
-                        lastWordCanBeGuessed = lastWordSetting,
-                        skippedWordSubtractsPoints = skippedWordSetting,
-                        timePerRound = roundLengthSliderPosition.toInt(),
-                        tm = tm,
-                        wordPacks = selectedWordPacks.toList(),
-                        wordsWinCondition = wordsRequiredForWinningSliderPosition.toInt()
-                    )
-                    if (gameSetting.canStartUpGame())
-                        onStartGame(gameSetting)
-                    else {
-                        errorLabel = gameSetting.gameStartupCheck(context)
+                    if (s.canStartUpGame()) {
+                        game.start(s.wordPacks.flatMap { it.words(context.resources) })
+                        step = 2
+                    } else {
+                        errorLabel = s.gameStartupCheck(context)
                         errorVisible = true
                     }
                 }
@@ -587,16 +529,7 @@ fun GameSettings(
 @Composable
 fun PreRoundScreen(
     modifier: Modifier = Modifier,
-    game: Game = remember { Game(GameSetting(
-        wordPacks = mutableListOf(WordPack.pack1),
-        tm = TeamManager(),
-        timePerRound = 60,
-        wordsWinCondition = 100,
-        lastWordCanBeGuessed = false,
-        skippedWordSubtractsPoints = true
-    ), mutableListOf("a"))},
-    onNext: () -> Unit = {},
-    onPrevious: () -> Unit = {}
+    game: Game = remember { Game().apply { start(listOf("a")) } }
 ) {
     val t = game.gameOver()
 
@@ -633,7 +566,7 @@ fun PreRoundScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
                     Text(stringResource(R.string.standings))
-                    Text(stringResource(R.string.to_points, game.gameSetting.wordsWinCondition))
+                    Text(stringResource(R.string.to_points, game.settings.wordsWinCondition))
                 }
                 Column (
                     modifier = Modifier
@@ -641,11 +574,11 @@ fun PreRoundScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
 
                 ){
-                    game.gameSetting.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
+                    game.teamManager.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
                 }
                 AliasButton(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
-                    if (t == null) onNext()
-                    else onPrevious()
+                    if (t == null) { game.createRound(); step = 3 }
+                    else step = 1
                 }) {
                     if (t != null)Text(stringResource(R.string.start_round))
                     else Text(stringResource(R.string.back_to_menu))
@@ -694,19 +627,9 @@ fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinis
 
 @Composable @Preview
 fun RoundScreen(
-    round: Round = Round(
-        gameSetting = GameSetting(
-            wordPacks = mutableListOf(WordPack.pack1),
-            tm = TeamManager(),
-            timePerRound = 60,
-            wordsWinCondition = 100,
-            lastWordCanBeGuessed = false,
-            skippedWordSubtractsPoints = true
-        ),
-        words = mutableListOf("a"),
-        currentTeam = Team()),
-    onNext: () -> Unit = {}
+    game: Game = remember { Game().apply { start(listOf("a")); createRound() } }
 ) {
+    val round = game.currentRound ?: return
 
     @Composable
     fun WordCard(word: String = "word", counter: Int = 0) {
@@ -756,7 +679,7 @@ fun RoundScreen(
                 AliasButton({
                     round.skipped()
                     if(!isRunning) {
-                        onNext()
+                        step = 4
                         round.end()
                     }
                 }) {
@@ -769,7 +692,7 @@ fun RoundScreen(
                     } else round.guessed()
                     if(!isRunning) {
                         round.end()
-                        onNext()
+                        step = 4
                     }
                 }) {
                     Text(stringResource(R.string.guessed))
@@ -801,15 +724,7 @@ fun RoundScreen(
 
 @Composable @Preview
 fun PostRoundScreen(
-    game: Game = remember { Game(GameSetting(
-        wordPacks = mutableListOf(WordPack.pack1),
-        tm = TeamManager(),
-        timePerRound = 60,
-        wordsWinCondition = 100,
-        lastWordCanBeGuessed = false,
-        skippedWordSubtractsPoints = true
-    ), mutableListOf("a"))},
-    onNext: () -> Unit = {}
+    game: Game = remember { Game() }
 ) {
 
     AliasTheme {
@@ -864,7 +779,7 @@ fun PostRoundScreen(
                     }
                     AliasButton({
                         game.endRound()
-                        onNext()
+                        step = 2
                     }) {
                         Text(stringResource(R.string.next))
                     }

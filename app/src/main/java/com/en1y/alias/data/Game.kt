@@ -1,25 +1,32 @@
 package com.en1y.alias.data
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 
-class Game(
-    val gameSetting: GameSetting,
-    val words: List<String>
-) {
-    val teamManager get() = gameSetting.tm
-    // snapshot once: a getter would return a fresh copy on every access, so rotating it did nothing
-    val teamsOrder = teamManager.teams.toMutableList()
+class Game : ViewModel() { // ViewModel lets the game survive activity recreate
+    val settings = GameSetting()
+    val teamManager get() = settings.tm
 
-    var currentRound: Round? = null
+    private var words: List<String> = emptyList()
+    private var teamsOrder = mutableListOf<Team>()
+
+    var currentRound by mutableStateOf<Round?>(null)
         private set
+
+    fun start(words: List<String>) {
+        this.words = words
+        teamsOrder = teamManager.teams.toMutableList()
+        currentRound = null
+    }
 
     fun getCurrentTeam(): Team = teamsOrder[0]
 
     fun createRound(): Round {
         val round = Round(
             words = words,
-            gameSetting = gameSetting,
+            gameSetting = settings,
             currentTeam = getCurrentTeam()
         )
         currentRound = round
@@ -35,11 +42,11 @@ class Game(
         val points = mutableListOf<Int>()
         val rounds = mutableSetOf<Int>()
         teamsOrder.forEach { points.add(it.points); rounds.add(it.roundNum) }
-        if (rounds.size != 1) return null // not everyone has played the same number of rounds yet
+        if (rounds.size != 1) return null
 
         val max = points.max()
-        if (max < gameSetting.wordsWinCondition) return null
-        if (points.count { it == max } > 1) return null // tie: play another round
+        if (max < settings.wordsWinCondition) return null
+        if (points.count { it == max } > 1) return null
         return teamsOrder[points.indexOf(max)]
     }
 
@@ -49,13 +56,5 @@ class Game(
         var min = Int.MAX_VALUE
         rounds.forEach { min = Math.min(min, it) }
         return min + 1
-    }
-}
-
-@Composable
-fun rememberGame(gameSetting: GameSetting): Game {
-    val words = gameSetting.wordPacks.flatMap { it.words }
-    return remember(gameSetting, words) {
-        Game(gameSetting = gameSetting, words = words)
     }
 }
