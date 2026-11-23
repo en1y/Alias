@@ -56,7 +56,6 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
@@ -182,27 +181,31 @@ fun AliasTheme(
 /** Root column of every screen. Top padding leaves room for the camera/status bar. */
 fun Modifier.screen() = fillMaxSize().padding(16.dp).padding(top = 30.dp)
 
-/** Scrolls vertically and draws a thin scrollbar. Color defaults to the current text color. */
+/** Scrolls vertically and draws a thin scrollbar that fades while idle. Color defaults to the current text color. */
 @Composable
 fun Modifier.verticalScrollWithBar(
     state: ScrollState = rememberScrollState(),
     color: Color = LocalContentColor.current,
-    width: Dp = 4.dp,
-) = drawWithContent {
-    drawContent()
-    if (state.maxValue == 0) return@drawWithContent // content fits, no scrollbar
-    val w = width.toPx()
-    val barHeight = size.height * size.height / (size.height + state.maxValue)
-    val y = state.value.toFloat() / state.maxValue * (size.height - barHeight)
-    drawRoundRect(color, Offset(size.width - w, y), Size(w, barHeight), CornerRadius(w / 2))
-}.verticalScroll(state)
+    width: Dp = 3.dp,
+): Modifier {
+    val alpha by animateFloatAsState(if (state.isScrollInProgress) 0.8f else 0.3f, label = "scrollbarAlpha")
+    return drawWithContent {
+        drawContent()
+        if (state.maxValue == 0) return@drawWithContent // content fits, no scrollbar
+        val w = width.toPx()
+        val barHeight = (size.height * size.height / (size.height + state.maxValue)).coerceAtLeast(24.dp.toPx())
+        val y = state.value.toFloat() / state.maxValue * (size.height - barHeight)
+        // ponytail: drawn 6dp outside the right edge, in the screen padding, so it never covers content; callers need ~10dp free there
+        drawRoundRect(color, Offset(size.width + 6.dp.toPx(), y), Size(w, barHeight), CornerRadius(w / 2), alpha = alpha)
+    }.verticalScroll(state)
+}
 
 /** A colored block (primary by default). Text/Icons inside automatically get the matching "on" color. */
 @Composable
 fun Panel(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.primary,
-    shape: Shape = RectangleShape,
+    shape: Shape = MaterialTheme.shapes.medium,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit
@@ -234,6 +237,7 @@ fun AliasButton(
     enabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     pressScale: Float = 0.95f,
+    shape: Shape = ButtonDefaults.shape,
     content: @Composable RowScope.() -> Unit
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -244,6 +248,7 @@ fun AliasButton(
         modifier = modifier.graphicsLayer { scaleX = scale; scaleY = scale },
         enabled = enabled,
         colors = colors,
+        shape = shape,
         interactionSource = interaction,
         content = content
     )

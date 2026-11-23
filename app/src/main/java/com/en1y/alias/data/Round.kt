@@ -14,7 +14,7 @@ class Round(
 ) {
     val roundWords = mutableStateMapOf<String, GuessStatus>()
     var currentWord by mutableStateOf(words.random())
-    var nextWord = generateWord()
+    var nextWord by mutableStateOf(generateWord())
     var counter by mutableIntStateOf(0)
     private var guessable = false;
 

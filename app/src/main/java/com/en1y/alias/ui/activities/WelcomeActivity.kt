@@ -1,11 +1,12 @@
 package com.en1y.alias.ui.activities
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -60,13 +61,12 @@ class WelcomeActivity : AppCompatActivity() {
                     Toast.makeText(this, R.string.press_back_again, Toast.LENGTH_SHORT).show()
                 }
             }
-            when (step) {
-                0 -> Greeting(onNext = {step = 1})
-                1 -> ChooseLanguageScreen(onNext = {
-                    startActivity(Intent(this, GameActivity::class.java))
-                    finish()
-                })
-            }
+            AliasTheme { Crossfade(step, animationSpec = tween(250), label = "step") { s ->
+                when (s) {
+                    0 -> Greeting(onNext = {step = 1})
+                    1 -> ChooseLanguageScreen(onNext = { switchTo(GameActivity::class.java) })
+                }
+            } }
         }
     }
 }

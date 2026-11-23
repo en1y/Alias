@@ -1,12 +1,11 @@
 package com.en1y.alias.ui.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import com.en1y.alias.ui.theme.AliasTheme
+import androidx.core.app.ActivityOptionsCompat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,15 +15,12 @@ class MainActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
 
-        if (!welcomed) {
-            startActivity(Intent(this, WelcomeActivity::class.java))
-            finish()
-            return
-        } else {
-            startActivity(Intent(this, GameActivity::class.java))
-            finish()
-            return
-        }
-
+        switchTo(if (welcomed) GameActivity::class.java else WelcomeActivity::class.java)
     }
+}
+
+/** Opens [target] and closes this activity with a short fade instead of the default slide. */
+fun Activity.switchTo(target: Class<out Activity>) {
+    startActivity(Intent(this, target), ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
+    finish()
 }

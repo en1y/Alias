@@ -8,19 +8,27 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
@@ -35,15 +43,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -71,6 +85,8 @@ import com.en1y.alias.data.Game
 import com.en1y.alias.data.Round
 import com.en1y.alias.data.WordPack
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -100,24 +116,27 @@ class GameActivity: AppCompatActivity(){
                 } else step--
             }
 
-            when (step) {
-                0 -> TeamSelect(game)
-                1 -> GameSettings(game)
-                2 -> PreRoundScreen(game = game)
-                3 -> RoundScreen(game)
-                4 -> PostRoundScreen(game)
-                10 -> AppSettings()
-                11 -> WordPacksSettings(game)
-                101 -> ChooseLanguageScreen(onNext = {step = 10})
-                102 -> ThemeChoosingScreen()
-            }
+            // AliasTheme paints the background behind the fade so the window color never shows through
+            AliasTheme { Crossfade(step, animationSpec = tween(250), label = "step") { s ->
+                when (s) {
+                    0 -> TeamSelect(game)
+                    1 -> GameSettings(game)
+                    2 -> PreRoundScreen(game = game)
+                    3 -> RoundScreen(game)
+                    4 -> PostRoundScreen(game)
+                    10 -> AppSettings()
+                    11 -> WordPacksSettings(game)
+                    101 -> ChooseLanguageScreen(onNext = {step = 10})
+                    102 -> ThemeChoosingScreen()
+                }
+            } }
         }
     }
 }
 
 @Composable
-fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, remove: () -> Unit = {}) {
-    Panel(color = MaterialTheme.colorScheme.secondary) { Row (
+fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, highlighted: Boolean = false, remove: () -> Unit = {}) {
+    Panel(color = if (highlighted) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary) { Row (
         modifier = Modifier
             .fillMaxWidth()
             .padding(15.dp),
@@ -174,6 +193,7 @@ fun TeamSelect(game: Game = remember { Game() }) {
                 }
             }
             AliasButton(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {step = 1}
             ) {
                 Text(text = stringResource(R.string.continue_button))
@@ -219,6 +239,7 @@ fun AppSettings(modifier: Modifier = Modifier) {
             Text(stringResource(R.string.settings))
 
             Panel(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -246,6 +267,7 @@ fun AppSettings(modifier: Modifier = Modifier) {
             }
             Text(stringResource(R.string.external_links))
             Panel(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -314,12 +336,14 @@ fun WordPacksSettings(
                 description: String,
                 words: List<String>
             ) {
-                Panel { Row(
+                Panel(Modifier.border(2.dp, if (wordPack in s.wordPacks) MaterialTheme.colorScheme.tertiary else Color.Transparent, MaterialTheme.shapes.medium).padding(16.dp)) { Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ){
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -404,7 +428,7 @@ fun GameSettings(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(modifier = Modifier.padding(end = 10.dp), text = stringResource(R.string.game_settings))
+                Text(modifier = Modifier.weight(1f), text = stringResource(R.string.game_settings))
                 AliasButton(onClick = {showDialog = true}, colors = ButtonDefaults.secondaryColors()) {
                     Icon(AliasIcon.Reset, stringResource(R.string.reset))
                 }
@@ -418,9 +442,11 @@ fun GameSettings(
                 onClick = {step = 11}
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column (
+                        modifier = Modifier.weight(1f),
                         horizontalAlignment = Alignment.Start
                     ){
                         Text(stringResource(R.string.word_packs))
@@ -429,14 +455,10 @@ fun GameSettings(
                         else
                             Text(stringResource(R.string.selected_word_packs, s.wordPacks.size))
                     }
-                    Column (
-                        verticalArrangement = Arrangement.Center
-                    ){
-                        Icon(AliasIcon.Forward, null)
-                    }
+                    Icon(AliasIcon.Forward, null)
                 }
             }
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -460,55 +482,61 @@ fun GameSettings(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text(stringResource(R.string.round_length))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(stringResource(R.string.round_length))
+                    Text(stringResource(R.string.seconds_short, s.timePerRound))
+                }
                 AliasSlider(
                     value = s.timePerRound.toFloat(),
                     onValueChange = {s.timePerRound = it.roundToInt()},
                     steps = 6,
                     valueRange = 30f..240f)
-                Text(stringResource(R.string.seconds_short, s.timePerRound))
 
-                Text(stringResource(R.string.words_to_win))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(stringResource(R.string.words_to_win))
+                    Text(pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition))
+                }
                 AliasSlider(
                     value = s.wordsWinCondition.toFloat(),
                     onValueChange = {s.wordsWinCondition = it.roundToInt()},
                     steps = 8,
                     valueRange = 25f..250f)
-                Text(pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition))
             }
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
                 Text(stringResource(R.string.rules))
-                Column(
+                Panel(
+                    modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ){
-                    Panel(Modifier.padding(horizontal = 30.dp)) { Row(
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ){
                         Column(
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxWidth()
                         ){
                             Text(stringResource(R.string.last_word))
                             Text(stringResource(R.string.last_word_description))
                         }
                         AliasSwitch(checked = s.lastWordCanBeGuessed, onCheckedChange = {s.lastWordCanBeGuessed = it})
-                    } }
-                    HorizontalDivider(thickness = 2.dp)
-                    Panel(Modifier.padding(horizontal = 30.dp)) { Row(
+                    }
+                    HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ){
-                        Column{
+                        Column(Modifier.weight(1f)){
                             Text(stringResource(R.string.skipped_word))
                             Text(stringResource(R.string.skipped_word_description))
                         }
                         AliasSwitch(checked = s.skippedWordSubtractsPoints, onCheckedChange = {s.skippedWordSubtractsPoints = it})
-                    } }
+                    }
                 }
             }
             var errorLabel by remember { mutableStateOf("") }
@@ -516,6 +544,7 @@ fun GameSettings(
             if (errorVisible)
                 Text(errorLabel, color = MaterialTheme.colorScheme.error)
             AliasButton(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     if (s.canStartUpGame()) {
                         game.start(s.wordPacks.flatMap { it.words(context.resources) })
@@ -537,6 +566,7 @@ fun PreRoundScreen(
     game: Game = remember { Game().apply { start(listOf("a")) } }
 ) {
     val t = game.gameOver()
+    val team: Team = remember { game.getCurrentTeam() }
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
 
@@ -579,11 +609,11 @@ fun PreRoundScreen(
             modifier = Modifier
                 .screen()
                 .verticalScrollWithBar(),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(20.dp), // SpaceBetween is a no-op inside a scroll
             horizontalAlignment = Alignment.Start
         ) {
-            Column {
-                Row {
+            Column(Modifier.fillMaxWidth(), Arrangement.spacedBy(8.dp), Alignment.CenterHorizontally) {
+                Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween, Alignment.CenterVertically) {
                     AliasButton({
                         showDialog = true
                     }) {
@@ -591,8 +621,6 @@ fun PreRoundScreen(
                     }
                     Text(stringResource(R.string.round_number, game.getRound()))
                 }
-                val team: Team = remember { game.getCurrentTeam() }
-
                 Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
 
                 if (t != null) {
@@ -603,7 +631,7 @@ fun PreRoundScreen(
                     Text(stringResource(R.string.hand_phone))
                 }
             }
-            Column{
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -617,7 +645,8 @@ fun PreRoundScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
 
                 ){
-                    game.teamManager.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
+                    // highlights the winner once the game is over, otherwise the team that plays next
+                    game.teamManager.teams.forEach { key(it) { TeamIcon(team = it, isRemovable = false, highlighted = it == (t ?: team))} }
                 }
                 AliasButton(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
                     if (t == null) { game.createRound(); step = 3 }
@@ -644,7 +673,7 @@ fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinis
         }
     }
 
-    Column {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "%d:%02d".format(remainingSeconds / 60, remainingSeconds % 60))
         val rawProgress = if (initialSeconds > 0) {
             remainingSeconds.toFloat() / initialSeconds.toFloat()
@@ -675,9 +704,13 @@ fun RoundScreen(
     val round = game.currentRound ?: return
 
     @Composable
-    fun WordCard(word: String = stringResource(R.string.word), counter: Int = 0) {
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly
+    fun WordCard(modifier: Modifier, word: String = stringResource(R.string.word), counter: Int = 0, color: Color = MaterialTheme.colorScheme.primary) {
+        // Box carries the drag/graphicsLayer modifiers so they move the card's background too
+        Box(modifier.fillMaxWidth(0.65f).aspectRatio(1.5f)) { Panel(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            color = color,
+            shape = RoundedCornerShape(20.dp),
+            verticalArrangement = Arrangement.SpaceBetween
         ){
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -686,11 +719,9 @@ fun RoundScreen(
                 Text(counter.toString())
                 Text(stringResource(R.string.guessed_hint))
             }
-            Text(word)
-            Row {
-                Text(stringResource(R.string.skipped_hint))
-            }
-        }
+            Text(word, Modifier.fillMaxWidth(), textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.skipped_hint), Modifier.align(Alignment.End))
+        } }
     }
 
     var isRunning by remember { mutableStateOf(false) }
@@ -705,54 +736,85 @@ fun RoundScreen(
         }
     }
 
+    // shared by the buttons and the card swipe
+    val skip: () -> Unit = { round.skipped(); if (!isRunning) { step = 4; round.end() } }
+    val guess: () -> Unit = {
+        if (!isRunning && round.gameSetting.lastWordCanBeGuessed) showLastWordGuessedByOtherTeams = true
+        else { round.guessed(); if (!isRunning) { round.end(); step = 4 } }
+    }
+
+    val drag = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
+    val scope = rememberCoroutineScope()
+    val limit = with(LocalDensity.current) { 120.dp.toPx() }
+    val progress = (drag.value.y / limit).coerceIn(-1f, 1f) // -1 = fully up (guessed), 1 = fully down (skipped)
+
     AliasTheme {
         Box {
         Column(
             modifier = Modifier.screen(),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Row {
+            Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
                 AliasButton({
                     showExit = true
                     isRunning = false
                 }) {
                     Icon(AliasIcon.Back, null)
                 }
-                Text(round.currentTeam.teamName)
+                Text(round.currentTeam.teamName, Modifier.weight(1f))
                 Text(stringResource(R.string.points_short, round.countPoints()))
             }
-            Row {
-                CountdownTimer(round.gameSetting.timePerRound, isRunning = isRunning, onFinish = {isRunning = false})
-            }
-            Column {
-                if (started && !isRunning)
-                    Text(stringResource(R.string.last_word))
-                if (started) WordCard(round.currentWord, round.counter) else WordCard()
-            }
-            Row {
-                AliasButton({
-                    round.skipped()
-                    if(!isRunning) {
-                        step = 4
-                        round.end()
-                    }
-                }) {
-                    Text(stringResource(R.string.skip))
+            CountdownTimer(round.gameSetting.timePerRound, isRunning = isRunning, onFinish = {isRunning = false})
+            if (started && !isRunning)
+                Text(stringResource(R.string.last_word), Modifier.align(Alignment.CenterHorizontally))
+            val c = MaterialTheme.aliasColors
+            Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                // next word waits underneath, grows into place while the top card is dragged, fades in when replaced
+                key(round.nextWord) {
+                    val appear = remember { Animatable(0f) }
+                    LaunchedEffect(Unit) { appear.animateTo(1f, tween(350)) }
+                    WordCard(Modifier.graphicsLayer {
+                        scaleX = 0.92f + 0.08f * abs(progress); scaleY = scaleX
+                        translationY = 12.dp.toPx() * (1 - abs(progress))
+                        alpha = appear.value
+                    }, if (started) round.nextWord else "", round.counter + 1)
                 }
-                Text(round.countPoints().toString())
-                AliasButton({
-                    if (!isRunning && round.gameSetting.lastWordCanBeGuessed) {
-                        showLastWordGuessedByOtherTeams = true
-                    } else {
-                        round.guessed()
-                        if(!isRunning) {
-                            round.end()
-                            step = 4
+                WordCard(
+                    Modifier
+                        .pointerInput(started) {
+                            if (started) detectDragGestures(
+                                onDragEnd = { scope.launch {
+                                    val v = drag.value
+                                    if (abs(v.y) > limit / 2) { // only the vertical part decides
+                                        drag.animateTo(v * (3 * limit / v.getDistance())) // fly off the way it was thrown
+                                        if (v.y < 0) guess() else skip()
+                                        drag.snapTo(Offset.Zero)
+                                    } else drag.animateTo(Offset.Zero)
+                                } },
+                                onDragCancel = { scope.launch { drag.animateTo(Offset.Zero) } }
+                            ) { change, amount -> change.consume(); scope.launch { drag.snapTo(drag.value + amount) } }
                         }
-                    }
-                }) {
-                    Text(stringResource(R.string.guessed))
+                        .graphicsLayer {
+                            translationX = drag.value.x
+                            translationY = drag.value.y
+                            rotationZ = drag.value.x / limit * 6f
+                            alpha = 1f - ((drag.value.getDistance() - 1.5f * limit) / limit).coerceIn(0f, 1f)
+                        },
+                    if (started) round.currentWord else stringResource(R.string.word),
+                    round.counter,
+                    lerp(MaterialTheme.colorScheme.primary, if (progress < 0) c.guessed else c.skipped, abs(progress) * 0.7f)
+                )
+            }
+            Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
+                AliasButton(skip, Modifier.weight(1f).height(64.dp), shape = RoundedCornerShape(18.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = c.skipped, contentColor = MaterialTheme.colorScheme.surface)) {
+                    Text(stringResource(R.string.skip), style = MaterialTheme.typography.titleMedium)
+                }
+                Text(round.countPoints().toString(), Modifier.widthIn(min = 48.dp), textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineMedium)
+                AliasButton(guess, Modifier.weight(1f).height(64.dp), shape = RoundedCornerShape(18.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = c.guessed, contentColor = MaterialTheme.colorScheme.surface)) {
+                    Text(stringResource(R.string.guessed), style = MaterialTheme.typography.titleMedium)
                 }
             }
         }
@@ -785,16 +847,16 @@ fun RoundScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
-                        Column {
+                        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Text(stringResource(R.string.choose_guessing_team))
                             var t: Team? by remember { mutableStateOf(round.currentTeam) }
                             game.teamManager.teams.forEach {
-                                Row {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
                                     AliasRadioButton(selected = t == it, onClick = { t = it })
                                     Text(it.teamName)
                                 }
                             }
-                            Row {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
                                 AliasRadioButton(selected = t == null, onClick = { t = null })
                                 Text(stringResource(R.string.no_team_guessed))
                             }
@@ -818,9 +880,9 @@ fun RoundScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
-                        Column {
+                        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Text(stringResource(R.string.end_round_confirm))
-                            Row {
+                            Row(Modifier.align(Alignment.End), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                 AliasButton({
                                     showExit = false
                                     isRunning = true
@@ -857,8 +919,8 @@ fun PostRoundScreen(
         ) {
             val round = game.currentRound
             if (round != null) {
-                Column {
-                    Row {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
                         AliasButton({}) {
                             Icon(AliasIcon.Back, null)
                         }
@@ -866,11 +928,11 @@ fun PostRoundScreen(
                             painter = round.currentTeam.teamImage,
                             contentDescription = stringResource(R.string.team_image_description, round.currentTeam.teamName)
                         )
-                        Text(round.currentTeam.teamName)
+                        Text(round.currentTeam.teamName, Modifier.weight(1f))
                         Text(stringResource(R.string.round_number, game.getRound()))
                     }
-                    Row {
-                        Column {
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
                             Text(stringResource(R.string.round_review))
                             Text(stringResource(R.string.review_guesses))
                         }
@@ -878,10 +940,10 @@ fun PostRoundScreen(
                         val points = round.countPoints()
                         Text("${if (points > 0) "+" else ""}$points")
                     }
-                    Column {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         round.roundWords.forEach { (string, status) ->
-                            Row {
-                                Text(string)
+                            Panel(Modifier.padding(start = 16.dp)) { Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                Text(string, Modifier.weight(1f))
                                 val c = MaterialTheme.aliasColors
                                 val idle = LocalContentColor.current
                                 IconButton({
@@ -893,14 +955,14 @@ fun PostRoundScreen(
                                 IconButton({
                                     round.updateByWord(string, Round.GuessStatus.Deleted)
                                 }) { Icon(AliasIcon.Delete, null, tint = if (status == Round.GuessStatus.Deleted) c.deleted else idle) }
-                            }
+                            } }
 
                         }
                     }
                     AliasButton({
                         game.endRound()
                         step = 2
-                    }) {
+                    }, Modifier.fillMaxWidth()) {
                         Text(stringResource(R.string.next))
                     }
                 }
