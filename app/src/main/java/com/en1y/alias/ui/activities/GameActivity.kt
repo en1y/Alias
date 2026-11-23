@@ -696,6 +696,14 @@ fun RoundScreen(
     var isRunning by remember { mutableStateOf(false) }
     var started by remember { mutableStateOf(false) }
     var showLastWordGuessedByOtherTeams by remember { mutableStateOf(false) }
+    var showExit by remember { mutableStateOf(false) }
+
+    BackHandler {
+        if (started && isRunning) {
+            showExit = true
+            isRunning = false
+        }
+    }
 
     AliasTheme {
         Box {
@@ -705,7 +713,10 @@ fun RoundScreen(
             horizontalAlignment = Alignment.Start
         ) {
             Row {
-                AliasButton({}) {
+                AliasButton({
+                    showExit = true
+                    isRunning = false
+                }) {
                     Icon(AliasIcon.Back, null)
                 }
                 Text(round.currentTeam.teamName)
@@ -793,6 +804,36 @@ fun RoundScreen(
                                 round.end()
                             }) {
                                 Text(stringResource(R.string.continue_button))
+                            }
+                        }
+                    }
+                }
+            }
+            if (showExit) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(Color.Black.copy(alpha = 0.6f))
+                        .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
+                    contentAlignment = Alignment.Center
+                ) {
+                    Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
+                        Column {
+                            Text("Are you sure you want to end the round?")
+                            Row {
+                                AliasButton({
+                                    showExit = false
+                                    isRunning = true
+                                }) {
+                                    Text("Cancel")
+                                }
+                                AliasButton({
+                                    round.end()
+                                    showExit = false
+                                    step = 4
+                                }) {
+                                    Text("Confirm")
+                                }
                             }
                         }
                     }
