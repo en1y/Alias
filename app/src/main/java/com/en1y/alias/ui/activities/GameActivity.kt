@@ -16,25 +16,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -61,7 +51,21 @@ import androidx.compose.ui.window.Popup
 import com.en1y.alias.R
 import com.en1y.alias.data.Team
 import com.en1y.alias.manager.TeamManager
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.en1y.alias.ui.theme.AliasIcon
+import com.en1y.alias.ui.theme.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import com.en1y.alias.ui.theme.AliasButton
+import com.en1y.alias.ui.theme.AliasCheckbox
+import com.en1y.alias.ui.theme.AliasSlider
+import com.en1y.alias.ui.theme.AliasSwitch
 import com.en1y.alias.ui.theme.AliasTheme
+import com.en1y.alias.ui.theme.Panel
+import com.en1y.alias.ui.theme.aliasColors
+import com.en1y.alias.ui.theme.screen
+import com.en1y.alias.ui.theme.secondaryColors
+import com.en1y.alias.ui.theme.verticalScrollWithBar
 import androidx.core.net.toUri
 import com.en1y.alias.data.Game
 import com.en1y.alias.data.GameSetting
@@ -144,57 +148,42 @@ class GameActivity: AppCompatActivity(){
 
 @Composable
 fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, remove: () -> Unit = {}) {
-    Row (
+    Panel(color = MaterialTheme.colorScheme.secondary) { Row (
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.secondary)
             .padding(15.dp),
         horizontalArrangement = Arrangement.spacedBy(22.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically
     )
     {
         Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
-        Text(modifier = Modifier.weight(1f),
-            text = team.teamName,
-            color = MaterialTheme.colorScheme.onSecondary)
-        Text(text = "%d".format(team.points), color = MaterialTheme.colorScheme.onSecondary)
+        Text(modifier = Modifier.weight(1f), text = team.teamName)
+        Text(text = "%d".format(team.points))
         if (isRemovable)
-            Button(
-                onClick = remove,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                )){
-                Text("x")
+            IconButton(onClick = remove) {
+                Icon(AliasIcon.Close, stringResource(R.string.remove_team))
             }
-    }
+    } }
 }
 
 @Composable
 fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamManager() }, onNext: () -> Unit = {}) {
-    val scrollState = rememberScrollState()
 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp),
+                .screen(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.teams), color = MaterialTheme.colorScheme.onBackground)
-            Text(stringResource(R.string.teams_description), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.teams))
+            Text(stringResource(R.string.teams_description))
 
-            Column(
+            Panel(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primary)
-                    .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onPrimary)
-                    .padding(all = 16.dp)
-                    .verticalScroll(scrollState),
+                    .verticalScrollWithBar()
+                    .padding(all = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -204,29 +193,17 @@ fun TeamSelect(modifier: Modifier = Modifier, tm: TeamManager = remember { TeamM
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally)
             ) {
-                Button(
-                    onClick = {tm.removeTeam()},
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )) {
+                AliasButton(
+                    onClick = {tm.removeTeam()}) {
                     Text(stringResource(R.string.remove_team))
                 }
-                Button(
-                    onClick = {tm.addTeam()},
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )) {
+                AliasButton(
+                    onClick = {tm.addTeam()}) {
                     Text(stringResource(R.string.add_team))
                 }
             }
-            Button(
-                onClick = onNext,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                )
+            AliasButton(
+                onClick = onNext
             ) {
                 Text(text = stringResource(R.string.continue_button))
             }
@@ -239,21 +216,15 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier, onPrevious: () -> Unit = 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp),
+                .screen(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Button(onClick = onPrevious, colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )) {
-                Text("<")
+            AliasButton(onClick = onPrevious) {
+                Icon(AliasIcon.Back, null)
             }
-            Text(stringResource(R.string.theme), color = MaterialTheme.colorScheme.onBackground)
-            Text(stringResource(R.string.theme_description), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.theme))
+            Text(stringResource(R.string.theme_description))
             // TODO: Implement theme color changing
         }
     }
@@ -266,33 +237,22 @@ fun AppSettings(
     onLanguageChange: () -> Unit = {},
     onThemeChange: () -> Unit = {}
 ) {
-    val scrollState = rememberScrollState()
     val context = LocalContext.current
 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
-                .verticalScroll(scrollState)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp),
+                .screen()
+                .verticalScrollWithBar(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Button(onClick = onPrevious, colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )) {
-                Text("<")
+            AliasButton(onClick = onPrevious) {
+                Icon(AliasIcon.Back, null)
             }
-            Text(stringResource(R.string.settings), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.settings))
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary),
+            Panel(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -301,32 +261,25 @@ fun AppSettings(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text(stringResource(R.string.language), color = MaterialTheme.colorScheme.onPrimary)
-                    Button(onClick = onLanguageChange, colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary)) {
-                        Text(">")
+                    Text(stringResource(R.string.language))
+                    AliasButton(onClick = onLanguageChange, colors = ButtonDefaults.secondaryColors()) {
+                        Icon(AliasIcon.Forward, null)
                     }
                 }
-                HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
+                HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text(stringResource(R.string.choose_theme), color = MaterialTheme.colorScheme.onPrimary)
-                    Button(onClick = onThemeChange, colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary)) {
-                        Text(">")
+                    Text(stringResource(R.string.choose_theme))
+                    AliasButton(onClick = onThemeChange, colors = ButtonDefaults.secondaryColors()) {
+                        Icon(AliasIcon.Forward, null)
                     }
                 }
             }
-            Text(stringResource(R.string.external_links), color = MaterialTheme.colorScheme.onBackground)
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary),
+            Text(stringResource(R.string.external_links))
+            Panel(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -335,36 +288,32 @@ fun AppSettings(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text(stringResource(R.string.github_page), color = MaterialTheme.colorScheme.onPrimary)
-                    Button(onClick = {
+                    Text(stringResource(R.string.github_page))
+                    AliasButton(onClick = {
                         val urlIntent = Intent(
                             Intent.ACTION_VIEW,
                             "https://github.com/en1y/Alias".toUri()
                         )
                         context.startActivity(urlIntent)
-                    }, colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary)) {
-                        Text(">")
+                    }, colors = ButtonDefaults.secondaryColors()) {
+                        Icon(AliasIcon.Forward, null)
                     }
                 }
-                HorizontalDivider(thickness = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
+                HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text(stringResource(R.string.creator_page), color = MaterialTheme.colorScheme.onPrimary)
-                    Button(onClick = {
+                    Text(stringResource(R.string.creator_page))
+                    AliasButton(onClick = {
                         val urlIntent = Intent(
                             Intent.ACTION_VIEW,
                             ("https://github.com/en1y").toUri()
                         )
                         context.startActivity(urlIntent)
-                    }, colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary)) {
-                        Text(">")
+                    }, colors = ButtonDefaults.secondaryColors()) {
+                        Icon(AliasIcon.Forward, null)
                     }
                 }
             }
@@ -380,38 +329,28 @@ fun WordPacksSettings(
     selectedWordPacks: Set<WordPack> = mutableSetOf(),
     onSelectionChange: (Set<WordPack>) -> Unit = {}
 ){
-    val scrollState = rememberScrollState()
 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp)
-                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
-                .verticalScroll(scrollState),
+                .screen()
+                .verticalScrollWithBar(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Button(onClick = onPrevious, colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )) {
-                Text("<")
+            AliasButton(onClick = onPrevious) {
+                Icon(AliasIcon.Back, null)
             }
-            Text(stringResource(R.string.word_packs), color = MaterialTheme.colorScheme.onBackground)
-            Text(stringResource(R.string.word_packs_description), color = MaterialTheme.colorScheme.onBackground)
+            Text(stringResource(R.string.word_packs))
+            Text(stringResource(R.string.word_packs_description))
             @Composable fun WordPackElement(
                 wordPack: WordPack,
                 name: String,
                 description: String,
                 words: List<String>
             ) {
-                Row(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.primary)
-                        .fillMaxWidth(),
+                Panel { Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
@@ -421,12 +360,12 @@ fun WordPacksSettings(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ){
-                            Text(name, color = MaterialTheme.colorScheme.onPrimary)
-                            Text(pluralStringResource(R.plurals.words_count, words.size, words.size), color = MaterialTheme.colorScheme.onPrimary)
+                            Text(name)
+                            Text(pluralStringResource(R.plurals.words_count, words.size, words.size))
                         }
-                        Text(description, color = MaterialTheme.colorScheme.onPrimary)
+                        Text(description)
                     }
-                    Checkbox(
+                    AliasCheckbox(
                         checked = selectedWordPacks.contains(wordPack),
                         onCheckedChange = { checked ->
                             val updatedSelection = selectedWordPacks.toMutableSet()
@@ -435,7 +374,7 @@ fun WordPacksSettings(
                             onSelectionChange(updatedSelection)
                         }
                     )
-                }
+                } }
             }
             WordPack.entries.forEach {
                 WordPackElement(it, it.title, it.description, it.words)
@@ -470,22 +409,21 @@ fun GameSettings(
                 onDismissRequest = { showDialog = false }
             ) {
                 Surface(
-                    shape = RoundedCornerShape(12.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.tertiary,
                     shadowElevation = 6.dp
                 ) {
                     Column(
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.tertiary)
-                            .padding(15.dp),
+                        modifier = Modifier.padding(15.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ){
                         Text(text = stringResource(R.string.new_game_title))
                         Text(text = stringResource(R.string.new_game_description))
-                        Button({}) {
+                        AliasButton({}) {
                             Text(stringResource(R.string.new_game))
                         }
-                        Button({showDialog = false}) {
+                        AliasButton({showDialog = false}) {
                             Text(stringResource(R.string.cancel))
                         }
                     }
@@ -495,56 +433,34 @@ fun GameSettings(
     }
 
 
-    val scrollState = rememberScrollState()
 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
-                .verticalScroll(scrollState)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp),
+                .screen()
+                .verticalScrollWithBar(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
+            Panel { Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary)
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(modifier = Modifier.padding(end = 10.dp), text = stringResource(R.string.game_settings), color = MaterialTheme.colorScheme.onBackground)
-                Button(
-                    onClick = {showDialog = true},
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary
-                    )
-                ) {
-                    Text(stringResource(R.string.reset))
+                Text(modifier = Modifier.padding(end = 10.dp), text = stringResource(R.string.game_settings))
+                AliasButton(onClick = {showDialog = true}, colors = ButtonDefaults.secondaryColors()) {
+                    Icon(AliasIcon.Reset, stringResource(R.string.reset))
                 }
-                Button(
-                    onClick = onSettings,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary
-                    )
-                ) {
-                    Text(stringResource(R.string.settings))
+                AliasButton(onClick = onSettings, colors = ButtonDefaults.secondaryColors()) {
+                    Icon(AliasIcon.Settings, stringResource(R.string.settings))
                 }
-            }
-            Button(
+            } }
+            AliasButton(
                 modifier = Modifier
                     .fillMaxWidth(),
-                onClick = onWordPackSelect,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                onClick = onWordPackSelect
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth()
@@ -561,7 +477,7 @@ fun GameSettings(
                     Column (
                         verticalArrangement = Arrangement.Center
                     ){
-                        Text(">")
+                        Icon(AliasIcon.Forward, null)
                     }
                 }
             }
@@ -571,8 +487,8 @@ fun GameSettings(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Text(stringResource(R.string.teams), color = MaterialTheme.colorScheme.onBackground)
-                    Button(onClick = onTeamSelect) {
+                    Text(stringResource(R.string.teams))
+                    AliasButton(onClick = onTeamSelect) {
                         Text(stringResource(R.string.edit))
                     }
                 }
@@ -589,47 +505,32 @@ fun GameSettings(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text(stringResource(R.string.round_length), color = MaterialTheme.colorScheme.onBackground)
-                Slider(
-                    modifier = Modifier.padding(horizontal = 10.dp),
+                Text(stringResource(R.string.round_length))
+                AliasSlider(
                     value = roundLengthSliderPosition,
                     onValueChange = {roundLengthSliderPosition = it},
-                    colors = SliderDefaults.colors(
-                        thumbColor = MaterialTheme.colorScheme.secondary,
-                        activeTrackColor = MaterialTheme.colorScheme.secondary,
-                        inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer
-                    ),
                     steps = 6,
                     valueRange = 30f..240f)
-                Text(stringResource(R.string.seconds_short, roundLengthSliderPosition.toInt()), color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(R.string.seconds_short, roundLengthSliderPosition.toInt()))
 
-                Text(stringResource(R.string.words_to_win), color = MaterialTheme.colorScheme.onBackground)
-                Slider(
-                    modifier = Modifier.padding(horizontal = 10.dp),
+                Text(stringResource(R.string.words_to_win))
+                AliasSlider(
                     value = wordsRequiredForWinningSliderPosition,
                     onValueChange = {wordsRequiredForWinningSliderPosition = it},
-                    colors = SliderDefaults.colors(
-                        thumbColor = MaterialTheme.colorScheme.secondary,
-                        activeTrackColor = MaterialTheme.colorScheme.secondary,
-                        inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer
-                    ),
                     steps = 8,
                     valueRange = 25f..250f)
-                Text(pluralStringResource(R.plurals.words_count, wordsRequiredForWinningSliderPosition.toInt(), wordsRequiredForWinningSliderPosition.toInt()), color = MaterialTheme.colorScheme.onBackground)
+                Text(pluralStringResource(R.plurals.words_count, wordsRequiredForWinningSliderPosition.toInt(), wordsRequiredForWinningSliderPosition.toInt()))
             }
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text(stringResource(R.string.rules), color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(R.string.rules))
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ){
-                    Row(
-                        modifier = Modifier
-                            .padding(horizontal = 30.dp)
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primary),
+                    Panel(Modifier.padding(horizontal = 30.dp)) { Row(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Column(
@@ -637,32 +538,29 @@ fun GameSettings(
                                 .weight(1f)
                                 .fillMaxWidth()
                         ){
-                            Text(stringResource(R.string.last_word), color = MaterialTheme.colorScheme.onPrimary)
-                            Text(stringResource(R.string.last_word_description), color = MaterialTheme.colorScheme.onPrimary)
+                            Text(stringResource(R.string.last_word))
+                            Text(stringResource(R.string.last_word_description))
                         }
-                        Switch(checked = lastWordSetting, onCheckedChange = {lastWordSetting = it})
-                    }
+                        AliasSwitch(checked = lastWordSetting, onCheckedChange = {lastWordSetting = it})
+                    } }
                     HorizontalDivider(thickness = 2.dp)
-                    Row(
-                        modifier = Modifier
-                            .padding(horizontal = 30.dp)
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primary),
+                    Panel(Modifier.padding(horizontal = 30.dp)) { Row(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Column{
-                            Text(stringResource(R.string.skipped_word), color = MaterialTheme.colorScheme.onPrimary)
-                            Text(stringResource(R.string.skipped_word_description), color = MaterialTheme.colorScheme.onPrimary)
+                            Text(stringResource(R.string.skipped_word))
+                            Text(stringResource(R.string.skipped_word_description))
                         }
-                        Switch(checked = skippedWordSetting, onCheckedChange = {skippedWordSetting = it})
-                    }
+                        AliasSwitch(checked = skippedWordSetting, onCheckedChange = {skippedWordSetting = it})
+                    } }
                 }
             }
             var errorLabel by remember { mutableStateOf("") }
             var errorVisible by remember { mutableStateOf(false) }
             if (errorVisible)
-                Text(errorLabel, color = Color.Red)
-            Button(
+                Text(errorLabel, color = MaterialTheme.colorScheme.error)
+            AliasButton(
                 onClick = {
                     val gameSetting = GameSetting(
                         lastWordCanBeGuessed = lastWordSetting,
@@ -678,11 +576,7 @@ fun GameSettings(
                         errorLabel = gameSetting.gameStartupCheck(context)
                         errorVisible = true
                     }
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                }
             ) {
                 Text(text = stringResource(R.string.start_game))
             }
@@ -704,24 +598,19 @@ fun PreRoundScreen(
     onNext: () -> Unit = {},
     onPrevious: () -> Unit = {}
 ) {
-    val scrollState = rememberScrollState()
     val t = game.gameOver()
 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp)
-                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
-                .verticalScroll(scrollState),
+                .screen()
+                .verticalScrollWithBar(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
             Column {
                 Row {
-                    Button({}) {
+                    AliasButton({}) {
                         Text(stringResource(R.string.end_game))
                     }
                     Text(stringResource(R.string.round_number, game.getRound()))
@@ -754,7 +643,7 @@ fun PreRoundScreen(
                 ){
                     game.gameSetting.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false)} }
                 }
-                Button(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
+                AliasButton(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
                     if (t == null) onNext()
                     else onPrevious()
                 }) {
@@ -844,16 +733,13 @@ fun RoundScreen(
     AliasTheme { Box {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp),
+                .screen(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
             Row {
-                Button({}) {
-                    Text("<")
+                AliasButton({}) {
+                    Icon(AliasIcon.Back, null)
                 }
                 Text(round.currentTeam.teamName)
                 Text(stringResource(R.string.points_short, round.countPoints()))
@@ -867,7 +753,7 @@ fun RoundScreen(
                 if (started) WordCard(round.currentWord, round.counter) else WordCard()
             }
             Row {
-                Button({
+                AliasButton({
                     round.skipped()
                     if(!isRunning) {
                         onNext()
@@ -877,7 +763,7 @@ fun RoundScreen(
                     Text(stringResource(R.string.skip))
                 }
                 Text(round.countPoints().toString())
-                Button({
+                AliasButton({
                     if (!isRunning && round.gameSetting.lastWordCanBeGuessed) {
                         //TODO: handle last word can be guessed
                     } else round.guessed()
@@ -897,14 +783,14 @@ fun RoundScreen(
                 .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
             contentAlignment = Alignment.Center
         ) {
-            Surface(shape = RoundedCornerShape(12.dp), shadowElevation = 6.dp) {
+            Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
                 Column(
                     modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(stringResource(R.string.swipe_hint))
-                    Button({ started = true; isRunning = true; round.start()}) {
+                    AliasButton({ started = true; isRunning = true; round.start()}) {
                         Text(stringResource(R.string.start))
                     }
                 }
@@ -925,17 +811,12 @@ fun PostRoundScreen(
     ), mutableListOf("a"))},
     onNext: () -> Unit = {}
 ) {
-    val scrollState = rememberScrollState()
 
     AliasTheme {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(all = 16.dp)
-                .padding(top = 30.dp)
-                .verticalScrollbar(scrollState, MaterialTheme.colorScheme.onBackground)
-                .verticalScroll(scrollState),
+                .screen()
+                .verticalScrollWithBar(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
@@ -943,8 +824,8 @@ fun PostRoundScreen(
             if (round != null) {
                 Column {
                     Row {
-                        Button({}) {
-                            Text("<")
+                        AliasButton({}) {
+                            Icon(AliasIcon.Back, null)
                         }
                         Image(
                             painter = round.currentTeam.teamImage,
@@ -966,20 +847,22 @@ fun PostRoundScreen(
                         round.roundWords.forEach { (string, status) ->
                             Row {
                                 Text(string)
-                                TextButton({
-                                    round.roundWords[string] = Round.GuessStatus.Guessed
-                                }) { Text(text = "✓", modifier = Modifier.background(if (status == Round.GuessStatus.Guessed) Color.Green else Color.Transparent)) }
-                                TextButton({
-                                    round.roundWords[string] = Round.GuessStatus.Skipped
-                                }) { Text(text = "x", modifier = Modifier.background(if (status == Round.GuessStatus.Skipped) Color.Red else Color.Transparent)) }
-                                TextButton({
-                                    round.roundWords[string] = Round.GuessStatus.Deleted
-                                }) { Text(text = "\uD83D\uDDD1", modifier = Modifier.background(if (status == Round.GuessStatus.Deleted) Color.Gray else Color.Transparent)) }
+                                val c = MaterialTheme.aliasColors
+                                val idle = LocalContentColor.current
+                                IconButton({
+                                    round.updateByWord(string, Round.GuessStatus.Guessed)
+                                }) { Icon(AliasIcon.Check, stringResource(R.string.guessed), tint = if (status == Round.GuessStatus.Guessed) c.guessed else idle) }
+                                IconButton({
+                                    round.updateByWord(string, Round.GuessStatus.Skipped)
+                                }) { Icon(AliasIcon.Close, stringResource(R.string.skip), tint = if (status == Round.GuessStatus.Skipped) c.skipped else idle) }
+                                IconButton({
+                                    round.updateByWord(string, Round.GuessStatus.Deleted)
+                                }) { Icon(AliasIcon.Delete, null, tint = if (status == Round.GuessStatus.Deleted) c.deleted else idle) }
                             }
 
                         }
                     }
-                    Button({
+                    AliasButton({
                         game.endRound()
                         onNext()
                     }) {
