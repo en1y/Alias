@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlin.math.round
 
 class Game : ViewModel() { // ViewModel lets the game survive activity recreate
     val settings = GameSetting()
@@ -18,6 +19,16 @@ class Game : ViewModel() { // ViewModel lets the game survive activity recreate
     fun start(words: List<String>) {
         this.words = words
         teamsOrder = teamManager.teams.toMutableList()
+        currentRound = null
+    }
+
+    fun reset(words: List<String>) {
+        this.words = words
+        teamsOrder = teamManager.teams.toMutableList()
+        settings.tm.teams.forEach {
+            it.points = 0
+            it.roundNum = 0
+        }
         currentRound = null
     }
 

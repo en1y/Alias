@@ -94,6 +94,7 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Pular</string>
 	<string name="guessed">Acertou</string>
+	<string name="word">Palavra</string>
 	<string name="swipe_hint">Deslize para cima se acertou, para baixo para pular</string>
 	<string name="start">Começar</string>
 	<string name="round_review">Resumo da rodada</string>

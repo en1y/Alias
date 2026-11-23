@@ -95,6 +95,7 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Skip</string>
 	<string name="guessed">Guessed</string>
+	<string name="word">Word</string>
 	<string name="swipe_hint">Swipe up if guessed, swipe down to skip</string>
 	<string name="start">Start</string>
 	<string name="round_review">Round review</string>

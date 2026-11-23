@@ -94,6 +94,7 @@
 	<string name="points_short">%d pont</string>
 	<string name="skip">Kihagyás</string>
 	<string name="guessed">Kitalálva</string>
+	<string name="word">Szó</string>
 	<string name="swipe_hint">Húzd felfelé, ha kitaláltátok, lefelé a kihagyáshoz</string>
 	<string name="start">Indítás</string>
 	<string name="round_review">Kör összefoglalója</string>

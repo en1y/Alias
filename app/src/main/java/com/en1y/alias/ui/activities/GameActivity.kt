@@ -371,7 +371,10 @@ fun GameSettings(
                     ){
                         Text(text = stringResource(R.string.new_game_title))
                         Text(text = stringResource(R.string.new_game_description))
-                        AliasButton({}) {
+                        AliasButton({
+                            game.reset(s.wordPacks.flatMap { it.words(context.resources) })
+                            showDialog = false
+                        }) {
                             Text(stringResource(R.string.new_game))
                         }
                         AliasButton({showDialog = false}) {
@@ -533,6 +536,42 @@ fun PreRoundScreen(
     game: Game = remember { Game().apply { start(listOf("a")) } }
 ) {
     val t = game.gameOver()
+    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        AliasTheme {
+            Popup(
+                alignment = Alignment.Center,
+                onDismissRequest = { showDialog = false }
+            ) {
+                Surface(
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.tertiary,
+                    shadowElevation = 6.dp
+                ) {
+                    Column(
+                        modifier = Modifier.padding(15.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ){
+                        Text(text = stringResource(R.string.new_game_title))
+                        Text(text = stringResource(R.string.new_game_description))
+                        AliasButton({
+                            game.reset(game.settings.wordPacks.flatMap { it.words(context.resources) })
+                            showDialog = false
+                            step = 1
+                        }) {
+                            Text(stringResource(R.string.new_game))
+                        }
+                        AliasButton({showDialog = false}) {
+                            Text(stringResource(R.string.cancel))
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     AliasTheme {
         Column(
@@ -544,7 +583,9 @@ fun PreRoundScreen(
         ) {
             Column {
                 Row {
-                    AliasButton({}) {
+                    AliasButton({
+                        showDialog = true
+                    }) {
                         Text(stringResource(R.string.end_game))
                     }
                     Text(stringResource(R.string.round_number, game.getRound()))
@@ -581,7 +622,7 @@ fun PreRoundScreen(
                     if (t == null) { game.createRound(); step = 3 }
                     else step = 1
                 }) {
-                    if (t != null)Text(stringResource(R.string.start_round))
+                    if (t == null) Text(stringResource(R.string.start_round))
                     else Text(stringResource(R.string.back_to_menu))
                 }
             }
@@ -633,7 +674,7 @@ fun RoundScreen(
     val round = game.currentRound ?: return
 
     @Composable
-    fun WordCard(word: String = "word", counter: Int = 0) {
+    fun WordCard(word: String = stringResource(R.string.word), counter: Int = 0) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly
         ){

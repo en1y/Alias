@@ -94,6 +94,7 @@
 	<string name="points_short">%d pkt</string>
 	<string name="skip">Pomiń</string>
 	<string name="guessed">Odgadnięte</string>
+	<string name="word">Słowo</string>
 	<string name="swipe_hint">Przesuń w górę, jeśli odgadnięte, w dół, aby pominąć</string>
 	<string name="start">Start</string>
 	<string name="round_review">Podsumowanie rundy</string>

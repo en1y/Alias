@@ -94,6 +94,7 @@
 	<string name="points_short">%d bod.</string>
 	<string name="skip">Preskoči</string>
 	<string name="guessed">Pogođeno</string>
+	<string name="word">Riječ</string>
 	<string name="swipe_hint">Povucite gore ako je pogođeno, dolje za preskakanje</string>
 	<string name="start">Start</string>
 	<string name="round_review">Pregled runde</string>

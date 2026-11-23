@@ -94,6 +94,7 @@
 	<string name="points_short">%d puan</string>
 	<string name="skip">Geç</string>
 	<string name="guessed">Bildi</string>
+	<string name="word">Kelime</string>
 	<string name="swipe_hint">Bildiyseniz yukarı, geçmek için aşağı kaydırın</string>
 	<string name="start">Başla</string>
 	<string name="round_review">Tur özeti</string>

@@ -10,9 +10,7 @@ import com.en1y.alias.data.TeamInfo.Companion.random
 class Team {
     val info = random()
     var points by mutableIntStateOf(0)
-        private set
     var roundNum by mutableIntStateOf(0)
-        private set
 
     fun addPoints(pointsToAdd: Int) {
         points += pointsToAdd

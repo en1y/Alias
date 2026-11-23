@@ -94,6 +94,7 @@
 	<string name="points_short">%d b.</string>
 	<string name="skip">Přeskočit</string>
 	<string name="guessed">Uhodnuto</string>
+	<string name="word">Slovo</string>
 	<string name="swipe_hint">Přejeďte nahoru, pokud uhodnuto, dolů pro přeskočení</string>
 	<string name="start">Start</string>
 	<string name="round_review">Shrnutí kola</string>

@@ -94,6 +94,7 @@
 	<string name="points_short">%d πόντ.</string>
 	<string name="skip">Παράλειψη</string>
 	<string name="guessed">Βρέθηκε</string>
+	<string name="word">Λέξη</string>
 	<string name="swipe_hint">Σύρετε προς τα πάνω αν βρέθηκε, προς τα κάτω για παράλειψη</string>
 	<string name="start">Έναρξη</string>
 	<string name="round_review">Ανασκόπηση γύρου</string>

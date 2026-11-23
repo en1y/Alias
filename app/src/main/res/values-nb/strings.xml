@@ -94,6 +94,7 @@
 	<string name="points_short">%d p</string>
 	<string name="skip">Hopp over</string>
 	<string name="guessed">Gjettet</string>
+	<string name="word">Ord</string>
 	<string name="swipe_hint">Sveip opp hvis gjettet, ned for å hoppe over</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rundeoppsummering</string>

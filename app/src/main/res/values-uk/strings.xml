@@ -94,6 +94,7 @@
 	<string name="points_short">%d б.</string>
 	<string name="skip">Пропустити</string>
 	<string name="guessed">Вгадано</string>
+	<string name="word">Слово</string>
 	<string name="swipe_hint">Свайп угору — вгадано, вниз — пропустити</string>
 	<string name="start">Старт</string>
 	<string name="round_review">Підсумки раунду</string>

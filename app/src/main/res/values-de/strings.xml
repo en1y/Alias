@@ -94,6 +94,7 @@
 	<string name="points_short">%d Pkt.</string>
 	<string name="skip">Überspringen</string>
 	<string name="guessed">Erraten</string>
+	<string name="word">Wort</string>
 	<string name="swipe_hint">Wische nach oben, wenn erraten, nach unten zum Überspringen</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rundenrückblick</string>

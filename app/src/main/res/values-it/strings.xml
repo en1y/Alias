@@ -94,6 +94,7 @@
 	<string name="points_short">%d pt</string>
 	<string name="skip">Salta</string>
 	<string name="guessed">Indovinata</string>
+	<string name="word">Parola</string>
 	<string name="swipe_hint">Scorri in su se indovinata, in giù per saltare</string>
 	<string name="start">Inizia</string>
 	<string name="round_review">Riepilogo del round</string>

@@ -94,6 +94,7 @@
 	<string name="points_short">%d pct</string>
 	<string name="skip">Sari</string>
 	<string name="guessed">Ghicit</string>
+	<string name="word">Cuvânt</string>
 	<string name="swipe_hint">Glisează în sus dacă ai ghicit, în jos pentru a sări</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rezumatul rundei</string>

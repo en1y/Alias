@@ -94,6 +94,7 @@
 	<string name="points_short">%d ptn</string>
 	<string name="skip">Overslaan</string>
 	<string name="guessed">Geraden</string>
+	<string name="word">Woord</string>
 	<string name="swipe_hint">Veeg omhoog als geraden, omlaag om over te slaan</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rondeoverzicht</string>

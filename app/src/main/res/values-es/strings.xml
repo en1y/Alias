@@ -94,6 +94,7 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Saltar</string>
 	<string name="guessed">Adivinada</string>
+	<string name="word">Palabra</string>
 	<string name="swipe_hint">Desliza hacia arriba si la adivinaste, hacia abajo para saltar</string>
 	<string name="start">Empezar</string>
 	<string name="round_review">Resumen de la ronda</string>

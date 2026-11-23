@@ -94,6 +94,7 @@
 	<string name="points_short">%d poin</string>
 	<string name="skip">Lewati</string>
 	<string name="guessed">Tertebak</string>
+	<string name="word">Kata</string>
 	<string name="swipe_hint">Geser ke atas jika tertebak, ke bawah untuk melewati</string>
 	<string name="start">Mulai</string>
 	<string name="round_review">Ringkasan ronde</string>
