@@ -26,6 +26,9 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonColors
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderColors
@@ -285,3 +288,14 @@ fun AliasCheckbox(
         uncheckedColor = LocalContentColor.current,
     ),
 ) = Checkbox(checked, onCheckedChange, modifier, colors = colors)
+
+@Composable
+fun AliasRadioButton(
+    selected: Boolean,
+    onClick: (() -> Unit)?,
+    modifier: Modifier = Modifier,
+    colors: RadioButtonColors = RadioButtonDefaults.colors(
+        selectedColor = MaterialTheme.colorScheme.secondary,
+        unselectedColor = LocalContentColor.current,
+    ),
+) = RadioButton(selected, onClick, modifier, colors = colors)

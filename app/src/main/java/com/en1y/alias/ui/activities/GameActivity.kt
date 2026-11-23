@@ -54,8 +54,10 @@ import com.en1y.alias.ui.theme.AliasIcon
 import com.en1y.alias.ui.theme.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.RadioButton
 import com.en1y.alias.ui.theme.AliasButton
 import com.en1y.alias.ui.theme.AliasCheckbox
+import com.en1y.alias.ui.theme.AliasRadioButton
 import com.en1y.alias.ui.theme.AliasSlider
 import com.en1y.alias.ui.theme.AliasSwitch
 import com.en1y.alias.ui.theme.AliasTheme
@@ -528,7 +530,6 @@ fun GameSettings(
 
 @Composable
 fun PreRoundScreen(
-    modifier: Modifier = Modifier,
     game: Game = remember { Game().apply { start(listOf("a")) } }
 ) {
     val t = game.gameOver()
@@ -652,11 +653,12 @@ fun RoundScreen(
 
     var isRunning by remember { mutableStateOf(false) }
     var started by remember { mutableStateOf(false) }
+    var showLastWordGuessedByOtherTeams by remember { mutableStateOf(false) }
 
-    AliasTheme { Box {
+    AliasTheme {
+        Box {
         Column(
-            modifier = Modifier
-                .screen(),
+            modifier = Modifier.screen(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
@@ -688,11 +690,13 @@ fun RoundScreen(
                 Text(round.countPoints().toString())
                 AliasButton({
                     if (!isRunning && round.gameSetting.lastWordCanBeGuessed) {
-                        //TODO: handle last word can be guessed
-                    } else round.guessed()
-                    if(!isRunning) {
-                        round.end()
-                        step = 4
+                        showLastWordGuessedByOtherTeams = true
+                    } else {
+                        round.guessed()
+                        if(!isRunning) {
+                            round.end()
+                            step = 4
+                        }
                     }
                 }) {
                     Text(stringResource(R.string.guessed))
@@ -719,6 +723,39 @@ fun RoundScreen(
                 }
             }
         }
+            if (showLastWordGuessedByOtherTeams) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(Color.Black.copy(alpha = 0.6f))
+                        .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
+                    contentAlignment = Alignment.Center
+                ) {
+                    Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
+                        Column {
+                            Text("Choose the team who guessed")
+                            var t: Team? by remember { mutableStateOf(round.currentTeam) }
+                            game.teamManager.teams.forEach {
+                                Row {
+                                    AliasRadioButton(selected = t == it, onClick = { t = it })
+                                    Text(it.teamName)
+                                }
+                            }
+                            Row {
+                                AliasRadioButton(selected = t == null, onClick = { t = null })
+                                Text("No team guessed")
+                            }
+                            AliasButton({
+                                t?.addPoints(1)
+                                step = 4
+                                round.end()
+                            }) {
+                                Text(stringResource(R.string.continue_button))
+                            }
+                        }
+                    }
+                }
+            }
     } }
 }
 
