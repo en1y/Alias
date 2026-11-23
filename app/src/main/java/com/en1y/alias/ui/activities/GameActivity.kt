@@ -53,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.pointer.pointerInput
@@ -152,7 +153,7 @@ fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, highlighted: Bool
         verticalAlignment = Alignment.CenterVertically
     )
     {
-        Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
+        Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName), colorFilter = ColorFilter.tint(LocalContentColor.current))
         Text(modifier = Modifier.weight(1f), text = team.teamName)
         Text(text = "%d".format(team.points), style = MaterialTheme.typography.titleMedium)
         if (isRemovable)
@@ -651,6 +652,8 @@ fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinis
 
         LinearProgressIndicator(
             progress = { animatedProgress },
+            color = MaterialTheme.colorScheme.secondary,
+            trackColor = MaterialTheme.colorScheme.secondaryContainer,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp)
