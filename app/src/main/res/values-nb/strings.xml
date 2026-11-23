@@ -102,6 +102,10 @@
 	<string name="next">Neste</string>
 	<string name="game_error">Noe gikk galt, spillet gikk i stykker</string>
 	<string name="team_image_description">Bilde av lag %s</string>
+	<string name="choose_guessing_team">Velg laget som gjettet</string>
+	<string name="no_team_guessed">Ingen lag gjettet</string>
+	<string name="end_round_confirm">Er du sikker på at du vil avslutte runden?</string>
+	<string name="confirm">Bekreft</string>
 	<plurals name="words_count">
 		<item quantity="one">%d ord</item>
 		<item quantity="other">%d ord</item>

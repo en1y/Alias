@@ -102,6 +102,10 @@
 	<string name="next">Tovább</string>
 	<string name="game_error">Valami hiba történt, a játék elromlott</string>
 	<string name="team_image_description">A(z) %s csapat képe</string>
+	<string name="choose_guessing_team">Válaszd ki a csapatot, amelyik kitalálta</string>
+	<string name="no_team_guessed">Egyik csapat sem találta ki</string>
+	<string name="end_round_confirm">Biztosan be akarod fejezni a kört?</string>
+	<string name="confirm">Megerősítés</string>
 	<plurals name="words_count">
 		<item quantity="one">%d szó</item>
 		<item quantity="other">%d szó</item>

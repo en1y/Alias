@@ -102,6 +102,10 @@
 	<string name="next">Următorul</string>
 	<string name="game_error">Ceva n-a mers bine, jocul s-a stricat</string>
 	<string name="team_image_description">Imaginea echipei %s</string>
+	<string name="choose_guessing_team">Alege echipa care a ghicit</string>
+	<string name="no_team_guessed">Nicio echipă nu a ghicit</string>
+	<string name="end_round_confirm">Sigur vrei să închei runda?</string>
+	<string name="confirm">Confirmă</string>
 	<plurals name="words_count">
 		<item quantity="one">%d cuvânt</item>
 		<item quantity="few">%d cuvinte</item>

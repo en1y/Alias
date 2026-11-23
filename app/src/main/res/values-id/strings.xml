@@ -102,6 +102,10 @@
 	<string name="next">Berikutnya</string>
 	<string name="game_error">Terjadi kesalahan, permainan rusak</string>
 	<string name="team_image_description">Gambar tim %s</string>
+	<string name="choose_guessing_team">Pilih tim yang menebak</string>
+	<string name="no_team_guessed">Tidak ada tim yang menebak</string>
+	<string name="end_round_confirm">Kamu yakin ingin mengakhiri ronde?</string>
+	<string name="confirm">Konfirmasi</string>
 	<plurals name="words_count">
 		<item quantity="other">%d kata</item>
 	</plurals>

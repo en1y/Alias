@@ -103,6 +103,10 @@
 	<string name="next">Next</string>
 	<string name="game_error">Something went wrong, the game broke</string>
 	<string name="team_image_description">Team %s image</string>
+	<string name="choose_guessing_team">Choose the team who guessed</string>
+	<string name="no_team_guessed">No team guessed</string>
+	<string name="end_round_confirm">Are you sure you want to end the round?</string>
+	<string name="confirm">Confirm</string>
 	<plurals name="words_count">
 		<item quantity="one">%d word</item>
 		<item quantity="other">%d words</item>

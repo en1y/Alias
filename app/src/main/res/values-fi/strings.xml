@@ -102,6 +102,10 @@
 	<string name="next">Seuraava</string>
 	<string name="game_error">Jokin meni pieleen, peli hajosi</string>
 	<string name="team_image_description">Joukkueen %s kuva</string>
+	<string name="choose_guessing_team">Valitse joukkue, joka arvasi</string>
+	<string name="no_team_guessed">Mikään joukkue ei arvannut</string>
+	<string name="end_round_confirm">Haluatko varmasti lopettaa kierroksen?</string>
+	<string name="confirm">Vahvista</string>
 	<plurals name="words_count">
 		<item quantity="one">%d sana</item>
 		<item quantity="other">%d sanaa</item>

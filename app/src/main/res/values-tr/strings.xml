@@ -102,6 +102,10 @@
 	<string name="next">İleri</string>
 	<string name="game_error">Bir şeyler ters gitti, oyun bozuldu</string>
 	<string name="team_image_description">%s takımının resmi</string>
+	<string name="choose_guessing_team">Bilen takımı seç</string>
+	<string name="no_team_guessed">Hiçbir takım bilemedi</string>
+	<string name="end_round_confirm">Turu bitirmek istediğine emin misin?</string>
+	<string name="confirm">Onayla</string>
 	<plurals name="words_count">
 		<item quantity="one">%d kelime</item>
 		<item quantity="other">%d kelime</item>

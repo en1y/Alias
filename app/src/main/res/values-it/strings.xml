@@ -102,6 +102,10 @@
 	<string name="next">Avanti</string>
 	<string name="game_error">Qualcosa è andato storto, il gioco si è rotto</string>
 	<string name="team_image_description">Immagine della squadra %s</string>
+	<string name="choose_guessing_team">Scegli la squadra che ha indovinato</string>
+	<string name="no_team_guessed">Nessuna squadra ha indovinato</string>
+	<string name="end_round_confirm">Vuoi davvero terminare il round?</string>
+	<string name="confirm">Conferma</string>
 	<plurals name="words_count">
 		<item quantity="one">%d parola</item>
 		<item quantity="many">%d parole</item>

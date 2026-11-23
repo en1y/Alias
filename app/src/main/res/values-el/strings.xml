@@ -102,6 +102,10 @@
 	<string name="next">Επόμενο</string>
 	<string name="game_error">Κάτι πήγε στραβά, το παιχνίδι χάλασε</string>
 	<string name="team_image_description">Εικόνα της ομάδας %s</string>
+	<string name="choose_guessing_team">Επιλέξτε την ομάδα που μάντεψε</string>
+	<string name="no_team_guessed">Καμία ομάδα δεν μάντεψε</string>
+	<string name="end_round_confirm">Είστε σίγουροι ότι θέλετε να τερματίσετε τον γύρο;</string>
+	<string name="confirm">Επιβεβαίωση</string>
 	<plurals name="words_count">
 		<item quantity="one">%d λέξη</item>
 		<item quantity="other">%d λέξεις</item>

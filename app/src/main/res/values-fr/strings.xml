@@ -102,6 +102,10 @@
 	<string name="next">Suivant</string>
 	<string name="game_error">Un problème est survenu, le jeu a planté</string>
 	<string name="team_image_description">Image de l\'équipe %s</string>
+	<string name="choose_guessing_team">Choisis l\'équipe qui a deviné</string>
+	<string name="no_team_guessed">Aucune équipe n\'a deviné</string>
+	<string name="end_round_confirm">Veux-tu vraiment terminer la manche ?</string>
+	<string name="confirm">Confirmer</string>
 	<plurals name="words_count">
 		<item quantity="one">%d mot</item>
 		<item quantity="many">%d mots</item>

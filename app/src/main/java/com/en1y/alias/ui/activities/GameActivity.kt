@@ -786,7 +786,7 @@ fun RoundScreen(
                 ) {
                     Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
                         Column {
-                            Text("Choose the team who guessed")
+                            Text(stringResource(R.string.choose_guessing_team))
                             var t: Team? by remember { mutableStateOf(round.currentTeam) }
                             game.teamManager.teams.forEach {
                                 Row {
@@ -796,7 +796,7 @@ fun RoundScreen(
                             }
                             Row {
                                 AliasRadioButton(selected = t == null, onClick = { t = null })
-                                Text("No team guessed")
+                                Text(stringResource(R.string.no_team_guessed))
                             }
                             AliasButton({
                                 t?.addPoints(1)
@@ -819,20 +819,20 @@ fun RoundScreen(
                 ) {
                     Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
                         Column {
-                            Text("Are you sure you want to end the round?")
+                            Text(stringResource(R.string.end_round_confirm))
                             Row {
                                 AliasButton({
                                     showExit = false
                                     isRunning = true
                                 }) {
-                                    Text("Cancel")
+                                    Text(stringResource(R.string.cancel))
                                 }
                                 AliasButton({
                                     round.end()
                                     showExit = false
                                     step = 4
                                 }) {
-                                    Text("Confirm")
+                                    Text(stringResource(R.string.confirm))
                                 }
                             }
                         }

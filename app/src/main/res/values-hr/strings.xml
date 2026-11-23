@@ -102,6 +102,10 @@
 	<string name="next">Dalje</string>
 	<string name="game_error">Nešto je pošlo po zlu, igra se pokvarila</string>
 	<string name="team_image_description">Slika tima %s</string>
+	<string name="choose_guessing_team">Odaberite tim koji je pogodio</string>
+	<string name="no_team_guessed">Nijedan tim nije pogodio</string>
+	<string name="end_round_confirm">Jeste li sigurni da želite završiti rundu?</string>
+	<string name="confirm">Potvrdi</string>
 	<plurals name="words_count">
 		<item quantity="one">%d riječ</item>
 		<item quantity="few">%d riječi</item>

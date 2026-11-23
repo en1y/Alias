@@ -102,6 +102,10 @@
 	<string name="next">Ďalej</string>
 	<string name="game_error">Niečo sa pokazilo, hra sa rozbila</string>
 	<string name="team_image_description">Obrázok tímu %s</string>
+	<string name="choose_guessing_team">Vyberte tím, ktorý uhádol</string>
+	<string name="no_team_guessed">Žiadny tím neuhádol</string>
+	<string name="end_round_confirm">Naozaj chcete ukončiť kolo?</string>
+	<string name="confirm">Potvrdiť</string>
 	<plurals name="words_count">
 		<item quantity="one">%d slovo</item>
 		<item quantity="few">%d slová</item>

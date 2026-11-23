@@ -102,6 +102,10 @@
 	<string name="next">Volgende</string>
 	<string name="game_error">Er ging iets mis, het spel is kapot</string>
 	<string name="team_image_description">Afbeelding van team %s</string>
+	<string name="choose_guessing_team">Kies het team dat het geraden heeft</string>
+	<string name="no_team_guessed">Geen enkel team heeft het geraden</string>
+	<string name="end_round_confirm">Weet je zeker dat je de ronde wilt beëindigen?</string>
+	<string name="confirm">Bevestigen</string>
 	<plurals name="words_count">
 		<item quantity="one">%d woord</item>
 		<item quantity="other">%d woorden</item>

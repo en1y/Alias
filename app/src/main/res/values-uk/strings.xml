@@ -102,6 +102,10 @@
 	<string name="next">Далі</string>
 	<string name="game_error">Щось пішло не так, гра зламалася</string>
 	<string name="team_image_description">Зображення команди %s</string>
+	<string name="choose_guessing_team">Оберіть команду, яка вгадала</string>
+	<string name="no_team_guessed">Жодна команда не вгадала</string>
+	<string name="end_round_confirm">Ви впевнені, що хочете завершити раунд?</string>
+	<string name="confirm">Підтвердити</string>
 	<plurals name="words_count">
 		<item quantity="one">%d слово</item>
 		<item quantity="few">%d слова</item>

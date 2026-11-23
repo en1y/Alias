@@ -102,6 +102,10 @@
 	<string name="next">Næste</string>
 	<string name="game_error">Noget gik galt, spillet gik i stykker</string>
 	<string name="team_image_description">Billede af hold %s</string>
+	<string name="choose_guessing_team">Vælg holdet, der gættede</string>
+	<string name="no_team_guessed">Intet hold gættede</string>
+	<string name="end_round_confirm">Er du sikker på, at du vil afslutte runden?</string>
+	<string name="confirm">Bekræft</string>
 	<plurals name="words_count">
 		<item quantity="one">%d ord</item>
 		<item quantity="other">%d ord</item>
