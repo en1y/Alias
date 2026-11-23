@@ -4,11 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import kotlin.math.round
 
 class Game : ViewModel() { // ViewModel lets the game survive activity recreate
     val settings = GameSetting()
     val teamManager get() = settings.tm
+    var isGameActive by mutableStateOf(false)
 
     private var words: List<String> = emptyList()
     private var teamsOrder = mutableListOf<Team>()
@@ -18,8 +18,9 @@ class Game : ViewModel() { // ViewModel lets the game survive activity recreate
 
     fun start(words: List<String>) {
         this.words = words
-        teamsOrder = teamManager.teams.toMutableList()
+        if (!isGameActive) teamsOrder = teamManager.teams.toMutableList()
         currentRound = null
+        isGameActive = true
     }
 
     fun reset(words: List<String>) {
@@ -30,6 +31,7 @@ class Game : ViewModel() { // ViewModel lets the game survive activity recreate
             it.roundNum = 0
         }
         currentRound = null
+        isGameActive = false
     }
 
     fun getCurrentTeam(): Team = teamsOrder[0]
@@ -67,5 +69,24 @@ class Game : ViewModel() { // ViewModel lets the game survive activity recreate
         var min = Int.MAX_VALUE
         rounds.forEach { min = Math.min(min, it) }
         return min + 1
+    }
+
+    fun removeTeam(team: Team? = null) {
+        if (!isGameActive) {
+            if (team == null) teamManager.removeTeam()
+            else teamManager.removeTeam(team)
+        }
+    }
+
+    fun addTeam() {
+        if (isGameActive) {
+            val minPoints = teamManager.teams.minOfOrNull { it.points } ?: 0
+            val minRounds = teamManager.teams.minOfOrNull { it.roundNum } ?: 0
+
+            val newTeam = teamManager.addTeam() ?: return
+            newTeam.roundNum = minRounds
+            newTeam.points = minPoints
+            teamsOrder.add(teamsOrder.indexOfLast { it.roundNum == minRounds } + 1, newTeam)
+        } else teamManager.addTeam()
     }
 }

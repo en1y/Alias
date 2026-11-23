@@ -157,18 +157,19 @@ fun TeamSelect(game: Game = remember { Game() }) {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                tm.teams.forEach { t -> key(t) { TeamIcon(team = t, remove = { tm.removeTeam(t) }) } }
+                tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = !game.isGameActive, remove = { game.removeTeam(t) }) } }
             }
             Row (
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally)
             ) {
                 AliasButton(
-                    onClick = {tm.removeTeam()}) {
+                    enabled = !game.isGameActive,
+                    onClick = {game.removeTeam()}) {
                     Text(stringResource(R.string.remove_team))
                 }
                 AliasButton(
-                    onClick = {tm.addTeam()}) {
+                    onClick = {game.addTeam()}) {
                     Text(stringResource(R.string.add_team))
                 }
             }
@@ -620,7 +621,7 @@ fun PreRoundScreen(
                 }
                 AliasButton(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
                     if (t == null) { game.createRound(); step = 3 }
-                    else step = 1
+                    else { game.isGameActive = false; step = 1 }
                 }) {
                     if (t == null) Text(stringResource(R.string.start_round))
                     else Text(stringResource(R.string.back_to_menu))
