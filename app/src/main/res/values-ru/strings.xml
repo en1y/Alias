@@ -51,6 +51,16 @@
 	<string name="add_team">Добавить команду</string>
 	<string name="theme">Тема</string>
 	<string name="theme_description">Выберите цвет темы</string>
+	<string name="theme_light">Светлая</string>
+	<string name="theme_system">Системная</string>
+	<string name="theme_dark">Тёмная</string>
+	<string name="colors">Цвета</string>
+	<string name="palette_peach">Персиковый</string>
+	<string name="palette_purple">Фиолетовый</string>
+	<string name="palette_blue">Синий</string>
+	<string name="palette_red">Красный</string>
+	<string name="palette_yellow">Жёлтый</string>
+	<string name="palette_black_white">Чёрно-белый</string>
 	<string name="settings">Настройки</string>
 	<string name="language">Язык</string>
 	<string name="choose_theme">Выбрать тему</string>

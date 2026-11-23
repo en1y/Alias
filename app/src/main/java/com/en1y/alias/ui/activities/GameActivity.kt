@@ -29,6 +29,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.material3.ColorScheme
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
@@ -86,6 +91,9 @@ import com.en1y.alias.ui.theme.AliasSwitch
 import com.en1y.alias.ui.theme.AliasTheme
 import com.en1y.alias.ui.theme.Overlay
 import com.en1y.alias.ui.theme.Panel
+import com.en1y.alias.ui.theme.Palette
+import com.en1y.alias.ui.theme.ThemeMode
+import com.en1y.alias.ui.theme.ThemeSettings
 import com.en1y.alias.ui.theme.aliasColors
 import com.en1y.alias.ui.theme.screen
 import com.en1y.alias.ui.theme.secondaryColors
@@ -107,6 +115,7 @@ class GameActivity: AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ThemeSettings.load(this)
         if (savedInstanceState == null) step = 0
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContent {
@@ -216,7 +225,8 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier) {
     AliasTheme {
         Column(
             modifier = Modifier
-                .screen(),
+                .screen()
+                .verticalScrollWithBar(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
@@ -225,9 +235,50 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier) {
             }
             Text(stringResource(R.string.theme), style = MaterialTheme.typography.headlineSmall)
             Text(stringResource(R.string.theme_description), style = MaterialTheme.typography.bodyMedium)
-            // TODO: Implement theme color changing
+            val mode = ThemeSettings.mode
+            val palette = ThemeSettings.palette
+            Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp)) {
+                ThemeOption(stringResource(R.string.theme_light), mode == ThemeMode.Light, { ThemeSettings.update(mode = ThemeMode.Light) }) { FakeScreen(palette.light) }
+                ThemeOption(stringResource(R.string.theme_system), mode == ThemeMode.System, { ThemeSettings.update(mode = ThemeMode.System) }) {
+                    FakeScreen(palette.light)
+                    Box(Modifier.matchParentSize().clip(RightHalf)) { FakeScreen(palette.dark) }
+                }
+                ThemeOption(stringResource(R.string.theme_dark), mode == ThemeMode.Dark, { ThemeSettings.update(mode = ThemeMode.Dark) }) { FakeScreen(palette.dark) }
+            }
+            HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
+            Text(stringResource(R.string.colors), style = MaterialTheme.typography.titleMedium)
+            val dark = ThemeSettings.isDark()
+            Palette.entries.chunked(3).forEach { row ->
+                Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp)) {
+                    row.forEach { p ->
+                        ThemeOption(stringResource(p.title), p == palette, { ThemeSettings.update(palette = p) }) {
+                            if (p == Palette.BlackAndWhite) Box(Modifier.matchParentSize().background(Color.White).clip(Diagonal).background(Color.Black))
+                            else Box(Modifier.matchParentSize().background((if (dark) p.dark else p.light).secondary))
+                        }
+                    }
+                }
+            }
         }
     }
+}
+
+private val RightHalf = GenericShape { size, _ -> addRect(Rect(size.width / 2, 0f, size.width, size.height)) }
+private val Diagonal = GenericShape { size, _ -> moveTo(size.width, 0f); lineTo(size.width, size.height); lineTo(0f, size.height); close() }
+
+@Composable
+private fun BoxScope.FakeScreen(scheme: ColorScheme) = Box(Modifier.matchParentSize().background(scheme.background)) {
+    Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 18.dp).fillMaxWidth(0.64f).height(16.dp).background(scheme.secondary, CircleShape))
+}
+
+@Composable
+private fun RowScope.ThemeOption(name: String, selected: Boolean, onClick: () -> Unit, preview: @Composable BoxScope.() -> Unit) = Column(
+    Modifier.weight(1f).selectable(selected, role = Role.RadioButton, onClick = onClick),
+    Arrangement.spacedBy(6.dp), Alignment.CenterHorizontally
+) {
+    val shape = MaterialTheme.shapes.large
+    Box(Modifier.fillMaxWidth().aspectRatio(1f).clip(shape)
+        .border(if (selected) 3.dp else 2.dp, if (selected) LocalContentColor.current else MaterialTheme.colorScheme.primary, shape), content = preview)
+    Text(name, textAlign = TextAlign.Center, style = if (selected) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyMedium)
 }
 
 @Composable
@@ -576,7 +627,7 @@ fun PreRoundScreen(
                     }
                     Text(stringResource(R.string.round_number, game.getRound()))
                 }
-                Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName), modifier = Modifier.size(96.dp))
+                Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName), modifier = Modifier.size(96.dp), colorFilter = ColorFilter.tint(LocalContentColor.current))
 
                 if (t != null) {
                     Text(stringResource(R.string.team_won, t.teamName), style = MaterialTheme.typography.headlineSmall)
@@ -848,7 +899,8 @@ fun PostRoundScreen(
                         }
                         Image(
                             painter = round.currentTeam.teamImage,
-                            contentDescription = stringResource(R.string.team_image_description, round.currentTeam.teamName)
+                            contentDescription = stringResource(R.string.team_image_description, round.currentTeam.teamName),
+                            colorFilter = ColorFilter.tint(LocalContentColor.current)
                         )
                         Text(round.currentTeam.teamName, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
                         Text(stringResource(R.string.round_number, game.getRound()))

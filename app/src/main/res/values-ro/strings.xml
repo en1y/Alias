@@ -51,6 +51,16 @@
 	<string name="add_team">Adaugă echipă</string>
 	<string name="theme">Temă</string>
 	<string name="theme_description">Alege culoarea temei</string>
+	<string name="theme_light">Luminos</string>
+	<string name="theme_system">Sistem</string>
+	<string name="theme_dark">Întunecat</string>
+	<string name="colors">Culori</string>
+	<string name="palette_peach">Piersică</string>
+	<string name="palette_purple">Mov</string>
+	<string name="palette_blue">Albastru</string>
+	<string name="palette_red">Roșu</string>
+	<string name="palette_yellow">Galben</string>
+	<string name="palette_black_white">Alb-negru</string>
 	<string name="settings">Setări</string>
 	<string name="language">Limbă</string>
 	<string name="choose_theme">Alege tema</string>

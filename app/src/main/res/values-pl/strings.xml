@@ -51,6 +51,16 @@
 	<string name="add_team">Dodaj drużynę</string>
 	<string name="theme">Motyw</string>
 	<string name="theme_description">Wybierz kolor motywu</string>
+	<string name="theme_light">Jasny</string>
+	<string name="theme_system">Systemowy</string>
+	<string name="theme_dark">Ciemny</string>
+	<string name="colors">Kolory</string>
+	<string name="palette_peach">Brzoskwiniowy</string>
+	<string name="palette_purple">Fioletowy</string>
+	<string name="palette_blue">Niebieski</string>
+	<string name="palette_red">Czerwony</string>
+	<string name="palette_yellow">Żółty</string>
+	<string name="palette_black_white">Czarno-biały</string>
 	<string name="settings">Ustawienia</string>
 	<string name="language">Język</string>
 	<string name="choose_theme">Wybierz motyw</string>

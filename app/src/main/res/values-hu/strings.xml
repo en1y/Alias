@@ -51,6 +51,16 @@
 	<string name="add_team">Csapat hozzáadása</string>
 	<string name="theme">Téma</string>
 	<string name="theme_description">Válaszd ki a téma színét</string>
+	<string name="theme_light">Világos</string>
+	<string name="theme_system">Rendszer</string>
+	<string name="theme_dark">Sötét</string>
+	<string name="colors">Színek</string>
+	<string name="palette_peach">Barack</string>
+	<string name="palette_purple">Lila</string>
+	<string name="palette_blue">Kék</string>
+	<string name="palette_red">Piros</string>
+	<string name="palette_yellow">Sárga</string>
+	<string name="palette_black_white">Fekete-fehér</string>
 	<string name="settings">Beállítások</string>
 	<string name="language">Nyelv</string>
 	<string name="choose_theme">Téma kiválasztása</string>

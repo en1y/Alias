@@ -51,6 +51,16 @@
 	<string name="add_team">Lisää joukkue</string>
 	<string name="theme">Teema</string>
 	<string name="theme_description">Valitse teeman väri</string>
+	<string name="theme_light">Vaalea</string>
+	<string name="theme_system">Järjestelmä</string>
+	<string name="theme_dark">Tumma</string>
+	<string name="colors">Värit</string>
+	<string name="palette_peach">Persikka</string>
+	<string name="palette_purple">Violetti</string>
+	<string name="palette_blue">Sininen</string>
+	<string name="palette_red">Punainen</string>
+	<string name="palette_yellow">Keltainen</string>
+	<string name="palette_black_white">Mustavalkoinen</string>
 	<string name="settings">Asetukset</string>
 	<string name="language">Kieli</string>
 	<string name="choose_theme">Valitse teema</string>

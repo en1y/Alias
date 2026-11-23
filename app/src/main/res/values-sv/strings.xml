@@ -51,6 +51,16 @@
 	<string name="add_team">Lägg till lag</string>
 	<string name="theme">Tema</string>
 	<string name="theme_description">Välj temafärg</string>
+	<string name="theme_light">Ljust</string>
+	<string name="theme_system">System</string>
+	<string name="theme_dark">Mörkt</string>
+	<string name="colors">Färger</string>
+	<string name="palette_peach">Persika</string>
+	<string name="palette_purple">Lila</string>
+	<string name="palette_blue">Blå</string>
+	<string name="palette_red">Röd</string>
+	<string name="palette_yellow">Gul</string>
+	<string name="palette_black_white">Svartvitt</string>
 	<string name="settings">Inställningar</string>
 	<string name="language">Språk</string>
 	<string name="choose_theme">Välj tema</string>

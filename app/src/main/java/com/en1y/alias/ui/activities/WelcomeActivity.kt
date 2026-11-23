@@ -40,6 +40,7 @@ import com.en1y.alias.logic.normalizeLanguage
 import com.en1y.alias.ui.theme.AliasButton
 import com.en1y.alias.ui.theme.AliasTheme
 import com.en1y.alias.ui.theme.Panel
+import com.en1y.alias.ui.theme.ThemeSettings
 import com.en1y.alias.ui.theme.secondaryColors
 import com.en1y.alias.ui.theme.verticalScrollWithBar
 import androidx.compose.material3.ButtonDefaults
@@ -48,6 +49,7 @@ import androidx.core.content.edit
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ThemeSettings.load(this)
         setContent {
             var step by rememberSaveable { mutableIntStateOf(0) }
 

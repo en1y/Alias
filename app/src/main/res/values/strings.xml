@@ -52,6 +52,16 @@
 	<string name="add_team">Add team</string>
 	<string name="theme">Theme</string>
 	<string name="theme_description">Choose your theme color</string>
+	<string name="theme_light">Light</string>
+	<string name="theme_system">System</string>
+	<string name="theme_dark">Dark</string>
+	<string name="colors">Colors</string>
+	<string name="palette_peach">Peach</string>
+	<string name="palette_purple">Purple</string>
+	<string name="palette_blue">Blue</string>
+	<string name="palette_red">Red</string>
+	<string name="palette_yellow">Yellow</string>
+	<string name="palette_black_white">Black and white</string>
 	<string name="settings">Settings</string>
 	<string name="language">Language</string>
 	<string name="choose_theme">Choose theme</string>

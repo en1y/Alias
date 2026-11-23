@@ -1,7 +1,10 @@
 package com.en1y.alias.ui.theme
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.activity.compose.BackHandler
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloatAsState
@@ -37,6 +40,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalRippleConfiguration
@@ -62,7 +66,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,56 +79,71 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
+import com.en1y.alias.R
 
 // ---------------------------------------------------------------- Colors
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF33241E),
-    onPrimary = Color(0xFFFBE9DF),
-    secondary = Color(0xFFE89470),
-    onSecondary = Color(0xFF2B140A),
-    tertiary = Color(0xFFFFC9AE),
-    onTertiary = Color(0xFF2B140A),
-    primaryContainer = Color(0xFF45312A),
-    onPrimaryContainer = Color(0xFFFBE9DF),
-    secondaryContainer = Color(0xFF5A3D31),
-    onSecondaryContainer = Color(0xFFFBE9DF),
-    tertiaryContainer = Color(0xFF6E4A3B),
-    onTertiaryContainer = Color(0xFFFBE9DF),
-    background = Color(0xFF1C1310),
-    onBackground = Color(0xFFFBE9DF),
-    surface = Color(0xFF1C1310),
-    onSurface = Color(0xFFFBE9DF),
-    error = Color(0xFFFF8A80),
-    onError = Color(0xFF2B140A),
-    outline = Color(0xFFA07E6E),
-)
+/** Builds a scheme from 5 flat colors; text colors are the accent nearly black or nearly white, whichever reads better. */
+private fun scheme(dark: Boolean, bg: Long, panel: Long, card: Long, accent: Long, highlight: Long): ColorScheme {
+    val (b, p, k, a, h) = listOf(bg, panel, card, accent, highlight).map { Color(it) }
+    val darkInk = lerp(a, Color.Black, 0.85f)
+    val lightInk = lerp(a, Color.White, 0.9f)
+    fun on(c: Color) = if (c.luminance() > 0.179f) darkInk else lightInk
+    return (if (dark) darkColorScheme() else lightColorScheme()).copy(
+        primary = p, onPrimary = on(p),
+        primaryContainer = k, onPrimaryContainer = on(k),
+        secondary = a, onSecondary = on(a),
+        secondaryContainer = lerp(p, a, 0.35f), onSecondaryContainer = on(p),
+        tertiary = h, onTertiary = on(h),
+        background = b, onBackground = on(b),
+        surface = b, onSurface = on(b),
+        outline = lerp(on(b), b, 0.5f),
+    )
+}
 
-private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFFFFE3D2),
-    onPrimary = Color(0xFF3A2418),
-    secondary = Color(0xFFF7A47E),
-    onSecondary = Color(0xFF3A1A0A),
-    tertiary = Color(0xFFE2703F),
-    onTertiary = Color(0xFF2A0F03),
-    primaryContainer = Color(0xFFFFFFFF),
-    onPrimaryContainer = Color(0xFF3A2418),
-    secondaryContainer = Color(0xFFFFD3BD),
-    onSecondaryContainer = Color(0xFF3A1A0A),
-    tertiaryContainer = Color(0xFFF5B49A),
-    onTertiaryContainer = Color(0xFF2A0F03),
-    background = Color(0xFFFFF6F0),
-    onBackground = Color(0xFF3A2418),
-    surface = Color(0xFFFFF6F0),
-    onSurface = Color(0xFF3A2418),
-    error = Color(0xFFC62828),
-    onError = Color(0xFFFFFFFF),
-    outline = Color(0xFFC08C72),
-)
+enum class Palette(@param:StringRes val title: Int, val light: ColorScheme, val dark: ColorScheme) {
+    Peach(R.string.palette_peach, scheme(false, 0xFFFFF6F0, 0xFFFFE3D2, 0xFFFFFFFF, 0xFFF7A47E, 0xFFE2703F), scheme(true, 0xFF1C1310, 0xFF33241E, 0xFF45312A, 0xFFE89470, 0xFFFFC9AE)),
+    Purple(R.string.palette_purple, scheme(false, 0xFFF8F5FF, 0xFFEBE3FF, 0xFFFFFFFF, 0xFF9B7BFF, 0xFF6B4CE6), scheme(true, 0xFF15112B, 0xFF262046, 0xFF342B5E, 0xFF9B7BFF, 0xFFD4C6FF)),
+    Blue(R.string.palette_blue, scheme(false, 0xFFF2F8FF, 0xFFDCEBFF, 0xFFFFFFFF, 0xFF6AA8FF, 0xFF2D6FD6), scheme(true, 0xFF0E1626, 0xFF1B2A44, 0xFF253858, 0xFF5B9BF5, 0xFFB8D6FF)),
+    Red(R.string.palette_red, scheme(false, 0xFFFFF4F4, 0xFFFFDDDD, 0xFFFFFFFF, 0xFFF47C7C, 0xFFC93A3A), scheme(true, 0xFF1E0F10, 0xFF3A1D1F, 0xFF4C2729, 0xFFE86A6A, 0xFFFFC2C2)),
+    Yellow(R.string.palette_yellow, scheme(false, 0xFFFFFBEB, 0xFFFFF0C2, 0xFFFFFFFF, 0xFFFFCC4D, 0xFFE0A100), scheme(true, 0xFF1A160A, 0xFF332B12, 0xFF453A1A, 0xFFF2C14E, 0xFFFFE39A)),
+    BlackAndWhite(R.string.palette_black_white, scheme(false, 0xFFFFFFFF, 0xFFE8E8E8, 0xFF000000, 0xFF000000, 0xFF7A7A7A), scheme(true, 0xFF000000, 0xFF1C1C1C, 0xFFFFFFFF, 0xFFFFFFFF, 0xFF8A8A8A)),
+}
+
+enum class ThemeMode { Light, System, Dark }
+
+/** The chosen theme, kept in the "settings" preferences. Call [load] before setContent. */
+object ThemeSettings {
+    var mode by mutableStateOf(ThemeMode.System); private set
+    var palette by mutableStateOf(Palette.Peach); private set
+    private var prefs: SharedPreferences? = null
+
+    fun load(context: Context) {
+        val p = context.getSharedPreferences("settings", Context.MODE_PRIVATE).also { prefs = it }
+        mode = ThemeMode.entries.find { it.name == p.getString("themeMode", null) } ?: ThemeMode.System
+        palette = Palette.entries.find { it.name == p.getString("palette", null) } ?: Palette.Peach
+    }
+
+    fun update(mode: ThemeMode = this.mode, palette: Palette = this.palette) {
+        this.mode = mode
+        this.palette = palette
+        prefs?.edit { putString("themeMode", mode.name); putString("palette", palette.name) }
+    }
+
+    @Composable
+    fun isDark() = when (mode) {
+        ThemeMode.Light -> false
+        ThemeMode.Dark -> true
+        ThemeMode.System -> isSystemInDarkTheme()
+    }
+}
 
 /**
  * Colors Material doesn't have a slot for. To add one: add a field here,
@@ -164,7 +185,7 @@ val AliasShapes = Shapes(
 
 @Composable
 fun AliasTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = ThemeSettings.isDark(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     // false = no ripple on any Button/Checkbox/Switch/... inside this theme
@@ -177,8 +198,8 @@ fun AliasTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> ThemeSettings.palette.dark
+        else -> ThemeSettings.palette.light
     }
 
     MaterialTheme(colorScheme = colorScheme, typography = Typography, shapes = AliasShapes) {

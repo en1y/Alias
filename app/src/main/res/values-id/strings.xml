@@ -51,6 +51,16 @@
 	<string name="add_team">Tambah tim</string>
 	<string name="theme">Tema</string>
 	<string name="theme_description">Pilih warna tema</string>
+	<string name="theme_light">Terang</string>
+	<string name="theme_system">Sistem</string>
+	<string name="theme_dark">Gelap</string>
+	<string name="colors">Warna</string>
+	<string name="palette_peach">Persik</string>
+	<string name="palette_purple">Ungu</string>
+	<string name="palette_blue">Biru</string>
+	<string name="palette_red">Merah</string>
+	<string name="palette_yellow">Kuning</string>
+	<string name="palette_black_white">Hitam putih</string>
 	<string name="settings">Pengaturan</string>
 	<string name="language">Bahasa</string>
 	<string name="choose_theme">Pilih tema</string>

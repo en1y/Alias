@@ -51,6 +51,16 @@
 	<string name="add_team">Pridať tím</string>
 	<string name="theme">Motív</string>
 	<string name="theme_description">Vyberte farbu motívu</string>
+	<string name="theme_light">Svetlý</string>
+	<string name="theme_system">Systém</string>
+	<string name="theme_dark">Tmavý</string>
+	<string name="colors">Farby</string>
+	<string name="palette_peach">Broskyňová</string>
+	<string name="palette_purple">Fialová</string>
+	<string name="palette_blue">Modrá</string>
+	<string name="palette_red">Červená</string>
+	<string name="palette_yellow">Žltá</string>
+	<string name="palette_black_white">Čiernobiela</string>
 	<string name="settings">Nastavenia</string>
 	<string name="language">Jazyk</string>
 	<string name="choose_theme">Vybrať motív</string>

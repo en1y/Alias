@@ -51,6 +51,16 @@
 	<string name="add_team">Team toevoegen</string>
 	<string name="theme">Thema</string>
 	<string name="theme_description">Kies je themakleur</string>
+	<string name="theme_light">Licht</string>
+	<string name="theme_system">Systeem</string>
+	<string name="theme_dark">Donker</string>
+	<string name="colors">Kleuren</string>
+	<string name="palette_peach">Perzik</string>
+	<string name="palette_purple">Paars</string>
+	<string name="palette_blue">Blauw</string>
+	<string name="palette_red">Rood</string>
+	<string name="palette_yellow">Geel</string>
+	<string name="palette_black_white">Zwart-wit</string>
 	<string name="settings">Instellingen</string>
 	<string name="language">Taal</string>
 	<string name="choose_theme">Thema kiezen</string>

@@ -51,6 +51,16 @@
 	<string name="add_team">Adicionar time</string>
 	<string name="theme">Tema</string>
 	<string name="theme_description">Escolha a cor do tema</string>
+	<string name="theme_light">Claro</string>
+	<string name="theme_system">Sistema</string>
+	<string name="theme_dark">Escuro</string>
+	<string name="colors">Cores</string>
+	<string name="palette_peach">Pêssego</string>
+	<string name="palette_purple">Roxo</string>
+	<string name="palette_blue">Azul</string>
+	<string name="palette_red">Vermelho</string>
+	<string name="palette_yellow">Amarelo</string>
+	<string name="palette_black_white">Preto e branco</string>
 	<string name="settings">Configurações</string>
 	<string name="language">Idioma</string>
 	<string name="choose_theme">Escolher tema</string>

@@ -51,6 +51,16 @@
 	<string name="add_team">Takım ekle</string>
 	<string name="theme">Tema</string>
 	<string name="theme_description">Tema rengini seç</string>
+	<string name="theme_light">Açık</string>
+	<string name="theme_system">Sistem</string>
+	<string name="theme_dark">Koyu</string>
+	<string name="colors">Renkler</string>
+	<string name="palette_peach">Şeftali</string>
+	<string name="palette_purple">Mor</string>
+	<string name="palette_blue">Mavi</string>
+	<string name="palette_red">Kırmızı</string>
+	<string name="palette_yellow">Sarı</string>
+	<string name="palette_black_white">Siyah beyaz</string>
 	<string name="settings">Ayarlar</string>
 	<string name="language">Dil</string>
 	<string name="choose_theme">Tema seç</string>

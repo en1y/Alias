@@ -51,6 +51,16 @@
 	<string name="add_team">Dodaj tim</string>
 	<string name="theme">Tema</string>
 	<string name="theme_description">Odaberite boju teme</string>
+	<string name="theme_light">Svijetla</string>
+	<string name="theme_system">Sustav</string>
+	<string name="theme_dark">Tamna</string>
+	<string name="colors">Boje</string>
+	<string name="palette_peach">Breskva</string>
+	<string name="palette_purple">Ljubičasta</string>
+	<string name="palette_blue">Plava</string>
+	<string name="palette_red">Crvena</string>
+	<string name="palette_yellow">Žuta</string>
+	<string name="palette_black_white">Crno-bijela</string>
 	<string name="settings">Postavke</string>
 	<string name="language">Jezik</string>
 	<string name="choose_theme">Odaberi temu</string>

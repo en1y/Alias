@@ -51,6 +51,16 @@
 	<string name="add_team">Ajouter une équipe</string>
 	<string name="theme">Thème</string>
 	<string name="theme_description">Choisissez la couleur du thème</string>
+	<string name="theme_light">Clair</string>
+	<string name="theme_system">Système</string>
+	<string name="theme_dark">Sombre</string>
+	<string name="colors">Couleurs</string>
+	<string name="palette_peach">Pêche</string>
+	<string name="palette_purple">Violet</string>
+	<string name="palette_blue">Bleu</string>
+	<string name="palette_red">Rouge</string>
+	<string name="palette_yellow">Jaune</string>
+	<string name="palette_black_white">Noir et blanc</string>
 	<string name="settings">Paramètres</string>
 	<string name="language">Langue</string>
 	<string name="choose_theme">Choisir le thème</string>

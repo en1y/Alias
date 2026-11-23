@@ -51,6 +51,16 @@
 	<string name="add_team">Προσθήκη ομάδας</string>
 	<string name="theme">Θέμα</string>
 	<string name="theme_description">Επιλέξτε το χρώμα του θέματος</string>
+	<string name="theme_light">Φωτεινό</string>
+	<string name="theme_system">Σύστημα</string>
+	<string name="theme_dark">Σκοτεινό</string>
+	<string name="colors">Χρώματα</string>
+	<string name="palette_peach">Ροδακινί</string>
+	<string name="palette_purple">Μωβ</string>
+	<string name="palette_blue">Μπλε</string>
+	<string name="palette_red">Κόκκινο</string>
+	<string name="palette_yellow">Κίτρινο</string>
+	<string name="palette_black_white">Ασπρόμαυρο</string>
 	<string name="settings">Ρυθμίσεις</string>
 	<string name="language">Γλώσσα</string>
 	<string name="choose_theme">Επιλογή θέματος</string>

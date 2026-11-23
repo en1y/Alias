@@ -51,6 +51,16 @@
 	<string name="add_team">Team hinzufügen</string>
 	<string name="theme">Design</string>
 	<string name="theme_description">Wähle deine Designfarbe</string>
+	<string name="theme_light">Hell</string>
+	<string name="theme_system">System</string>
+	<string name="theme_dark">Dunkel</string>
+	<string name="colors">Farben</string>
+	<string name="palette_peach">Pfirsich</string>
+	<string name="palette_purple">Lila</string>
+	<string name="palette_blue">Blau</string>
+	<string name="palette_red">Rot</string>
+	<string name="palette_yellow">Gelb</string>
+	<string name="palette_black_white">Schwarz-Weiß</string>
 	<string name="settings">Einstellungen</string>
 	<string name="language">Sprache</string>
 	<string name="choose_theme">Design wählen</string>
