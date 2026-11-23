@@ -94,8 +94,11 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Pular</string>
 	<string name="guessed">Acertou</string>
-	<string name="word">Palavra</string>
+	<string name="word">palavra</string>
 	<string name="swipe_hint">Deslize para cima se acertou, para baixo para pular</string>
+	<string name="pull_up_hint">↑ Arraste o cartão para cima quando sua equipe adivinhar a palavra</string>
+	<string name="pull_down_hint">↓ Arraste-o para baixo para pular a palavra</string>
+	<string name="how_to_play">Como jogar</string>
 	<string name="start">Começar</string>
 	<string name="round_review">Resumo da rodada</string>
 	<string name="review_guesses">Revise seus palpites</string>

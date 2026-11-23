@@ -94,8 +94,11 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Saltar</string>
 	<string name="guessed">Adivinada</string>
-	<string name="word">Palabra</string>
+	<string name="word">palabra</string>
 	<string name="swipe_hint">Desliza hacia arriba si la adivinaste, hacia abajo para saltar</string>
+	<string name="pull_up_hint">↑ Arrastra la tarjeta hacia arriba cuando tu equipo adivine la palabra</string>
+	<string name="pull_down_hint">↓ Arrástrala hacia abajo para saltar la palabra</string>
+	<string name="how_to_play">Cómo jugar</string>
 	<string name="start">Empezar</string>
 	<string name="round_review">Resumen de la ronda</string>
 	<string name="review_guesses">Revisa tus respuestas</string>

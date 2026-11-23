@@ -1,34 +1,16 @@
 package com.en1y.alias.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+private val Default = Typography()
+
+val Typography = Default.copy(
+    bodyLarge = Default.bodyLarge.copy(fontSize = 18.sp, lineHeight = 26.sp),
+    bodyMedium = Default.bodyMedium.copy(fontSize = 16.sp, lineHeight = 22.sp),
+    labelLarge = Default.labelLarge.copy(fontSize = 17.sp, lineHeight = 22.sp),
+    titleMedium = Default.titleMedium.copy(fontSize = 20.sp, lineHeight = 26.sp),
+    headlineSmall = Default.headlineSmall.copy(fontSize = 28.sp, lineHeight = 34.sp),
+    headlineMedium = Default.headlineMedium.copy(fontSize = 34.sp, lineHeight = 40.sp),
+    headlineLarge = Default.headlineLarge.copy(fontSize = 40.sp, lineHeight = 46.sp),
 )

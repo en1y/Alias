@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-/** Opens [target] and closes this activity with a short fade instead of the default slide. */
 fun Activity.switchTo(target: Class<out Activity>) {
     startActivity(Intent(this, target), ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
     finish()

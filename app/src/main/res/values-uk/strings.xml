@@ -94,8 +94,11 @@
 	<string name="points_short">%d б.</string>
 	<string name="skip">Пропустити</string>
 	<string name="guessed">Вгадано</string>
-	<string name="word">Слово</string>
+	<string name="word">слово</string>
 	<string name="swipe_hint">Свайп угору — вгадано, вниз — пропустити</string>
+	<string name="pull_up_hint">↑ Потягни картку вгору, коли команда вгадає слово</string>
+	<string name="pull_down_hint">↓ Потягни її вниз, щоб пропустити слово</string>
+	<string name="how_to_play">Як грати</string>
 	<string name="start">Старт</string>
 	<string name="round_review">Підсумки раунду</string>
 	<string name="review_guesses">Перевірте свої відповіді</string>

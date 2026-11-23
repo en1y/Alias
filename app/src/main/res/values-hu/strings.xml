@@ -94,8 +94,11 @@
 	<string name="points_short">%d pont</string>
 	<string name="skip">Kihagyás</string>
 	<string name="guessed">Kitalálva</string>
-	<string name="word">Szó</string>
+	<string name="word">szó</string>
 	<string name="swipe_hint">Húzd felfelé, ha kitaláltátok, lefelé a kihagyáshoz</string>
+	<string name="pull_up_hint">↑ Húzd felfelé a kártyát, ha a csapatod kitalálja a szót</string>
+	<string name="pull_down_hint">↓ Húzd lefelé a szó kihagyásához</string>
+	<string name="how_to_play">Hogyan kell játszani</string>
 	<string name="start">Indítás</string>
 	<string name="round_review">Kör összefoglalója</string>
 	<string name="review_guesses">Nézzétek át a tippeket</string>

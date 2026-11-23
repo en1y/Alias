@@ -94,8 +94,11 @@
 	<string name="points_short">%d b.</string>
 	<string name="skip">Přeskočit</string>
 	<string name="guessed">Uhodnuto</string>
-	<string name="word">Slovo</string>
+	<string name="word">slovo</string>
 	<string name="swipe_hint">Přejeďte nahoru, pokud uhodnuto, dolů pro přeskočení</string>
+	<string name="pull_up_hint">↑ Přetáhni kartu nahoru, když tvůj tým slovo uhodne</string>
+	<string name="pull_down_hint">↓ Přetažením dolů slovo přeskočíš</string>
+	<string name="how_to_play">Jak hrát</string>
 	<string name="start">Start</string>
 	<string name="round_review">Shrnutí kola</string>
 	<string name="review_guesses">Zkontrolujte své odpovědi</string>

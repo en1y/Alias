@@ -94,8 +94,11 @@
 	<string name="points_short">%d p</string>
 	<string name="skip">Hoppa över</string>
 	<string name="guessed">Gissat</string>
-	<string name="word">Ord</string>
+	<string name="word">ord</string>
 	<string name="swipe_hint">Svep uppåt om gissat, nedåt för att hoppa över</string>
+	<string name="pull_up_hint">↑ Dra kortet uppåt när ditt lag gissar ordet</string>
+	<string name="pull_down_hint">↓ Dra det nedåt för att hoppa över ordet</string>
+	<string name="how_to_play">Så spelar du</string>
 	<string name="start">Starta</string>
 	<string name="round_review">Sammanfattning av rundan</string>
 	<string name="review_guesses">Granska era gissningar</string>

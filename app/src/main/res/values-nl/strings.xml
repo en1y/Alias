@@ -94,8 +94,11 @@
 	<string name="points_short">%d ptn</string>
 	<string name="skip">Overslaan</string>
 	<string name="guessed">Geraden</string>
-	<string name="word">Woord</string>
+	<string name="word">woord</string>
 	<string name="swipe_hint">Veeg omhoog als geraden, omlaag om over te slaan</string>
+	<string name="pull_up_hint">↑ Sleep de kaart omhoog als je team het woord raadt</string>
+	<string name="pull_down_hint">↓ Sleep hem omlaag om het woord over te slaan</string>
+	<string name="how_to_play">Zo speel je</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rondeoverzicht</string>
 	<string name="review_guesses">Bekijk je antwoorden</string>

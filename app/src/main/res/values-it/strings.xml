@@ -94,8 +94,11 @@
 	<string name="points_short">%d pt</string>
 	<string name="skip">Salta</string>
 	<string name="guessed">Indovinata</string>
-	<string name="word">Parola</string>
+	<string name="word">parola</string>
 	<string name="swipe_hint">Scorri in su se indovinata, in giù per saltare</string>
+	<string name="pull_up_hint">↑ Trascina la carta verso l\'alto quando la tua squadra indovina la parola</string>
+	<string name="pull_down_hint">↓ Trascinala verso il basso per saltare la parola</string>
+	<string name="how_to_play">Come si gioca</string>
 	<string name="start">Inizia</string>
 	<string name="round_review">Riepilogo del round</string>
 	<string name="review_guesses">Controlla le risposte</string>

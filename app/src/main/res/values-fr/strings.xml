@@ -94,8 +94,11 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Passer</string>
 	<string name="guessed">Deviné</string>
-	<string name="word">Mot</string>
+	<string name="word">mot</string>
 	<string name="swipe_hint">Glissez vers le haut si deviné, vers le bas pour passer</string>
+	<string name="pull_up_hint">↑ Fais glisser la carte vers le haut quand ton équipe devine le mot</string>
+	<string name="pull_down_hint">↓ Fais-la glisser vers le bas pour passer le mot</string>
+	<string name="how_to_play">Comment jouer</string>
 	<string name="start">Commencer</string>
 	<string name="round_review">Bilan de la manche</string>
 	<string name="review_guesses">Vérifiez vos réponses</string>

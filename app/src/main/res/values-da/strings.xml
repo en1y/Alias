@@ -94,8 +94,11 @@
 	<string name="points_short">%d point</string>
 	<string name="skip">Spring over</string>
 	<string name="guessed">Gættet</string>
-	<string name="word">Ord</string>
+	<string name="word">ord</string>
 	<string name="swipe_hint">Swipe op hvis gættet, ned for at springe over</string>
+	<string name="pull_up_hint">↑ Træk kortet op, når dit hold gætter ordet</string>
+	<string name="pull_down_hint">↓ Træk det ned for at springe ordet over</string>
+	<string name="how_to_play">Sådan spiller du</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rundeoversigt</string>
 	<string name="review_guesses">Gennemgå jeres gæt</string>

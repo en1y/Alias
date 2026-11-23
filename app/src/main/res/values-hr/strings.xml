@@ -94,8 +94,11 @@
 	<string name="points_short">%d bod.</string>
 	<string name="skip">Preskoči</string>
 	<string name="guessed">Pogođeno</string>
-	<string name="word">Riječ</string>
+	<string name="word">riječ</string>
 	<string name="swipe_hint">Povucite gore ako je pogođeno, dolje za preskakanje</string>
+	<string name="pull_up_hint">↑ Povuci karticu prema gore kada tvoj tim pogodi riječ</string>
+	<string name="pull_down_hint">↓ Povuci je prema dolje da preskočiš riječ</string>
+	<string name="how_to_play">Kako igrati</string>
 	<string name="start">Start</string>
 	<string name="round_review">Pregled runde</string>
 	<string name="review_guesses">Pregledajte svoje odgovore</string>

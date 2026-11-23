@@ -87,7 +87,7 @@ fun Greeting(modifier: Modifier = Modifier, onNext: () -> Unit = {}) {
             ){
                 Text(
                     text = stringResource(R.string.welcome_message),
-                    modifier = modifier)
+                    modifier = modifier, style = MaterialTheme.typography.headlineSmall)
                 AliasButton(onClick = onNext, colors = ButtonDefaults.secondaryColors()) {
                     Text(stringResource(R.string.continue_button))
                 }
@@ -110,8 +110,8 @@ fun ChooseLanguageScreen(onNext: () -> Unit = {}) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.choose_language),
-                modifier = Modifier.padding(top = 20.dp)) // because of camera in the top and the notifications
-            Text(stringResource(R.string.choose_language_description))
+                modifier = Modifier.padding(top = 20.dp), style = MaterialTheme.typography.headlineSmall) // because of camera in the top and the notifications
+            Text(stringResource(R.string.choose_language_description), style = MaterialTheme.typography.bodyMedium)
             Panel (
                 modifier = Modifier
                     .weight(1f)

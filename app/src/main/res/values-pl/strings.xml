@@ -94,8 +94,11 @@
 	<string name="points_short">%d pkt</string>
 	<string name="skip">Pomiń</string>
 	<string name="guessed">Odgadnięte</string>
-	<string name="word">Słowo</string>
+	<string name="word">słowo</string>
 	<string name="swipe_hint">Przesuń w górę, jeśli odgadnięte, w dół, aby pominąć</string>
+	<string name="pull_up_hint">↑ Przeciągnij kartę w górę, gdy twoja drużyna odgadnie słowo</string>
+	<string name="pull_down_hint">↓ Przeciągnij ją w dół, aby pominąć słowo</string>
+	<string name="how_to_play">Jak grać</string>
 	<string name="start">Start</string>
 	<string name="round_review">Podsumowanie rundy</string>
 	<string name="review_guesses">Sprawdź swoje odpowiedzi</string>

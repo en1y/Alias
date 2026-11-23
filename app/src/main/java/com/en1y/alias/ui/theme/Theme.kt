@@ -1,20 +1,34 @@
 package com.en1y.alias.ui.theme
 
 import android.os.Build
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -23,6 +37,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.MaterialTheme
@@ -58,6 +73,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -195,7 +211,7 @@ fun Modifier.verticalScrollWithBar(
         val w = width.toPx()
         val barHeight = (size.height * size.height / (size.height + state.maxValue)).coerceAtLeast(24.dp.toPx())
         val y = state.value.toFloat() / state.maxValue * (size.height - barHeight)
-        // ponytail: drawn 6dp outside the right edge, in the screen padding, so it never covers content; callers need ~10dp free there
+        // drawn in the padding right of the content so it never covers it; callers need ~10dp free there
         drawRoundRect(color, Offset(size.width + 6.dp.toPx(), y), Size(w, barHeight), CornerRadius(w / 2), alpha = alpha)
     }.verticalScroll(state)
 }
@@ -217,6 +233,26 @@ fun Panel(
             horizontalAlignment,
             content
         )
+    }
+}
+
+/** Dims and blocks the screen behind it while [visible]; the card rises and fades in. Back and tapping outside call [onDismiss]. */
+@Composable
+fun BoxScope.Overlay(
+    visible: Boolean,
+    onDismiss: () -> Unit = {},
+    scrim: Color = Color.Black.copy(alpha = 0.6f),
+    alignment: Alignment = Alignment.Center,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    BackHandler(visible, onDismiss)
+    val state = remember { MutableTransitionState(visible) }.apply { targetState = visible }
+    AnimatedVisibility(state, Modifier.matchParentSize(), enter = fadeIn(), exit = fadeOut()) {
+        Box(Modifier.fillMaxSize().background(scrim).pointerInput(Unit) { detectTapGestures { onDismiss() } }.navigationBarsPadding(), alignment) {
+            Box(Modifier.padding(16.dp).animateEnterExit(slideInVertically { it / 3 }, slideOutVertically { it / 3 }).pointerInput(Unit) { detectTapGestures { } }) {
+                Panel(Modifier.padding(24.dp), shape = MaterialTheme.shapes.large, verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally, content = content)
+            }
+        }
     }
 }
 
@@ -254,6 +290,7 @@ fun AliasButton(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AliasSlider(
     value: Float,
@@ -266,7 +303,11 @@ fun AliasSlider(
         activeTrackColor = MaterialTheme.colorScheme.secondary,
         inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer
     ),
-) = Slider(value, onValueChange, modifier.padding(horizontal = 10.dp), steps = steps, valueRange = valueRange, colors = colors)
+) = Slider(
+    value, onValueChange, modifier.padding(horizontal = 10.dp), steps = steps, valueRange = valueRange, colors = colors,
+    thumb = { Box(Modifier.size(24.dp).background(colors.thumbColor, CircleShape)) },
+    track = { SliderDefaults.Track(it, modifier = Modifier.height(6.dp), colors = colors, drawStopIndicator = null, thumbTrackGapSize = 0.dp) },
+)
 
 @Composable
 fun AliasSwitch(
@@ -285,7 +326,7 @@ fun AliasSwitch(
 @Composable
 fun AliasCheckbox(
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
+    onCheckedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,
     colors: CheckboxColors = CheckboxDefaults.colors(
         checkedColor = MaterialTheme.colorScheme.secondary,

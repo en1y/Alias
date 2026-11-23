@@ -94,8 +94,11 @@
 	<string name="points_short">%d pct</string>
 	<string name="skip">Sari</string>
 	<string name="guessed">Ghicit</string>
-	<string name="word">Cuvânt</string>
+	<string name="word">cuvânt</string>
 	<string name="swipe_hint">Glisează în sus dacă ai ghicit, în jos pentru a sări</string>
+	<string name="pull_up_hint">↑ Trage cartonașul în sus când echipa ta ghicește cuvântul</string>
+	<string name="pull_down_hint">↓ Trage-l în jos ca să sari peste cuvânt</string>
+	<string name="how_to_play">Cum se joacă</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rezumatul rundei</string>
 	<string name="review_guesses">Verifică răspunsurile</string>

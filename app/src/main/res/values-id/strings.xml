@@ -94,8 +94,11 @@
 	<string name="points_short">%d poin</string>
 	<string name="skip">Lewati</string>
 	<string name="guessed">Tertebak</string>
-	<string name="word">Kata</string>
+	<string name="word">kata</string>
 	<string name="swipe_hint">Geser ke atas jika tertebak, ke bawah untuk melewati</string>
+	<string name="pull_up_hint">↑ Tarik kartu ke atas saat timmu menebak kata</string>
+	<string name="pull_down_hint">↓ Tarik ke bawah untuk melewati kata</string>
+	<string name="how_to_play">Cara bermain</string>
 	<string name="start">Mulai</string>
 	<string name="round_review">Ringkasan ronde</string>
 	<string name="review_guesses">Periksa tebakanmu</string>

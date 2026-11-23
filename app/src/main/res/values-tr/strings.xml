@@ -94,8 +94,11 @@
 	<string name="points_short">%d puan</string>
 	<string name="skip">Geç</string>
 	<string name="guessed">Bildi</string>
-	<string name="word">Kelime</string>
+	<string name="word">kelime</string>
 	<string name="swipe_hint">Bildiyseniz yukarı, geçmek için aşağı kaydırın</string>
+	<string name="pull_up_hint">↑ Takımın kelimeyi bildiğinde kartı yukarı sürükle</string>
+	<string name="pull_down_hint">↓ Kelimeyi geçmek için aşağı sürükle</string>
+	<string name="how_to_play">Nasıl oynanır</string>
 	<string name="start">Başla</string>
 	<string name="round_review">Tur özeti</string>
 	<string name="review_guesses">Tahminlerinizi gözden geçirin</string>

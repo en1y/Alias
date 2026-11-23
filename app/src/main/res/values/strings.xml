@@ -95,8 +95,11 @@
 	<string name="points_short">%d pts</string>
 	<string name="skip">Skip</string>
 	<string name="guessed">Guessed</string>
-	<string name="word">Word</string>
+	<string name="word">word</string>
 	<string name="swipe_hint">Swipe up if guessed, swipe down to skip</string>
+	<string name="pull_up_hint">↑ Drag the card up when your team guesses the word</string>
+	<string name="pull_down_hint">↓ Drag it down to skip the word</string>
+	<string name="how_to_play">How to play</string>
 	<string name="start">Start</string>
 	<string name="round_review">Round review</string>
 	<string name="review_guesses">Review your guesses</string>

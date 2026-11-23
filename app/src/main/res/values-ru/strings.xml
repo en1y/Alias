@@ -94,8 +94,11 @@
 	<string name="points_short">%d очк.</string>
 	<string name="skip">Пропустить</string>
 	<string name="guessed">Угадано</string>
-	<string name="word">Слово</string>
+	<string name="word">слово</string>
 	<string name="swipe_hint">Свайп вверх — угадано, вниз — пропустить</string>
+	<string name="pull_up_hint">↑ Потяни карточку вверх, когда команда угадает слово</string>
+	<string name="pull_down_hint">↓ Потяни её вниз, чтобы пропустить слово</string>
+	<string name="how_to_play">Как играть</string>
 	<string name="start">Старт</string>
 	<string name="round_review">Итоги раунда</string>
 	<string name="review_guesses">Проверьте свои ответы</string>

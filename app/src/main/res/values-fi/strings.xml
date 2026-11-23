@@ -94,8 +94,11 @@
 	<string name="points_short">%d p</string>
 	<string name="skip">Ohita</string>
 	<string name="guessed">Arvattu</string>
-	<string name="word">Sana</string>
+	<string name="word">sana</string>
 	<string name="swipe_hint">Pyyhkäise ylös, jos arvattu, alas ohittaaksesi</string>
+	<string name="pull_up_hint">↑ Vedä korttia ylös, kun joukkueesi arvaa sanan</string>
+	<string name="pull_down_hint">↓ Vedä sitä alas ohittaaksesi sanan</string>
+	<string name="how_to_play">Näin pelaat</string>
 	<string name="start">Aloita</string>
 	<string name="round_review">Kierroksen yhteenveto</string>
 	<string name="review_guesses">Tarkistakaa arvauksenne</string>

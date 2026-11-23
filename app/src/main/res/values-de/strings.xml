@@ -94,8 +94,11 @@
 	<string name="points_short">%d Pkt.</string>
 	<string name="skip">Überspringen</string>
 	<string name="guessed">Erraten</string>
-	<string name="word">Wort</string>
+	<string name="word">wort</string>
 	<string name="swipe_hint">Wische nach oben, wenn erraten, nach unten zum Überspringen</string>
+	<string name="pull_up_hint">↑ Ziehe die Karte nach oben, wenn dein Team das Wort errät</string>
+	<string name="pull_down_hint">↓ Ziehe sie nach unten, um das Wort zu überspringen</string>
+	<string name="how_to_play">So wird gespielt</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rundenrückblick</string>
 	<string name="review_guesses">Überprüft eure Antworten</string>

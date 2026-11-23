@@ -18,7 +18,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,11 +28,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,24 +60,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Popup
 import com.en1y.alias.R
 import com.en1y.alias.data.Team
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.en1y.alias.ui.theme.AliasIcon
 import com.en1y.alias.ui.theme.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.RadioButton
 import com.en1y.alias.ui.theme.AliasButton
 import com.en1y.alias.ui.theme.AliasCheckbox
 import com.en1y.alias.ui.theme.AliasRadioButton
 import com.en1y.alias.ui.theme.AliasSlider
 import com.en1y.alias.ui.theme.AliasSwitch
 import com.en1y.alias.ui.theme.AliasTheme
+import com.en1y.alias.ui.theme.Overlay
 import com.en1y.alias.ui.theme.Panel
 import com.en1y.alias.ui.theme.aliasColors
 import com.en1y.alias.ui.theme.screen
@@ -116,7 +125,6 @@ class GameActivity: AppCompatActivity(){
                 } else step--
             }
 
-            // AliasTheme paints the background behind the fade so the window color never shows through
             AliasTheme { Crossfade(step, animationSpec = tween(250), label = "step") { s ->
                 when (s) {
                     0 -> TeamSelect(game)
@@ -146,7 +154,7 @@ fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, highlighted: Bool
     {
         Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
         Text(modifier = Modifier.weight(1f), text = team.teamName)
-        Text(text = "%d".format(team.points))
+        Text(text = "%d".format(team.points), style = MaterialTheme.typography.titleMedium)
         if (isRemovable)
             IconButton(onClick = remove) {
                 Icon(AliasIcon.Close, stringResource(R.string.remove_team))
@@ -165,8 +173,8 @@ fun TeamSelect(game: Game = remember { Game() }) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.teams))
-            Text(stringResource(R.string.teams_description))
+            Text(stringResource(R.string.teams), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.teams_description), style = MaterialTheme.typography.bodyMedium)
 
             Panel(
                 modifier = Modifier
@@ -214,8 +222,8 @@ fun ThemeChoosingScreen(modifier: Modifier = Modifier) {
             AliasButton(onClick = {step = 10}) {
                 Icon(AliasIcon.Back, null)
             }
-            Text(stringResource(R.string.theme))
-            Text(stringResource(R.string.theme_description))
+            Text(stringResource(R.string.theme), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.theme_description), style = MaterialTheme.typography.bodyMedium)
             // TODO: Implement theme color changing
         }
     }
@@ -236,7 +244,7 @@ fun AppSettings(modifier: Modifier = Modifier) {
             AliasButton(onClick = {step = 1}) {
                 Icon(AliasIcon.Back, null)
             }
-            Text(stringResource(R.string.settings))
+            Text(stringResource(R.string.settings), style = MaterialTheme.typography.headlineSmall)
 
             Panel(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -265,7 +273,7 @@ fun AppSettings(modifier: Modifier = Modifier) {
                     }
                 }
             }
-            Text(stringResource(R.string.external_links))
+            Text(stringResource(R.string.external_links), style = MaterialTheme.typography.titleMedium)
             Panel(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -316,6 +324,7 @@ fun WordPacksSettings(
     modifier: Modifier = Modifier
 ){
     val s = game.settings
+    val res = LocalContext.current.resources
 
     AliasTheme {
         Column(
@@ -328,15 +337,18 @@ fun WordPacksSettings(
             AliasButton(onClick = {step = 1}) {
                 Icon(AliasIcon.Back, null)
             }
-            Text(stringResource(R.string.word_packs))
-            Text(stringResource(R.string.word_packs_description))
+            Text(stringResource(R.string.word_packs), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.word_packs_description), style = MaterialTheme.typography.bodyMedium)
             @Composable fun WordPackElement(
                 wordPack: WordPack,
                 name: String,
                 description: String,
-                words: List<String>
+                wordCount: Int
             ) {
-                Panel(Modifier.border(2.dp, if (wordPack in s.wordPacks) MaterialTheme.colorScheme.tertiary else Color.Transparent, MaterialTheme.shapes.medium).padding(16.dp)) { Row(
+                val selected = wordPack in s.wordPacks
+                Panel(Modifier.clip(MaterialTheme.shapes.medium)
+                    .toggleable(selected, role = Role.Checkbox) { if (it) s.wordPacks += wordPack else s.wordPacks -= wordPack }
+                    .border(2.dp, if (selected) MaterialTheme.colorScheme.tertiary else Color.Transparent, MaterialTheme.shapes.medium).padding(16.dp)) { Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -347,23 +359,18 @@ fun WordPacksSettings(
                     ){
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ){
-                            Text(name)
-                            Text(pluralStringResource(R.plurals.words_count, words.size, words.size))
+                            Text(name, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+                            Text(pluralStringResource(R.plurals.words_count, wordCount, wordCount), style = MaterialTheme.typography.bodyMedium, maxLines = 1)
                         }
-                        Text(description)
+                        Text(description, style = MaterialTheme.typography.bodyMedium)
                     }
-                    AliasCheckbox(
-                        checked = wordPack in s.wordPacks,
-                        onCheckedChange = { checked ->
-                            if (checked) s.wordPacks += wordPack else s.wordPacks -= wordPack
-                        }
-                    )
+                    AliasCheckbox(checked = selected, onCheckedChange = null)
                 } }
             }
             WordPack.entries.forEach {
-                WordPackElement(it, it.title, it.description, it.words)
+                WordPackElement(it, it.title, it.description, remember(it) { it.words(res).size })
             }
         }
     }
@@ -378,42 +385,7 @@ fun GameSettings(
     var showDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    if (showDialog) {
-        AliasTheme {
-            Popup(
-                alignment = Alignment.Center,
-                onDismissRequest = { showDialog = false }
-            ) {
-                Surface(
-                    shape = MaterialTheme.shapes.medium,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    shadowElevation = 6.dp
-                ) {
-                    Column(
-                        modifier = Modifier.padding(15.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ){
-                        Text(text = stringResource(R.string.new_game_title))
-                        Text(text = stringResource(R.string.new_game_description))
-                        AliasButton({
-                            game.reset(s.wordPacks.flatMap { it.words(context.resources) })
-                            showDialog = false
-                        }) {
-                            Text(stringResource(R.string.new_game))
-                        }
-                        AliasButton({showDialog = false}) {
-                            Text(stringResource(R.string.cancel))
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    AliasTheme {
+    AliasTheme { Box {
         Column(
             modifier = Modifier
                 .screen()
@@ -428,7 +400,7 @@ fun GameSettings(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(modifier = Modifier.weight(1f), text = stringResource(R.string.game_settings))
+                Text(modifier = Modifier.weight(1f), text = stringResource(R.string.game_settings), style = MaterialTheme.typography.titleLarge)
                 AliasButton(onClick = {showDialog = true}, colors = ButtonDefaults.secondaryColors()) {
                     Icon(AliasIcon.Reset, stringResource(R.string.reset))
                 }
@@ -449,11 +421,11 @@ fun GameSettings(
                         modifier = Modifier.weight(1f),
                         horizontalAlignment = Alignment.Start
                     ){
-                        Text(stringResource(R.string.word_packs))
+                        Text(stringResource(R.string.word_packs), style = MaterialTheme.typography.titleMedium)
                         if (s.wordPacks.isEmpty())
-                            Text(stringResource(R.string.choose_word_packs))
+                            Text(stringResource(R.string.choose_word_packs), style = MaterialTheme.typography.bodyMedium)
                         else
-                            Text(stringResource(R.string.selected_word_packs, s.wordPacks.size))
+                            Text(stringResource(R.string.selected_word_packs, s.wordPacks.size), style = MaterialTheme.typography.bodyMedium)
                     }
                     Icon(AliasIcon.Forward, null)
                 }
@@ -464,7 +436,7 @@ fun GameSettings(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Text(stringResource(R.string.teams))
+                    Text(stringResource(R.string.teams), style = MaterialTheme.typography.titleMedium)
                     AliasButton(onClick = {step = 0}) {
                         Text(stringResource(R.string.edit))
                     }
@@ -484,7 +456,7 @@ fun GameSettings(
             ){
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(stringResource(R.string.round_length))
-                    Text(stringResource(R.string.seconds_short, s.timePerRound))
+                    Text(stringResource(R.string.seconds_short, s.timePerRound), style = MaterialTheme.typography.titleMedium)
                 }
                 AliasSlider(
                     value = s.timePerRound.toFloat(),
@@ -494,7 +466,7 @@ fun GameSettings(
 
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(stringResource(R.string.words_to_win))
-                    Text(pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition))
+                    Text(pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition), style = MaterialTheme.typography.titleMedium)
                 }
                 AliasSlider(
                     value = s.wordsWinCondition.toFloat(),
@@ -506,7 +478,7 @@ fun GameSettings(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text(stringResource(R.string.rules))
+                Text(stringResource(R.string.rules), style = MaterialTheme.typography.titleMedium)
                 Panel(
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -520,8 +492,8 @@ fun GameSettings(
                             modifier = Modifier
                                 .weight(1f)
                         ){
-                            Text(stringResource(R.string.last_word))
-                            Text(stringResource(R.string.last_word_description))
+                            Text(stringResource(R.string.last_word), style = MaterialTheme.typography.titleMedium)
+                            Text(stringResource(R.string.last_word_description), style = MaterialTheme.typography.bodyMedium)
                         }
                         AliasSwitch(checked = s.lastWordCanBeGuessed, onCheckedChange = {s.lastWordCanBeGuessed = it})
                     }
@@ -532,8 +504,8 @@ fun GameSettings(
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         Column(Modifier.weight(1f)){
-                            Text(stringResource(R.string.skipped_word))
-                            Text(stringResource(R.string.skipped_word_description))
+                            Text(stringResource(R.string.skipped_word), style = MaterialTheme.typography.titleMedium)
+                            Text(stringResource(R.string.skipped_word_description), style = MaterialTheme.typography.bodyMedium)
                         }
                         AliasSwitch(checked = s.skippedWordSubtractsPoints, onCheckedChange = {s.skippedWordSubtractsPoints = it})
                     }
@@ -558,6 +530,22 @@ fun GameSettings(
                 Text(text = stringResource(R.string.start_game))
             }
         }
+        NewGameDialog(showDialog, { showDialog = false }) {
+            game.reset(s.wordPacks.flatMap { it.words(context.resources) })
+            showDialog = false
+        }
+    } }
+}
+
+@Composable
+fun BoxScope.NewGameDialog(visible: Boolean, onDismiss: () -> Unit, onConfirm: () -> Unit) = Overlay(visible, onDismiss) {
+    Text(stringResource(R.string.new_game_title), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
+    Text(stringResource(R.string.new_game_description), style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
+    AliasButton(onConfirm, Modifier.fillMaxWidth(), colors = ButtonDefaults.secondaryColors()) {
+        Text(stringResource(R.string.new_game))
+    }
+    AliasButton(onDismiss, Modifier.fillMaxWidth(), colors = ButtonDefaults.secondaryColors()) {
+        Text(stringResource(R.string.cancel))
     }
 }
 
@@ -570,46 +558,12 @@ fun PreRoundScreen(
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
 
-    if (showDialog) {
-        AliasTheme {
-            Popup(
-                alignment = Alignment.Center,
-                onDismissRequest = { showDialog = false }
-            ) {
-                Surface(
-                    shape = MaterialTheme.shapes.medium,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    shadowElevation = 6.dp
-                ) {
-                    Column(
-                        modifier = Modifier.padding(15.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ){
-                        Text(text = stringResource(R.string.new_game_title))
-                        Text(text = stringResource(R.string.new_game_description))
-                        AliasButton({
-                            game.reset(game.settings.wordPacks.flatMap { it.words(context.resources) })
-                            showDialog = false
-                            step = 1
-                        }) {
-                            Text(stringResource(R.string.new_game))
-                        }
-                        AliasButton({showDialog = false}) {
-                            Text(stringResource(R.string.cancel))
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    AliasTheme {
+    AliasTheme { Box {
         Column(
             modifier = Modifier
                 .screen()
                 .verticalScrollWithBar(),
-            verticalArrangement = Arrangement.spacedBy(20.dp), // SpaceBetween is a no-op inside a scroll
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Column(Modifier.fillMaxWidth(), Arrangement.spacedBy(8.dp), Alignment.CenterHorizontally) {
@@ -621,14 +575,14 @@ fun PreRoundScreen(
                     }
                     Text(stringResource(R.string.round_number, game.getRound()))
                 }
-                Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName))
+                Image(painter = team.teamImage, contentDescription = stringResource(R.string.team_image_description, team.teamName), modifier = Modifier.size(96.dp))
 
                 if (t != null) {
-                    Text(stringResource(R.string.team_won, t.teamName))
+                    Text(stringResource(R.string.team_won, t.teamName), style = MaterialTheme.typography.headlineSmall)
                 } else {
-                    Text(stringResource(R.string.next_team))
-                    Text(team.teamName)
-                    Text(stringResource(R.string.hand_phone))
+                    Text(stringResource(R.string.next_team), style = MaterialTheme.typography.bodyMedium)
+                    Text(team.teamName, style = MaterialTheme.typography.headlineMedium)
+                    Text(stringResource(R.string.hand_phone), style = MaterialTheme.typography.bodyMedium)
                 }
             }
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -636,8 +590,8 @@ fun PreRoundScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Text(stringResource(R.string.standings))
-                    Text(stringResource(R.string.to_points, game.settings.wordsWinCondition))
+                    Text(stringResource(R.string.standings), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.to_points, game.settings.wordsWinCondition), style = MaterialTheme.typography.bodyMedium)
                 }
                 Column (
                     modifier = Modifier
@@ -645,7 +599,6 @@ fun PreRoundScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
 
                 ){
-                    // highlights the winner once the game is over, otherwise the team that plays next
                     game.teamManager.teams.forEach { key(it) { TeamIcon(team = it, isRemovable = false, highlighted = it == (t ?: team))} }
                 }
                 AliasButton(modifier = Modifier.fillMaxWidth().padding(top = 20.dp), onClick = {
@@ -657,7 +610,12 @@ fun PreRoundScreen(
                 }
             }
         }
-    }
+        NewGameDialog(showDialog, { showDialog = false }) {
+            game.reset(game.settings.wordPacks.flatMap { it.words(context.resources) })
+            showDialog = false
+            step = 1
+        }
+    } }
 }
 
 @Composable
@@ -674,7 +632,11 @@ fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinis
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "%d:%02d".format(remainingSeconds / 60, remainingSeconds % 60))
+        Text(
+            text = "%d:%02d".format(remainingSeconds / 60, remainingSeconds % 60),
+            color = if (remainingSeconds < 10) MaterialTheme.aliasColors.skipped else Color.Unspecified,
+            style = MaterialTheme.typography.displayMedium
+        )
         val rawProgress = if (initialSeconds > 0) {
             remainingSeconds.toFloat() / initialSeconds.toFloat()
         } else {
@@ -697,6 +659,13 @@ fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinis
     }
 }
 
+/** Text whose leading arrow is drawn bold in [color]. */
+@Composable
+private fun ArrowHint(text: String, color: Color, modifier: Modifier = Modifier, style: TextStyle = LocalTextStyle.current) = Text(
+    buildAnnotatedString { withStyle(SpanStyle(color, fontWeight = FontWeight.Bold)) { append(text.take(1)) }; append(text.drop(1)) },
+    modifier, style = style
+)
+
 @Composable @Preview
 fun RoundScreen(
     game: Game = remember { Game().apply { start(listOf("a")); createRound() } }
@@ -704,10 +673,9 @@ fun RoundScreen(
     val round = game.currentRound ?: return
 
     @Composable
-    fun WordCard(modifier: Modifier, word: String = stringResource(R.string.word), counter: Int = 0, color: Color = MaterialTheme.colorScheme.primary) {
-        // Box carries the drag/graphicsLayer modifiers so they move the card's background too
-        Box(modifier.fillMaxWidth(0.65f).aspectRatio(1.5f)) { Panel(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+    fun WordCard(modifier: Modifier, word: String = stringResource(R.string.word), counter: Int = 0, color: Color = MaterialTheme.colorScheme.primaryContainer) {
+        Box(modifier.fillMaxWidth(0.85f).aspectRatio(1.5f)) { Panel(
+            modifier = Modifier.fillMaxSize().padding(20.dp),
             color = color,
             shape = RoundedCornerShape(20.dp),
             verticalArrangement = Arrangement.SpaceBetween
@@ -716,11 +684,11 @@ fun RoundScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
-                Text(counter.toString())
-                Text(stringResource(R.string.guessed_hint))
+                Text(counter.toString(), style = MaterialTheme.typography.titleMedium)
+                ArrowHint(stringResource(R.string.guessed_hint), MaterialTheme.aliasColors.guessed, style = MaterialTheme.typography.titleMedium)
             }
-            Text(word, Modifier.fillMaxWidth(), textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
-            Text(stringResource(R.string.skipped_hint), Modifier.align(Alignment.End))
+            Text(word, Modifier.fillMaxWidth(), textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineLarge)
+            ArrowHint(stringResource(R.string.skipped_hint), MaterialTheme.aliasColors.skipped, Modifier.align(Alignment.End), MaterialTheme.typography.titleMedium)
         } }
     }
 
@@ -736,7 +704,6 @@ fun RoundScreen(
         }
     }
 
-    // shared by the buttons and the card swipe
     val skip: () -> Unit = { round.skipped(); if (!isRunning) { step = 4; round.end() } }
     val guess: () -> Unit = {
         if (!isRunning && round.gameSetting.lastWordCanBeGuessed) showLastWordGuessedByOtherTeams = true
@@ -746,7 +713,14 @@ fun RoundScreen(
     val drag = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
     val scope = rememberCoroutineScope()
     val limit = with(LocalDensity.current) { 120.dp.toPx() }
-    val progress = (drag.value.y / limit).coerceIn(-1f, 1f) // -1 = fully up (guessed), 1 = fully down (skipped)
+    val progress = (drag.value.y / limit).coerceIn(-1f, 1f)
+    fun fling(up: Boolean, from: Offset = Offset(0f, if (up) -1f else 1f)) = scope.launch {
+        if (drag.isRunning) drag.snapTo(Offset.Zero)
+        // a newer tap or drag cancels this animation, the word still has to count
+        try { drag.animateTo(from * (3 * limit / from.getDistance()), tween(200)) }
+        finally { if (up) guess() else skip() }
+        drag.snapTo(Offset.Zero)
+    }
 
     AliasTheme {
         Box {
@@ -762,15 +736,14 @@ fun RoundScreen(
                 }) {
                     Icon(AliasIcon.Back, null)
                 }
-                Text(round.currentTeam.teamName, Modifier.weight(1f))
+                Text(round.currentTeam.teamName, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
                 Text(stringResource(R.string.points_short, round.countPoints()))
             }
             CountdownTimer(round.gameSetting.timePerRound, isRunning = isRunning, onFinish = {isRunning = false})
             if (started && !isRunning)
-                Text(stringResource(R.string.last_word), Modifier.align(Alignment.CenterHorizontally))
+                Text(stringResource(R.string.last_word), Modifier.align(Alignment.CenterHorizontally), style = MaterialTheme.typography.titleMedium)
             val c = MaterialTheme.aliasColors
             Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                // next word waits underneath, grows into place while the top card is dragged, fades in when replaced
                 key(round.nextWord) {
                     val appear = remember { Animatable(0f) }
                     LaunchedEffect(Unit) { appear.animateTo(1f, tween(350)) }
@@ -784,14 +757,12 @@ fun RoundScreen(
                     Modifier
                         .pointerInput(started) {
                             if (started) detectDragGestures(
-                                onDragEnd = { scope.launch {
+                                onDragStart = { scope.launch { drag.snapTo(Offset.Zero) } },
+                                onDragEnd = {
                                     val v = drag.value
-                                    if (abs(v.y) > limit / 2) { // only the vertical part decides
-                                        drag.animateTo(v * (3 * limit / v.getDistance())) // fly off the way it was thrown
-                                        if (v.y < 0) guess() else skip()
-                                        drag.snapTo(Offset.Zero)
-                                    } else drag.animateTo(Offset.Zero)
-                                } },
+                                    if (abs(v.y) > limit / 2) fling(v.y < 0, v)
+                                    else scope.launch { drag.animateTo(Offset.Zero) }
+                                },
                                 onDragCancel = { scope.launch { drag.animateTo(Offset.Zero) } }
                             ) { change, amount -> change.consume(); scope.launch { drag.snapTo(drag.value + amount) } }
                         }
@@ -803,104 +774,53 @@ fun RoundScreen(
                         },
                     if (started) round.currentWord else stringResource(R.string.word),
                     round.counter,
-                    lerp(MaterialTheme.colorScheme.primary, if (progress < 0) c.guessed else c.skipped, abs(progress) * 0.7f)
+                    lerp(MaterialTheme.colorScheme.primaryContainer, if (progress < 0) c.guessed else c.skipped, abs(progress) * 0.7f)
                 )
             }
             Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
-                AliasButton(skip, Modifier.weight(1f).height(64.dp), shape = RoundedCornerShape(18.dp),
+                AliasButton({ fling(false) }, Modifier.weight(1f).height(64.dp), shape = RoundedCornerShape(18.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = c.skipped, contentColor = MaterialTheme.colorScheme.surface)) {
                     Text(stringResource(R.string.skip), style = MaterialTheme.typography.titleMedium)
                 }
                 Text(round.countPoints().toString(), Modifier.widthIn(min = 48.dp), textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineMedium)
-                AliasButton(guess, Modifier.weight(1f).height(64.dp), shape = RoundedCornerShape(18.dp),
+                AliasButton({ fling(true) }, Modifier.weight(1f).height(64.dp), shape = RoundedCornerShape(18.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = c.guessed, contentColor = MaterialTheme.colorScheme.surface)) {
                     Text(stringResource(R.string.guessed), style = MaterialTheme.typography.titleMedium)
                 }
             }
         }
-        if (!started) Box(
-            modifier = Modifier
-                .matchParentSize()
-                .background(Color.Black.copy(alpha = 0.6f))
-                .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
-            contentAlignment = Alignment.Center
-        ) {
-            Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text(stringResource(R.string.swipe_hint))
-                    AliasButton({ started = true; isRunning = true; round.start()}) {
-                        Text(stringResource(R.string.start))
-                    }
+        Overlay(!started, alignment = Alignment.BottomCenter) {
+            Text(stringResource(R.string.how_to_play), style = MaterialTheme.typography.headlineSmall)
+            ArrowHint(stringResource(R.string.pull_up_hint), MaterialTheme.aliasColors.guessed, Modifier.fillMaxWidth())
+            ArrowHint(stringResource(R.string.pull_down_hint), MaterialTheme.aliasColors.skipped, Modifier.fillMaxWidth())
+            AliasButton({ started = true; isRunning = true; round.start() }, Modifier.fillMaxWidth().height(56.dp), colors = ButtonDefaults.secondaryColors()) {
+                Text(stringResource(R.string.start))
+            }
+        }
+        Overlay(showLastWordGuessedByOtherTeams) {
+            Text(stringResource(R.string.choose_guessing_team), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+            var t: Team? by remember { mutableStateOf(round.currentTeam) }
+            (game.teamManager.teams + null).forEach {
+                Row(Modifier.fillMaxWidth().selectable(t == it, role = Role.RadioButton) { t = it }, verticalAlignment = Alignment.CenterVertically) {
+                    AliasRadioButton(selected = t == it, onClick = null)
+                    Text(it?.teamName ?: stringResource(R.string.no_team_guessed))
+                }
+            }
+            AliasButton({ t?.addPoints(1); step = 4; round.end() }, Modifier.fillMaxWidth(), colors = ButtonDefaults.secondaryColors()) {
+                Text(stringResource(R.string.continue_button))
+            }
+        }
+        Overlay(showExit, { showExit = false; isRunning = true }) {
+            Text(stringResource(R.string.end_round_confirm), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+            Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp)) {
+                AliasButton({ showExit = false; isRunning = true }, Modifier.weight(1f), colors = ButtonDefaults.secondaryColors()) {
+                    Text(stringResource(R.string.cancel))
+                }
+                AliasButton({ round.end(); showExit = false; step = 4 }, Modifier.weight(1f), colors = ButtonDefaults.secondaryColors()) {
+                    Text(stringResource(R.string.confirm))
                 }
             }
         }
-            if (showLastWordGuessedByOtherTeams) {
-                Box(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .background(Color.Black.copy(alpha = 0.6f))
-                        .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
-                    contentAlignment = Alignment.Center
-                ) {
-                    Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
-                        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Text(stringResource(R.string.choose_guessing_team))
-                            var t: Team? by remember { mutableStateOf(round.currentTeam) }
-                            game.teamManager.teams.forEach {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    AliasRadioButton(selected = t == it, onClick = { t = it })
-                                    Text(it.teamName)
-                                }
-                            }
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                AliasRadioButton(selected = t == null, onClick = { t = null })
-                                Text(stringResource(R.string.no_team_guessed))
-                            }
-                            AliasButton({
-                                t?.addPoints(1)
-                                step = 4
-                                round.end()
-                            }) {
-                                Text(stringResource(R.string.continue_button))
-                            }
-                        }
-                    }
-                }
-            }
-            if (showExit) {
-                Box(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .background(Color.Black.copy(alpha = 0.6f))
-                        .pointerInput(Unit) { detectTapGestures { } }, // swallow taps so the screen below is inactive
-                    contentAlignment = Alignment.Center
-                ) {
-                    Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 6.dp) {
-                        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Text(stringResource(R.string.end_round_confirm))
-                            Row(Modifier.align(Alignment.End), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                AliasButton({
-                                    showExit = false
-                                    isRunning = true
-                                }) {
-                                    Text(stringResource(R.string.cancel))
-                                }
-                                AliasButton({
-                                    round.end()
-                                    showExit = false
-                                    step = 4
-                                }) {
-                                    Text(stringResource(R.string.confirm))
-                                }
-                            }
-                        }
-                    }
-                }
-            }
     } }
 }
 
@@ -912,14 +832,13 @@ fun PostRoundScreen(
     AliasTheme {
         Column(
             modifier = Modifier
-                .screen()
-                .verticalScrollWithBar(),
+                .screen(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
             val round = game.currentRound
             if (round != null) {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
                         AliasButton({}) {
                             Icon(AliasIcon.Back, null)
@@ -928,33 +847,37 @@ fun PostRoundScreen(
                             painter = round.currentTeam.teamImage,
                             contentDescription = stringResource(R.string.team_image_description, round.currentTeam.teamName)
                         )
-                        Text(round.currentTeam.teamName, Modifier.weight(1f))
+                        Text(round.currentTeam.teamName, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
                         Text(stringResource(R.string.round_number, game.getRound()))
                     }
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(stringResource(R.string.round_review))
-                            Text(stringResource(R.string.review_guesses))
+                            Text(stringResource(R.string.round_review), style = MaterialTheme.typography.headlineSmall)
+                            Text(stringResource(R.string.review_guesses), style = MaterialTheme.typography.bodyMedium)
                         }
                         // roundWords is a state map, so this recomputes whenever a status is toggled
                         val points = round.countPoints()
-                        Text("${if (points > 0) "+" else ""}$points")
+                        Text("${if (points > 0) "+" else ""}$points", style = MaterialTheme.typography.headlineSmall)
                     }
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Column(Modifier.weight(1f).verticalScrollWithBar(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         round.roundWords.forEach { (string, status) ->
                             Panel(Modifier.padding(start = 16.dp)) { Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                                 Text(string, Modifier.weight(1f))
                                 val c = MaterialTheme.aliasColors
-                                val idle = LocalContentColor.current
+                                val surface = MaterialTheme.colorScheme.surface
+                                @Composable fun fill(s: Round.GuessStatus, color: Color) = IconButtonDefaults.iconButtonColors(
+                                    containerColor = if (status == s) color else Color.Transparent,
+                                    contentColor = if (status == s) surface else LocalContentColor.current
+                                )
                                 IconButton({
                                     round.updateByWord(string, Round.GuessStatus.Guessed)
-                                }) { Icon(AliasIcon.Check, stringResource(R.string.guessed), tint = if (status == Round.GuessStatus.Guessed) c.guessed else idle) }
+                                }, colors = fill(Round.GuessStatus.Guessed, c.guessed)) { Icon(AliasIcon.Check, stringResource(R.string.guessed)) }
                                 IconButton({
                                     round.updateByWord(string, Round.GuessStatus.Skipped)
-                                }) { Icon(AliasIcon.Close, stringResource(R.string.skip), tint = if (status == Round.GuessStatus.Skipped) c.skipped else idle) }
+                                }, colors = fill(Round.GuessStatus.Skipped, c.skipped)) { Icon(AliasIcon.Close, stringResource(R.string.skip)) }
                                 IconButton({
                                     round.updateByWord(string, Round.GuessStatus.Deleted)
-                                }) { Icon(AliasIcon.Delete, null, tint = if (status == Round.GuessStatus.Deleted) c.deleted else idle) }
+                                }, colors = fill(Round.GuessStatus.Deleted, c.deleted)) { Icon(AliasIcon.Delete, null) }
                             } }
 
                         }

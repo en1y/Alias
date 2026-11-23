@@ -94,8 +94,11 @@
 	<string name="points_short">%d p</string>
 	<string name="skip">Hopp over</string>
 	<string name="guessed">Gjettet</string>
-	<string name="word">Ord</string>
+	<string name="word">ord</string>
 	<string name="swipe_hint">Sveip opp hvis gjettet, ned for å hoppe over</string>
+	<string name="pull_up_hint">↑ Dra kortet opp når laget ditt gjetter ordet</string>
+	<string name="pull_down_hint">↓ Dra det ned for å hoppe over ordet</string>
+	<string name="how_to_play">Slik spiller du</string>
 	<string name="start">Start</string>
 	<string name="round_review">Rundeoppsummering</string>
 	<string name="review_guesses">Gå gjennom gjetningene</string>
