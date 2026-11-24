@@ -1,6 +1,6 @@
 import java.util.Properties
 
-val appVersion = "1.0.1"
+val appVersion = "1.0.2"
 
 plugins {
     alias(libs.plugins.android.application)
@@ -55,6 +55,12 @@ android {
     }
     androidResources {
         generateLocaleConfig = true
+    }
+    // the app has its own language picker, so Play must install every language up front
+    bundle {
+        language {
+            enableSplit = false
+        }
     }
 }
 
