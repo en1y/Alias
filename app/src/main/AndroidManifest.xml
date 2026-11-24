@@ -21,11 +21,11 @@
         </service>
         <activity
                 android:name=".ui.activities.WelcomeActivity"
-                android:configChanges="locale|layoutDirection"
+                android:configChanges="locale|layoutDirection|screenLayout"
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.GameActivity"
-                android:configChanges="locale|layoutDirection|uiMode"
+                android:configChanges="locale|layoutDirection|screenLayout|uiMode"
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.MainActivity"
