@@ -64,6 +64,7 @@
 	<string name="settings">Asetukset</string>
 	<string name="language">Kieli</string>
 	<string name="choose_theme">Valitse teema</string>
+	<string name="sound_effects">Äänitehosteet</string>
 	<string name="external_links">Ulkoiset linkit</string>
 	<string name="github_page">Sovelluksen GitHub-sivu</string>
 	<string name="creator_page">Tekijän sivu</string>

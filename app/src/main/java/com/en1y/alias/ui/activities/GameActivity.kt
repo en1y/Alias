@@ -1,6 +1,8 @@
 package com.en1y.alias.ui.activities
 
+import android.content.Context
 import android.content.Intent
+import android.media.SoundPool
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
@@ -45,10 +47,12 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -99,6 +103,7 @@ import com.en1y.alias.ui.theme.aliasColors
 import com.en1y.alias.ui.theme.screen
 import com.en1y.alias.ui.theme.secondaryColors
 import com.en1y.alias.ui.theme.verticalScrollWithBar
+import androidx.core.content.edit
 import androidx.core.net.toUri
 import com.en1y.alias.data.Game
 import com.en1y.alias.data.Round
@@ -361,6 +366,11 @@ private fun RowScope.ThemeOption(
 @Composable
 fun AppSettings() {
     val context = LocalContext.current
+    val prefs = remember { context.getSharedPreferences("settings", Context.MODE_PRIVATE) }
+    var sfx by remember { mutableFloatStateOf(prefs.getFloat("sfxVolume", 1f)) }
+    val sounds = remember { SoundPool.Builder().build() } // 1 stream: a new check cuts off the previous one
+    val hello = remember { sounds.load(context, R.raw.hello, 1) }
+    DisposableEffect(Unit) { onDispose { sounds.release() } }
 
     AliasTheme {
         Column(
@@ -400,6 +410,17 @@ fun AppSettings() {
                     AliasButton(onClick = { step = 102 }, colors = ButtonDefaults.secondaryColors()) {
                         Icon(AliasIcon.Forward, null)
                     }
+                }
+                HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
+                Column(Modifier.fillMaxWidth()) {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text(stringResource(R.string.sound_effects))
+                        Text("${(sfx * 100).roundToInt()}%", style = MaterialTheme.typography.titleMedium)
+                    }
+                    AliasSlider(sfx, { sfx = it }, steps = 9, onValueChangeFinished = {
+                        prefs.edit { putFloat("sfxVolume", sfx) }
+                        sounds.play(hello, sfx, sfx, 1, 0, 1f)
+                    })
                 }
             }
             Text(stringResource(R.string.external_links), style = MaterialTheme.typography.titleMedium)
@@ -863,13 +884,19 @@ fun PreRoundScreen(
 }
 
 @Composable
-fun CountdownTimer(initialSeconds: Int = 60, isRunning: Boolean = false, onFinish: () -> Unit = {}) {
+fun CountdownTimer(
+    initialSeconds: Int = 60,
+    isRunning: Boolean = false,
+    onTick: (Int) -> Unit = {},
+    onFinish: () -> Unit = {}
+) {
     var remainingSeconds by remember { mutableIntStateOf(initialSeconds) }
 
     LaunchedEffect(isRunning, remainingSeconds) {
         if (isRunning && remainingSeconds > 0) {
             delay(1000L.milliseconds)
             remainingSeconds--
+            onTick(remainingSeconds)
         } else if (isRunning && remainingSeconds == 0) {
             onFinish()
         }
@@ -1001,11 +1028,22 @@ fun RoundScreen(
         }
     }
 
+    val context = LocalContext.current
+    val sfx = remember { context.getSharedPreferences("settings", Context.MODE_PRIVATE).getFloat("sfxVolume", 1f) }
+    val sounds = remember { SoundPool.Builder().setMaxStreams(3).build() }
+    val correct = remember { sounds.load(context, R.raw.correct, 1) }
+    val wrong = remember { sounds.load(context, R.raw.wrong, 1) }
+    // single beeps cut from countdown.mp3, played on each timer tick so they can't drift
+    val tick = remember { sounds.load(context, R.raw.countdown_tick, 1) }
+    val timeUp = remember { sounds.load(context, R.raw.countdown_end, 1) }
+    DisposableEffect(Unit) { onDispose { sounds.release() } }
+
     val drag = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
     val scope = rememberCoroutineScope()
     val limit = with(LocalDensity.current) { 120.dp.toPx() }
     val progress = (drag.value.y / limit).coerceIn(-1f, 1f)
     fun fling(up: Boolean, from: Offset = Offset(0f, if (up) -1f else 1f)) = scope.launch {
+        sounds.play(if (up) correct else wrong, sfx, sfx, 1, 0, 1f)
         if (drag.isRunning) drag.snapTo(Offset.Zero)
         // a newer tap or drag cancels this animation, the word still has to count
         try {
@@ -1033,7 +1071,11 @@ fun RoundScreen(
                     Text(round.currentTeam.teamName, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
                     Text(stringResource(R.string.points_short, round.countPoints()))
                 }
-                CountdownTimer(round.gameSetting.timePerRound, isRunning = isRunning, onFinish = { isRunning = false })
+                CountdownTimer(
+                    round.gameSetting.timePerRound,
+                    isRunning = isRunning,
+                    onTick = { if (it <= 10) sounds.play(if (it == 0) timeUp else tick, sfx, sfx, 1, 0, 1f) },
+                    onFinish = { isRunning = false })
                 if (started && !isRunning)
                     Text(
                         stringResource(R.string.last_word),

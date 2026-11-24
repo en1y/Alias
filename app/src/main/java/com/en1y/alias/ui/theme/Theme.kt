@@ -369,6 +369,7 @@ fun AliasSlider(
     modifier: Modifier = Modifier,
     steps: Int = 0,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+    onValueChangeFinished: (() -> Unit)? = null,
     colors: SliderColors = SliderDefaults.colors(
         thumbColor = MaterialTheme.colorScheme.secondary,
         activeTrackColor = MaterialTheme.colorScheme.secondary,
@@ -376,6 +377,7 @@ fun AliasSlider(
     ),
 ) = Slider(
     value, onValueChange, modifier.padding(horizontal = 10.dp), steps = steps, valueRange = valueRange, colors = colors,
+    onValueChangeFinished = onValueChangeFinished,
     thumb = { Box(Modifier
         .size(24.dp)
         .background(colors.thumbColor, CircleShape)) },
