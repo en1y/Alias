@@ -16356,4 +16356,6 @@
 		<item>молния</item>
 		<item>узел</item>
 </string-array>
+	<string name="version">Версия %s</string>
+	<string name="privacy_policy">Политика конфиденциальности</string>
 </resources>

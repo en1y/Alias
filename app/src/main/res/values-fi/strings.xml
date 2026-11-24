@@ -16470,4 +16470,6 @@
 		<item>vibraattori</item>
 		<item>kerma</item>
 </string-array>
+	<string name="version">Versio %s</string>
+	<string name="privacy_policy">Tietosuojakäytäntö</string>
 </resources>

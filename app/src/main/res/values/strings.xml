@@ -18214,4 +18214,6 @@
 		<item>vibrator</item>
 		<item>confession</item>
 </string-array>
+	<string name="version">Version %s</string>
+	<string name="privacy_policy">Privacy policy</string>
 </resources>

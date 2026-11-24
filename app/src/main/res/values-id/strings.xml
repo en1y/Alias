@@ -16000,4 +16000,6 @@
 		<item>kenikmatan jasmani</item>
 		<item>getaran</item>
 </string-array>
+	<string name="version">Versi %s</string>
+	<string name="privacy_policy">Kebijakan privasi</string>
 </resources>

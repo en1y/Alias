@@ -16816,4 +16816,6 @@
 		<item>Funkeln</item>
 		<item>Fotosession</item>
 </string-array>
+	<string name="version">Version %s</string>
+	<string name="privacy_policy">Datenschutzerklärung</string>
 </resources>

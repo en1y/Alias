@@ -16281,4 +16281,6 @@
 		<item>hódoló</item>
 		<item>kánkán</item>
 </string-array>
+	<string name="version">Verzió %s</string>
+	<string name="privacy_policy">Adatvédelmi irányelvek</string>
 </resources>

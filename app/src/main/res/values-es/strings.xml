@@ -16729,4 +16729,6 @@
 		<item>galán</item>
 		<item>dominación</item>
 </string-array>
+	<string name="version">Versión %s</string>
+	<string name="privacy_policy">Política de privacidad</string>
 </resources>

@@ -16468,4 +16468,6 @@
 		<item>travesseiro</item>
 		<item>ilusão</item>
 </string-array>
+	<string name="version">Versão %s</string>
+	<string name="privacy_policy">Política de privacidade</string>
 </resources>

@@ -16394,4 +16394,6 @@
 		<item>przywiązanie</item>
 		<item>kombinezon</item>
 </string-array>
+	<string name="version">Wersja %s</string>
+	<string name="privacy_policy">Polityka prywatności</string>
 </resources>

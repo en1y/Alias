@@ -364,8 +364,27 @@ fun AppSettings(modifier: Modifier = Modifier) {
                         Icon(AliasIcon.Forward, null)
                     }
                 }
+                HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(stringResource(R.string.privacy_policy))
+                    AliasButton(onClick = {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/en1y/Alias/blob/master/docs/PRIVACY.md".toUri()))
+                    }, colors = ButtonDefaults.secondaryColors()) {
+                        Icon(AliasIcon.Forward, null)
+                    }
+                }
             }
-
+            Text(
+                stringResource(R.string.version, context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: ""),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall,
+                color = LocalContentColor.current.copy(alpha = 0.6f)
+            )
         }
     }
 }

@@ -16364,4 +16364,6 @@
 		<item>logodnic</item>
 		<item>rezistență</item>
 </string-array>
+	<string name="version">Versiunea %s</string>
+	<string name="privacy_policy">Politica de confidențialitate</string>
 </resources>

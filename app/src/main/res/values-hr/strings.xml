@@ -16311,4 +16311,6 @@
 		<item>sanjar</item>
 		<item>zdravica</item>
 </string-array>
+	<string name="version">Verzija %s</string>
+	<string name="privacy_policy">Pravila privatnosti</string>
 </resources>

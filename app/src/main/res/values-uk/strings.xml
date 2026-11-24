@@ -15898,4 +15898,6 @@
 		<item>жорсткість</item>
 		<item>готель</item>
 </string-array>
+	<string name="version">Версія %s</string>
+	<string name="privacy_policy">Політика конфіденційності</string>
 </resources>

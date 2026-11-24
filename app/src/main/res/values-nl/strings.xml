@@ -16440,4 +16440,6 @@
 		<item>pols</item>
 		<item>weelde</item>
 </string-array>
+	<string name="version">Versie %s</string>
+	<string name="privacy_policy">Privacybeleid</string>
 </resources>

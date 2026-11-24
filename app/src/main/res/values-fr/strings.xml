@@ -16836,4 +16836,6 @@
 		<item>raideur</item>
 		<item>fécondité</item>
 </string-array>
+	<string name="version">Version %s</string>
+	<string name="privacy_policy">Politique de confidentialité</string>
 </resources>

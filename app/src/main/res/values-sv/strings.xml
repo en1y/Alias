@@ -16028,4 +16028,6 @@
 		<item>sexualundervisning</item>
 		<item>träff</item>
 </string-array>
+	<string name="version">Version %s</string>
+	<string name="privacy_policy">Integritetspolicy</string>
 </resources>

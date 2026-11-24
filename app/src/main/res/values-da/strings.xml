@@ -16704,4 +16704,6 @@
 		<item>cancan</item>
 		<item>fotosession</item>
 </string-array>
+	<string name="version">Version %s</string>
+	<string name="privacy_policy">Privatlivspolitik</string>
 </resources>

@@ -1,3 +1,7 @@
+import java.util.Properties
+
+val appVersion = "1.0.0"
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -15,17 +19,31 @@ android {
         applicationId = "com.en1y.alias"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionName = appVersion
+        versionCode = appVersion.split(".").map(String::toInt).let { (x, y, z) -> x * 10000 + y * 100 + z }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    val keystoreFile = rootProject.file("keystore.properties")
+    val signing = keystoreFile.takeIf { it.exists() }?.let { file ->
+        Properties().apply { file.inputStream().use(::load) }
+    }
+    signingConfigs {
+        if (signing != null) create("release") {
+            storeFile = rootProject.file(signing.getProperty("storeFile"))
+            storePassword = signing.getProperty("storePassword")
+            keyAlias = signing.getProperty("keyAlias")
+            keyPassword = signing.getProperty("keyPassword")
+        }
     }
 
     buildTypes {
         release {
             optimization {
-                enable = false
+                enable = true
             }
+            if (signing != null) signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

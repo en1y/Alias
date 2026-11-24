@@ -15372,4 +15372,6 @@
 		<item>zirve</item>
 		<item>gerdanlık</item>
 </string-array>
+	<string name="version">Sürüm %s</string>
+	<string name="privacy_policy">Gizlilik politikası</string>
 </resources>

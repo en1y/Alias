@@ -16796,4 +16796,6 @@
 		<item>tanečnice</item>
 		<item>řeč těla</item>
 </string-array>
+	<string name="version">Verze %s</string>
+	<string name="privacy_policy">Zásady ochrany osobních údajů</string>
 </resources>

@@ -16515,4 +16515,6 @@
 		<item>sottoveste</item>
 		<item>collana</item>
 </string-array>
+	<string name="version">Versione %s</string>
+	<string name="privacy_policy">Informativa sulla privacy</string>
 </resources>

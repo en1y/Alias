@@ -16516,4 +16516,6 @@
 		<item>cancan</item>
 		<item>stråleglans</item>
 </string-array>
+	<string name="version">Versjon %s</string>
+	<string name="privacy_policy">Personvernerklæring</string>
 </resources>

@@ -17091,4 +17091,6 @@
 		<item>hladenie</item>
 		<item>gigolo</item>
 </string-array>
+	<string name="version">Verzia %s</string>
+	<string name="privacy_policy">Zásady ochrany osobných údajov</string>
 </resources>
