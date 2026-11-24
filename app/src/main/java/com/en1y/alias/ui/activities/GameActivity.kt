@@ -38,6 +38,8 @@ import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.ui.semantics.Role
@@ -165,8 +167,17 @@ class GameActivity : AppCompatActivity() {
 }
 
 @Composable
-fun TeamIcon(team: Team = Team(), isRemovable: Boolean = true, highlighted: Boolean = false, remove: () -> Unit = {}) {
-    Panel(color = if (highlighted) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary) {
+fun TeamIcon(
+    team: Team = Team(),
+    isRemovable: Boolean = true,
+    highlighted: Boolean = false,
+    modifier: Modifier = Modifier,
+    remove: () -> Unit = {}
+) {
+    Panel(
+        modifier,
+        color = if (highlighted) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -652,26 +663,6 @@ fun GameSettings(
                             Icon(AliasIcon.Forward, null)
                         }
                     }
-                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(stringResource(R.string.teams), style = MaterialTheme.typography.titleMedium)
-                            AliasButton(onClick = { step = 0 }) {
-                                Text(stringResource(R.string.edit))
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(10.dp)
-
-                        ) {
-                            s.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false) } }
-                        }
-                    }
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.Start
@@ -757,6 +748,26 @@ fun GameSettings(
                             }
                         }
                     }
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(stringResource(R.string.teams), style = MaterialTheme.typography.titleMedium)
+                            AliasButton(onClick = { step = 0 }) {
+                                Text(stringResource(R.string.edit))
+                            }
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+
+                        ) {
+                            s.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false) } }
+                        }
+                    }
                 }
                 var errorLabel by remember { mutableStateOf("") }
                 var errorVisible by remember { mutableStateOf(false) }
@@ -814,13 +825,14 @@ fun PreRoundScreen(
     val team: Team = remember { game.getCurrentTeam() }
     val resources = LocalResources.current
     var showDialog by remember { mutableStateOf(false) }
+    val currentTeam = remember { BringIntoViewRequester() }
+    LaunchedEffect(Unit) { currentTeam.bringIntoView() }
 
     AliasTheme {
         Box {
             Column(
                 modifier = Modifier
-                    .screen()
-                    .verticalScrollWithBar(),
+                    .screen(),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalAlignment = Alignment.Start
             ) {
@@ -852,7 +864,7 @@ fun PreRoundScreen(
                         Text(stringResource(R.string.hand_phone), style = MaterialTheme.typography.bodyMedium)
                     }
                 }
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -865,16 +877,20 @@ fun PreRoundScreen(
                     }
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .verticalScrollWithBar()
+                            .weight(1f),
                         verticalArrangement = Arrangement.spacedBy(10.dp)
 
                     ) {
                         game.teamManager.teams.forEach {
                             key(it) {
+                                val current = it == (t ?: team)
                                 TeamIcon(
                                     team = it,
                                     isRemovable = false,
-                                    highlighted = it == (t ?: team)
+                                    highlighted = current,
+                                    modifier = if (current) Modifier.bringIntoViewRequester(currentTeam) else Modifier
                                 )
                             }
                         }
