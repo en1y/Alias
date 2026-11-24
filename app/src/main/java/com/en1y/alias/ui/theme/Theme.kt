@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -239,10 +240,10 @@ fun AliasTheme(
 
 // ---------------------------------------------------------------- Layout defaults
 
-/** Root column of every screen. Top padding leaves room for the camera/status bar. */
+/** Root column of every screen. Insets keep content clear of the status bar, camera cutout and nav bar. */
 fun Modifier.screen() = fillMaxSize()
+    .safeDrawingPadding()
     .padding(16.dp)
-    .padding(top = 30.dp)
 
 /** Scrolls vertically and draws a thin scrollbar that fades while idle. Color defaults to the current text color. */
 @Composable

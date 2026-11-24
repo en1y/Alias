@@ -6,6 +6,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
@@ -119,6 +120,7 @@ class GameActivity : AppCompatActivity() {
         ThemeSettings.load(this)
         if (savedInstanceState == null) step = 0
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        enableEdgeToEdge()
         setContent {
             var lastBackPress by remember { mutableLongStateOf(0L) }
             BackHandler {
