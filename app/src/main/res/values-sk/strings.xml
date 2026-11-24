@@ -70,6 +70,8 @@
 	<string name="creator_page">Stránka autora</string>
 	<string name="word_packs">Balíčky slov</string>
 	<string name="word_packs_description">Vyberte jeden alebo viac balíčkov slov</string>
+	<string name="add_all">Pridať všetky</string>
+	<string name="remove_all">Odobrať všetky</string>
 	<string name="new_game_title">Začať novú hru?</string>
 	<string name="new_game_description">Hra sa úplne resetuje vrátane skóre a kôl</string>
 	<string name="new_game">Nová hra</string>

@@ -126,6 +126,8 @@ class GameActivity : AppCompatActivity() {
         if (savedInstanceState == null) step = 0
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         enableEdgeToEdge()
+        game.settings.wordPacks += WordPack.Pack1
+        game.settings.wordPacks += WordPack.Pack2
         setContent {
             var lastBackPress by remember { mutableLongStateOf(0L) }
             BackHandler {
@@ -510,8 +512,14 @@ fun WordPacksSettings(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            AliasButton(onClick = { step = 1 }) {
-                Icon(AliasIcon.Back, null)
+            Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween, Alignment.CenterVertically) {
+                AliasButton(onClick = { step = 1 }) {
+                    Icon(AliasIcon.Back, null)
+                }
+                val all = s.wordPacks.size == WordPack.entries.size
+                AliasButton({ s.wordPacks = if (all) emptySet() else WordPack.entries.toSet() }) {
+                    Text(stringResource(if (all) R.string.remove_all else R.string.add_all))
+                }
             }
             Text(stringResource(R.string.word_packs), style = MaterialTheme.typography.headlineSmall)
             Text(stringResource(R.string.word_packs_description), style = MaterialTheme.typography.bodyMedium)
@@ -583,8 +591,7 @@ fun GameSettings(
         Box {
             Column(
                 modifier = Modifier
-                    .screen()
-                    .verticalScrollWithBar(),
+                    .screen(),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -609,133 +616,145 @@ fun GameSettings(
                         }
                     }
                 }
-                AliasButton(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    onClick = { step = 11 }
+                        .fillMaxWidth()
+                        .verticalScrollWithBar()
+                        .weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            Text(stringResource(R.string.word_packs), style = MaterialTheme.typography.titleMedium)
-                            if (s.wordPacks.isEmpty())
-                                Text(
-                                    stringResource(R.string.choose_word_packs),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            else
-                                Text(
-                                    stringResource(R.string.selected_word_packs, s.wordPacks.size),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                        }
-                        Icon(AliasIcon.Forward, null)
-                    }
-                }
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(stringResource(R.string.teams), style = MaterialTheme.typography.titleMedium)
-                        AliasButton(onClick = { step = 0 }) {
-                            Text(stringResource(R.string.edit))
-                        }
-                    }
-                    Column(
+                    AliasButton(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-
-                    ) {
-                        s.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false) } }
-                    }
-                }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text(stringResource(R.string.round_length))
-                        Text(
-                            stringResource(R.string.seconds_short, s.timePerRound),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    AliasSlider(
-                        value = s.timePerRound.toFloat(),
-                        onValueChange = { s.timePerRound = it.roundToInt() },
-                        steps = 6,
-                        valueRange = 30f..240f
-                    )
-
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text(stringResource(R.string.words_to_win))
-                        Text(
-                            pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    AliasSlider(
-                        value = s.wordsWinCondition.toFloat(),
-                        onValueChange = { s.wordsWinCondition = it.roundToInt() },
-                        steps = 8,
-                        valueRange = 25f..250f
-                    )
-                }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(stringResource(R.string.rules), style = MaterialTheme.typography.titleMedium)
-                    Panel(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                        onClick = { step = 11 }
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(
-                                modifier = Modifier
-                                    .weight(1f)
+                                modifier = Modifier.weight(1f),
+                                horizontalAlignment = Alignment.Start
                             ) {
-                                Text(stringResource(R.string.last_word), style = MaterialTheme.typography.titleMedium)
-                                Text(
-                                    stringResource(R.string.last_word_description),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
+                                Text(stringResource(R.string.word_packs), style = MaterialTheme.typography.titleMedium)
+                                if (s.wordPacks.isEmpty())
+                                    Text(
+                                        stringResource(R.string.choose_word_packs),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                else
+                                    Text(
+                                        stringResource(R.string.selected_word_packs, s.wordPacks.size),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
                             }
-                            AliasSwitch(
-                                checked = s.lastWordCanBeGuessed,
-                                onCheckedChange = { s.lastWordCanBeGuessed = it })
+                            Icon(AliasIcon.Forward, null)
                         }
-                        HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
+                    }
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Column(Modifier.weight(1f)) {
-                                Text(
-                                    stringResource(R.string.skipped_word),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                Text(
-                                    stringResource(R.string.skipped_word_description),
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
+                            Text(stringResource(R.string.teams), style = MaterialTheme.typography.titleMedium)
+                            AliasButton(onClick = { step = 0 }) {
+                                Text(stringResource(R.string.edit))
                             }
-                            AliasSwitch(
-                                checked = s.skippedWordSubtractsPoints,
-                                onCheckedChange = { s.skippedWordSubtractsPoints = it })
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+
+                        ) {
+                            s.tm.teams.forEach { t -> key(t) { TeamIcon(team = t, isRemovable = false) } }
+                        }
+                    }
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text(stringResource(R.string.round_length))
+                            Text(
+                                stringResource(R.string.seconds_short, s.timePerRound),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                        AliasSlider(
+                            value = s.timePerRound.toFloat(),
+                            onValueChange = { s.timePerRound = it.roundToInt() },
+                            steps = 6,
+                            valueRange = 30f..240f
+                        )
+
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text(stringResource(R.string.words_to_win))
+                            Text(
+                                pluralStringResource(R.plurals.words_count, s.wordsWinCondition, s.wordsWinCondition),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                        AliasSlider(
+                            value = s.wordsWinCondition.toFloat(),
+                            onValueChange = { s.wordsWinCondition = it.roundToInt() },
+                            steps = 8,
+                            valueRange = 25f..250f
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Text(stringResource(R.string.rules), style = MaterialTheme.typography.titleMedium)
+                        Panel(
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(Modifier.weight(1f)) {
+                                    Text(
+                                        stringResource(R.string.skipped_word),
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                    Text(
+                                        stringResource(R.string.skipped_word_description),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                                AliasSwitch(
+                                    checked = s.skippedWordSubtractsPoints,
+                                    onCheckedChange = { s.skippedWordSubtractsPoints = it })
+                            }
+                            HorizontalDivider(thickness = 2.dp, color = LocalContentColor.current)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                ) {
+                                    Text(
+                                        stringResource(R.string.last_word),
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                    Text(
+                                        stringResource(R.string.last_word_description),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                                AliasSwitch(
+                                    checked = s.lastWordCanBeGuessed,
+                                    onCheckedChange = { s.lastWordCanBeGuessed = it })
+                            }
                         }
                     }
                 }
@@ -807,12 +826,13 @@ fun PreRoundScreen(
             ) {
                 Column(Modifier.fillMaxWidth(), Arrangement.spacedBy(8.dp), Alignment.CenterHorizontally) {
                     Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween, Alignment.CenterVertically) {
-                        AliasButton({
-                            showDialog = true
-                        }) {
-                            Text(stringResource(R.string.end_game))
+                        AliasButton(onClick = { step = 1 }) {
+                            Icon(AliasIcon.Back, null)
                         }
                         Text(stringResource(R.string.round_number, game.getRound()))
+                        AliasButton(onClick = { showDialog = true }, colors = ButtonDefaults.secondaryColors()) {
+                            Icon(AliasIcon.Reset, stringResource(R.string.reset))
+                        }
                     }
                     Image(
                         painter = team.teamImage,
@@ -1003,6 +1023,7 @@ fun RoundScreen(
     }
 
     var isRunning by remember { mutableStateOf(false) }
+    var isTimerDone by remember { mutableStateOf(false) }
     var started by remember { mutableStateOf(false) }
     var showLastWordGuessedByOtherTeams by remember { mutableStateOf(false) }
     var showExit by remember { mutableStateOf(false) }
@@ -1075,8 +1096,11 @@ fun RoundScreen(
                     round.gameSetting.timePerRound,
                     isRunning = isRunning,
                     onTick = { if (it <= 10) sounds.play(if (it == 0) timeUp else tick, sfx, sfx, 1, 0, 1f) },
-                    onFinish = { isRunning = false })
-                if (started && !isRunning)
+                    onFinish = {
+                        isTimerDone = true
+                        isRunning = false
+                    })
+                if (started && isTimerDone)
                     Text(
                         stringResource(R.string.last_word),
                         Modifier.align(Alignment.CenterHorizontally),
@@ -1237,6 +1261,11 @@ fun PostRoundScreen(
     game: Game = remember { Game() }
 ) {
 
+    BackHandler {
+        game.endRound()
+        step = 2
+    }
+
     AliasTheme {
         Column(
             modifier = Modifier
@@ -1248,7 +1277,10 @@ fun PostRoundScreen(
             if (round != null) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
-                        AliasButton({}) {
+                        AliasButton({
+                            game.endRound()
+                            step = 2
+                        }) {
                             Icon(AliasIcon.Back, null)
                         }
                         Image(

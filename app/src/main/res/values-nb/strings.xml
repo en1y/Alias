@@ -70,6 +70,8 @@
 	<string name="creator_page">Skaperens side</string>
 	<string name="word_packs">Ordpakker</string>
 	<string name="word_packs_description">Velg én eller flere ordpakker</string>
+	<string name="add_all">Legg til alle</string>
+	<string name="remove_all">Fjern alle</string>
 	<string name="new_game_title">Starte et nytt spill?</string>
 	<string name="new_game_description">Dette tilbakestiller spillet helt, inkludert poeng og runder</string>
 	<string name="new_game">Nytt spill</string>

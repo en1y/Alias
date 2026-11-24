@@ -70,6 +70,8 @@
 	<string name="creator_page">Halaman pembuat</string>
 	<string name="word_packs">Paket kata</string>
 	<string name="word_packs_description">Pilih satu atau beberapa paket kata</string>
+	<string name="add_all">Tambah semua</string>
+	<string name="remove_all">Hapus semua</string>
 	<string name="new_game_title">Mulai permainan baru?</string>
 	<string name="new_game_description">Ini akan mengatur ulang permainan sepenuhnya, termasuk skor dan ronde</string>
 	<string name="new_game">Permainan baru</string>

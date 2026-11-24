@@ -70,6 +70,8 @@
 	<string name="creator_page">Skaberens side</string>
 	<string name="word_packs">Ordpakker</string>
 	<string name="word_packs_description">Vælg en eller flere ordpakker</string>
+	<string name="add_all">Tilføj alle</string>
+	<string name="remove_all">Fjern alle</string>
 	<string name="new_game_title">Start et nyt spil?</string>
 	<string name="new_game_description">Dette nulstiller spillet helt, inklusive point og runder</string>
 	<string name="new_game">Nyt spil</string>

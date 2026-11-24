@@ -70,6 +70,8 @@
 	<string name="creator_page">Página del creador</string>
 	<string name="word_packs">Paquetes de palabras</string>
 	<string name="word_packs_description">Elige uno o varios paquetes de palabras</string>
+	<string name="add_all">Añadir todos</string>
+	<string name="remove_all">Quitar todos</string>
 	<string name="new_game_title">¿Empezar una nueva partida?</string>
 	<string name="new_game_description">Esto reiniciará la partida por completo, incluidas las puntuaciones y las rondas</string>
 	<string name="new_game">Nueva partida</string>

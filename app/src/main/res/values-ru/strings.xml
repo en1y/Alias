@@ -70,6 +70,8 @@
 	<string name="creator_page">Страница автора</string>
 	<string name="word_packs">Наборы слов</string>
 	<string name="word_packs_description">Выберите один или несколько наборов слов</string>
+	<string name="add_all">Добавить все</string>
+	<string name="remove_all">Убрать все</string>
 	<string name="new_game_title">Начать новую игру?</string>
 	<string name="new_game_description">Игра будет полностью сброшена, включая очки и раунды</string>
 	<string name="new_game">Новая игра</string>

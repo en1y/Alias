@@ -70,6 +70,8 @@
 	<string name="creator_page">Σελίδα του δημιουργού</string>
 	<string name="word_packs">Πακέτα λέξεων</string>
 	<string name="word_packs_description">Επιλέξτε ένα ή περισσότερα πακέτα λέξεων</string>
+	<string name="add_all">Προσθήκη όλων</string>
+	<string name="remove_all">Αφαίρεση όλων</string>
 	<string name="new_game_title">Έναρξη νέου παιχνιδιού;</string>
 	<string name="new_game_description">Αυτό θα επαναφέρει πλήρως το παιχνίδι, μαζί με τους πόντους και τους γύρους</string>
 	<string name="new_game">Νέο παιχνίδι</string>

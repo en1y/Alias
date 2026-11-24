@@ -71,6 +71,8 @@
 	<string name="creator_page">Creator\'s page</string>
 	<string name="word_packs">Word packs</string>
 	<string name="word_packs_description">Choose one or multiple word packs</string>
+	<string name="add_all">Add all</string>
+	<string name="remove_all">Remove all</string>
 	<string name="new_game_title">Start a new game?</string>
 	<string name="new_game_description">This will reset this game completely, including both the scores and the rounds</string>
 	<string name="new_game">New game</string>

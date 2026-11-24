@@ -70,6 +70,8 @@
 	<string name="creator_page">A készítő oldala</string>
 	<string name="word_packs">Szócsomagok</string>
 	<string name="word_packs_description">Válassz egy vagy több szócsomagot</string>
+	<string name="add_all">Összes hozzáadása</string>
+	<string name="remove_all">Összes eltávolítása</string>
 	<string name="new_game_title">Új játékot kezdesz?</string>
 	<string name="new_game_description">Ez teljesen visszaállítja a játékot, a pontszámokat és a köröket is beleértve</string>
 	<string name="new_game">Új játék</string>

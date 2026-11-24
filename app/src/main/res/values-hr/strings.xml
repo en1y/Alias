@@ -70,6 +70,8 @@
 	<string name="creator_page">Stranica autora</string>
 	<string name="word_packs">Paketi riječi</string>
 	<string name="word_packs_description">Odaberite jedan ili više paketa riječi</string>
+	<string name="add_all">Dodaj sve</string>
+	<string name="remove_all">Ukloni sve</string>
 	<string name="new_game_title">Započeti novu igru?</string>
 	<string name="new_game_description">Ovo će potpuno resetirati igru, uključujući bodove i runde</string>
 	<string name="new_game">Nova igra</string>

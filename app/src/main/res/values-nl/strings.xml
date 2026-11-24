@@ -70,6 +70,8 @@
 	<string name="creator_page">Pagina van de maker</string>
 	<string name="word_packs">Woordpakketten</string>
 	<string name="word_packs_description">Kies een of meer woordpakketten</string>
+	<string name="add_all">Alles toevoegen</string>
+	<string name="remove_all">Alles verwijderen</string>
 	<string name="new_game_title">Nieuw spel starten?</string>
 	<string name="new_game_description">Dit zet het spel volledig terug, inclusief de scores en de rondes</string>
 	<string name="new_game">Nieuw spel</string>

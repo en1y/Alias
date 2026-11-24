@@ -70,6 +70,8 @@
 	<string name="creator_page">Skaparens sida</string>
 	<string name="word_packs">Ordpaket</string>
 	<string name="word_packs_description">Välj ett eller flera ordpaket</string>
+	<string name="add_all">Lägg till alla</string>
+	<string name="remove_all">Ta bort alla</string>
 	<string name="new_game_title">Starta ett nytt spel?</string>
 	<string name="new_game_description">Detta återställer spelet helt, inklusive poäng och rundor</string>
 	<string name="new_game">Nytt spel</string>

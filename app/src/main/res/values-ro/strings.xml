@@ -70,6 +70,8 @@
 	<string name="creator_page">Pagina creatorului</string>
 	<string name="word_packs">Pachete de cuvinte</string>
 	<string name="word_packs_description">Alege unul sau mai multe pachete de cuvinte</string>
+	<string name="add_all">Adaugă toate</string>
+	<string name="remove_all">Elimină toate</string>
 	<string name="new_game_title">Începi un joc nou?</string>
 	<string name="new_game_description">Jocul va fi resetat complet, inclusiv scorurile și rundele</string>
 	<string name="new_game">Joc nou</string>
