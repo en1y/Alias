@@ -3,7 +3,7 @@ package com.en1y.alias.logic
 import android.content.res.Resources
 
 const val MaxTeamsSize = 8
-const val MinTeamsSize = 1;
+const val MinTeamsSize = 1
 
 val SupportedLanguages = listOf(
     "hr", "cs", "da", "nl", "en", "fi", "fr", "de", "el", "hu", "id",
@@ -20,6 +20,6 @@ fun normalizeLanguage(lang: String) = when (lang) {
 val DeviceLanguage: String
     get() {
         var lang = normalizeLanguage(Resources.getSystem().configuration.locales[0].language)
-        if (lang !in SupportedLanguages) lang =  "en"
+        if (lang !in SupportedLanguages) lang = "en"
         return lang
     }

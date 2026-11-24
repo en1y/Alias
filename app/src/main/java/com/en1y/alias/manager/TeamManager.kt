@@ -8,7 +8,9 @@ import com.en1y.alias.logic.MaxTeamsSize
 class TeamManager {
     val teams = mutableStateListOf<Team>()
 
-    constructor() {addTeam(); addTeam()}
+    constructor() {
+        addTeam(); addTeam()
+    }
 
 
     fun removeTeam() {

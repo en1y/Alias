@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
 }
 
 fun Activity.switchTo(target: Class<out Activity>) {
-    startActivity(Intent(this, target), ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
+    startActivity(
+        Intent(this, target),
+        ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out).toBundle()
+    )
     finish()
 }

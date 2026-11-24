@@ -109,12 +109,36 @@ private fun scheme(dark: Boolean, bg: Long, panel: Long, card: Long, accent: Lon
 }
 
 enum class Palette(@param:StringRes val title: Int, val light: ColorScheme, val dark: ColorScheme) {
-    Peach(R.string.palette_peach, scheme(false, 0xFFFFF6F0, 0xFFFFE3D2, 0xFFFFFFFF, 0xFFF7A47E, 0xFFE2703F), scheme(true, 0xFF1C1310, 0xFF33241E, 0xFF45312A, 0xFFE89470, 0xFFFFC9AE)),
-    Purple(R.string.palette_purple, scheme(false, 0xFFF8F5FF, 0xFFEBE3FF, 0xFFFFFFFF, 0xFF9B7BFF, 0xFF6B4CE6), scheme(true, 0xFF15112B, 0xFF262046, 0xFF342B5E, 0xFF9B7BFF, 0xFFD4C6FF)),
-    Blue(R.string.palette_blue, scheme(false, 0xFFF2F8FF, 0xFFDCEBFF, 0xFFFFFFFF, 0xFF6AA8FF, 0xFF2D6FD6), scheme(true, 0xFF0E1626, 0xFF1B2A44, 0xFF253858, 0xFF5B9BF5, 0xFFB8D6FF)),
-    Red(R.string.palette_red, scheme(false, 0xFFFFF4F4, 0xFFFFDDDD, 0xFFFFFFFF, 0xFFF47C7C, 0xFFC93A3A), scheme(true, 0xFF1E0F10, 0xFF3A1D1F, 0xFF4C2729, 0xFFE86A6A, 0xFFFFC2C2)),
-    Yellow(R.string.palette_yellow, scheme(false, 0xFFFFFBEB, 0xFFFFF0C2, 0xFFFFFFFF, 0xFFFFCC4D, 0xFFE0A100), scheme(true, 0xFF1A160A, 0xFF332B12, 0xFF453A1A, 0xFFF2C14E, 0xFFFFE39A)),
-    BlackAndWhite(R.string.palette_black_white, scheme(false, 0xFFFFFFFF, 0xFFE8E8E8, 0xFF000000, 0xFF000000, 0xFF7A7A7A), scheme(true, 0xFF000000, 0xFF1C1C1C, 0xFFFFFFFF, 0xFFFFFFFF, 0xFF8A8A8A)),
+    Peach(
+        R.string.palette_peach,
+        scheme(false, 0xFFFFF6F0, 0xFFFFE3D2, 0xFFFFFFFF, 0xFFF7A47E, 0xFFE2703F),
+        scheme(true, 0xFF1C1310, 0xFF33241E, 0xFF45312A, 0xFFE89470, 0xFFFFC9AE)
+    ),
+    Purple(
+        R.string.palette_purple,
+        scheme(false, 0xFFF8F5FF, 0xFFEBE3FF, 0xFFFFFFFF, 0xFF9B7BFF, 0xFF6B4CE6),
+        scheme(true, 0xFF15112B, 0xFF262046, 0xFF342B5E, 0xFF9B7BFF, 0xFFD4C6FF)
+    ),
+    Blue(
+        R.string.palette_blue,
+        scheme(false, 0xFFF2F8FF, 0xFFDCEBFF, 0xFFFFFFFF, 0xFF6AA8FF, 0xFF2D6FD6),
+        scheme(true, 0xFF0E1626, 0xFF1B2A44, 0xFF253858, 0xFF5B9BF5, 0xFFB8D6FF)
+    ),
+    Red(
+        R.string.palette_red,
+        scheme(false, 0xFFFFF4F4, 0xFFFFDDDD, 0xFFFFFFFF, 0xFFF47C7C, 0xFFC93A3A),
+        scheme(true, 0xFF1E0F10, 0xFF3A1D1F, 0xFF4C2729, 0xFFE86A6A, 0xFFFFC2C2)
+    ),
+    Yellow(
+        R.string.palette_yellow,
+        scheme(false, 0xFFFFFBEB, 0xFFFFF0C2, 0xFFFFFFFF, 0xFFFFCC4D, 0xFFE0A100),
+        scheme(true, 0xFF1A160A, 0xFF332B12, 0xFF453A1A, 0xFFF2C14E, 0xFFFFE39A)
+    ),
+    BlackAndWhite(
+        R.string.palette_black_white,
+        scheme(false, 0xFFFFFFFF, 0xFFE8E8E8, 0xFF000000, 0xFF000000, 0xFF7A7A7A),
+        scheme(true, 0xFF000000, 0xFF1C1C1C, 0xFFFFFFFF, 0xFFFFFFFF, 0xFF8A8A8A)
+    ),
 }
 
 enum class ThemeMode { Light, System, Dark }
@@ -216,7 +240,9 @@ fun AliasTheme(
 // ---------------------------------------------------------------- Layout defaults
 
 /** Root column of every screen. Top padding leaves room for the camera/status bar. */
-fun Modifier.screen() = fillMaxSize().padding(16.dp).padding(top = 30.dp)
+fun Modifier.screen() = fillMaxSize()
+    .padding(16.dp)
+    .padding(top = 30.dp)
 
 /** Scrolls vertically and draws a thin scrollbar that fades while idle. Color defaults to the current text color. */
 @Composable
@@ -233,7 +259,13 @@ fun Modifier.verticalScrollWithBar(
         val barHeight = (size.height * size.height / (size.height + state.maxValue)).coerceAtLeast(24.dp.toPx())
         val y = state.value.toFloat() / state.maxValue * (size.height - barHeight)
         // drawn in the padding right of the content so it never covers it; callers need ~10dp free there
-        drawRoundRect(color, Offset(size.width + 6.dp.toPx(), y), Size(w, barHeight), CornerRadius(w / 2), alpha = alpha)
+        drawRoundRect(
+            color,
+            Offset(size.width + 6.dp.toPx(), y),
+            Size(w, barHeight),
+            CornerRadius(w / 2),
+            alpha = alpha
+        )
     }.verticalScroll(state)
 }
 
@@ -249,7 +281,10 @@ fun Panel(
 ) {
     CompositionLocalProvider(LocalContentColor provides contentColorFor(color)) {
         Column(
-            Modifier.fillMaxWidth().background(color, shape).then(modifier),
+            Modifier
+                .fillMaxWidth()
+                .background(color, shape)
+                .then(modifier),
             verticalArrangement,
             horizontalAlignment,
             content
@@ -269,9 +304,23 @@ fun BoxScope.Overlay(
     BackHandler(visible, onDismiss)
     val state = remember { MutableTransitionState(visible) }.apply { targetState = visible }
     AnimatedVisibility(state, Modifier.matchParentSize(), enter = fadeIn(), exit = fadeOut()) {
-        Box(Modifier.fillMaxSize().background(scrim).pointerInput(Unit) { detectTapGestures { onDismiss() } }.navigationBarsPadding(), alignment) {
-            Box(Modifier.padding(16.dp).animateEnterExit(slideInVertically { it / 3 }, slideOutVertically { it / 3 }).pointerInput(Unit) { detectTapGestures { } }) {
-                Panel(Modifier.padding(24.dp), shape = MaterialTheme.shapes.large, verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally, content = content)
+        Box(Modifier
+            .fillMaxSize()
+            .background(scrim)
+            .pointerInput(Unit) { detectTapGestures { onDismiss() } }
+            .navigationBarsPadding(), alignment) {
+            Box(
+                Modifier
+                    .padding(16.dp)
+                    .animateEnterExit(slideInVertically { it / 3 }, slideOutVertically { it / 3 })
+                    .pointerInput(Unit) { detectTapGestures { } }) {
+                Panel(
+                    Modifier.padding(24.dp),
+                    shape = MaterialTheme.shapes.large,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    content = content
+                )
             }
         }
     }
@@ -326,8 +375,18 @@ fun AliasSlider(
     ),
 ) = Slider(
     value, onValueChange, modifier.padding(horizontal = 10.dp), steps = steps, valueRange = valueRange, colors = colors,
-    thumb = { Box(Modifier.size(24.dp).background(colors.thumbColor, CircleShape)) },
-    track = { SliderDefaults.Track(it, modifier = Modifier.height(6.dp), colors = colors, drawStopIndicator = null, thumbTrackGapSize = 0.dp) },
+    thumb = { Box(Modifier
+        .size(24.dp)
+        .background(colors.thumbColor, CircleShape)) },
+    track = {
+        SliderDefaults.Track(
+            it,
+            modifier = Modifier.height(6.dp),
+            colors = colors,
+            drawStopIndicator = null,
+            thumbTrackGapSize = 0.dp
+        )
+    },
 )
 
 @Composable
