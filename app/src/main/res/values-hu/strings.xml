@@ -40,7 +40,7 @@
 		<item>Török</item>
 		<item>Ukrán</item>
 	</string-array>
-	<string name="welcome_message">Üdvözlünk az Aliasban!</string>
+	<string name="welcome_message">Üdvözlünk!</string>
 	<string name="choose_language">Válaszd ki a nyelvet</string>
 	<string name="choose_language_description">Ezt a nyelvet használja az alkalmazás, és ezen a nyelven lesznek a kitalálandó szavak is</string>
 	<string name="continue_button">Tovább</string>

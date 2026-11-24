@@ -40,7 +40,7 @@
 		<item>Turski</item>
 		<item>Ukrajinski</item>
 	</string-array>
-	<string name="welcome_message">Dobro došli u Alias!</string>
+	<string name="welcome_message">Dobro došli!</string>
 	<string name="choose_language">Odaberite svoj jezik</string>
 	<string name="choose_language_description">Ovaj jezik koristit će se u aplikaciji i za riječi koje ćete pogađati</string>
 	<string name="continue_button">Nastavi</string>

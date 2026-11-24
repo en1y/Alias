@@ -41,7 +41,7 @@
 		<item>Turkish</item>
 		<item>Ukrainian</item>
 	</string-array>
-	<string name="welcome_message">Welcome to Alias!</string>
+	<string name="welcome_message">Welcome!</string>
 	<string name="choose_language">Choose your language</string>
 	<string name="choose_language_description">This language will be used for the app and the words that you will be guessing</string>
 	<string name="continue_button">Continue</string>

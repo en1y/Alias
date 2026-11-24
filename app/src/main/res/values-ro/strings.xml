@@ -40,7 +40,7 @@
 		<item>Turcă</item>
 		<item>Ucraineană</item>
 	</string-array>
-	<string name="welcome_message">Bine ai venit în Alias!</string>
+	<string name="welcome_message">Bine ai venit!</string>
 	<string name="choose_language">Alege-ți limba</string>
 	<string name="choose_language_description">Această limbă va fi folosită în aplicație și pentru cuvintele pe care le vei ghici</string>
 	<string name="continue_button">Continuă</string>

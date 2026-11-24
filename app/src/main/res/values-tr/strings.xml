@@ -40,7 +40,7 @@
 		<item>Türkçe</item>
 		<item>Ukraynaca</item>
 	</string-array>
-	<string name="welcome_message">Alias\'a hoş geldin!</string>
+	<string name="welcome_message">Hoş geldin!</string>
 	<string name="choose_language">Dilini seç</string>
 	<string name="choose_language_description">Bu dil uygulamada ve tahmin edeceğin kelimelerde kullanılacak</string>
 	<string name="continue_button">Devam</string>

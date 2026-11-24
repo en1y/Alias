@@ -40,7 +40,7 @@
 		<item>Turco</item>
 		<item>Ucraniano</item>
 	</string-array>
-	<string name="welcome_message">¡Bienvenido a Alias!</string>
+	<string name="welcome_message">¡Bienvenido!</string>
 	<string name="choose_language">Elige tu idioma</string>
 	<string name="choose_language_description">Este idioma se usará en la aplicación y en las palabras que tendrás que adivinar</string>
 	<string name="continue_button">Continuar</string>

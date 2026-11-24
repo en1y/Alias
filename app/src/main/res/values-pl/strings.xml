@@ -40,7 +40,7 @@
 		<item>Turecki</item>
 		<item>Ukraiński</item>
 	</string-array>
-	<string name="welcome_message">Witaj w Alias!</string>
+	<string name="welcome_message">Witaj!</string>
 	<string name="choose_language">Wybierz swój język</string>
 	<string name="choose_language_description">Ten język będzie używany w aplikacji i w słowach, które będziesz zgadywać</string>
 	<string name="continue_button">Dalej</string>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the blue-yellow dot over the "i", same canvas as logo_letters so the two stack exactly -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="63dp"
+    android:height="27.5dp"
+    android:viewportWidth="63"
+    android:viewportHeight="27.5">
+    <group android:translateX="-22.5" android:translateY="-37">
+        <path
+            android:fillColor="#FFD700"
+            android:pathData="M49.763,41.6 A3.635,3.635 0 1 0 57.027,41.6 Z" />
+        <path
+            android:fillColor="#0057B7"
+            android:pathData="M49.76,41.75 A3.64,3.64 0 0 1 57.03,41.75 Z" />
+    </group>
+</vector>

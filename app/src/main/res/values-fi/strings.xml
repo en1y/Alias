@@ -40,7 +40,7 @@
 		<item>Turkki</item>
 		<item>Ukraina</item>
 	</string-array>
-	<string name="welcome_message">Tervetuloa Aliakseen!</string>
+	<string name="welcome_message">Tervetuloa!</string>
 	<string name="choose_language">Valitse kieli</string>
 	<string name="choose_language_description">Tätä kieltä käytetään sovelluksessa ja arvattavissa sanoissa</string>
 	<string name="continue_button">Jatka</string>

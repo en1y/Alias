@@ -40,7 +40,7 @@
 		<item>Τουρκικά</item>
 		<item>Ουκρανικά</item>
 	</string-array>
-	<string name="welcome_message">Καλώς ήρθατε στο Alias!</string>
+	<string name="welcome_message">Καλώς ήρθατε!</string>
 	<string name="choose_language">Επιλέξτε τη γλώσσα σας</string>
 	<string name="choose_language_description">Αυτή η γλώσσα θα χρησιμοποιείται στην εφαρμογή και στις λέξεις που θα μαντεύετε</string>
 	<string name="continue_button">Συνέχεια</string>

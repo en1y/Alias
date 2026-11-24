@@ -40,7 +40,7 @@
 		<item>Turc</item>
 		<item>Ukrainien</item>
 	</string-array>
-	<string name="welcome_message">Bienvenue dans Alias !</string>
+	<string name="welcome_message">Bienvenue !</string>
 	<string name="choose_language">Choisis ta langue</string>
 	<string name="choose_language_description">Cette langue sera utilisée pour l\'application et pour les mots que tu devras deviner</string>
 	<string name="continue_button">Continuer</string>

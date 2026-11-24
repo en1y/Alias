@@ -40,7 +40,7 @@
 		<item>Turečtina</item>
 		<item>Ukrajinčina</item>
 	</string-array>
-	<string name="welcome_message">Vitajte v Aliase!</string>
+	<string name="welcome_message">Vitajte!</string>
 	<string name="choose_language">Vyberte si jazyk</string>
 	<string name="choose_language_description">Tento jazyk sa použije v aplikácii aj pre slová, ktoré budete hádať</string>
 	<string name="continue_button">Pokračovať</string>

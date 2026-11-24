@@ -40,7 +40,7 @@
 		<item>Turki</item>
 		<item>Ukraina</item>
 	</string-array>
-	<string name="welcome_message">Selamat datang di Alias!</string>
+	<string name="welcome_message">Selamat datang!</string>
 	<string name="choose_language">Pilih bahasamu</string>
 	<string name="choose_language_description">Bahasa ini akan dipakai di aplikasi dan untuk kata-kata yang akan kamu tebak</string>
 	<string name="continue_button">Lanjut</string>

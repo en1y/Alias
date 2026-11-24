@@ -40,7 +40,7 @@
 		<item>Turks</item>
 		<item>Oekraïens</item>
 	</string-array>
-	<string name="welcome_message">Welkom bij Alias!</string>
+	<string name="welcome_message">Welkom!</string>
 	<string name="choose_language">Kies je taal</string>
 	<string name="choose_language_description">Deze taal wordt gebruikt voor de app en voor de woorden die je gaat raden</string>
 	<string name="continue_button">Doorgaan</string>

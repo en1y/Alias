@@ -10,12 +10,17 @@ import androidx.compose.animation.core.tween
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +33,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -92,6 +99,10 @@ fun Greeting(modifier: Modifier = Modifier, onNext: () -> Unit = {}) {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Box {
+                    Image(painterResource(R.drawable.logo_letters), stringResource(R.string.app_name), Modifier.width(320.dp).aspectRatio(63 / 27.5f), colorFilter = ColorFilter.tint(LocalContentColor.current))
+                    Image(painterResource(R.drawable.logo_dot), null, Modifier.width(320.dp).aspectRatio(63 / 27.5f))
+                }
                 Text(
                     text = stringResource(R.string.welcome_message),
                     modifier = modifier, style = MaterialTheme.typography.headlineSmall

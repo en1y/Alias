@@ -40,7 +40,7 @@
 		<item>Turkiska</item>
 		<item>Ukrainska</item>
 	</string-array>
-	<string name="welcome_message">Välkommen till Alias!</string>
+	<string name="welcome_message">Välkommen!</string>
 	<string name="choose_language">Välj ditt språk</string>
 	<string name="choose_language_description">Det här språket används i appen och för orden som du ska gissa</string>
 	<string name="continue_button">Fortsätt</string>

@@ -40,7 +40,7 @@
 		<item>Turco</item>
 		<item>Ucraino</item>
 	</string-array>
-	<string name="welcome_message">Benvenuto in Alias!</string>
+	<string name="welcome_message">Benvenuto!</string>
 	<string name="choose_language">Scegli la tua lingua</string>
 	<string name="choose_language_description">Questa lingua verrà usata per l\'app e per le parole che dovrai indovinare</string>
 	<string name="continue_button">Continua</string>

@@ -40,7 +40,7 @@
 		<item>Турецька</item>
 		<item>Українська</item>
 	</string-array>
-	<string name="welcome_message">Ласкаво просимо до Alias!</string>
+	<string name="welcome_message">Ласкаво просимо!</string>
 	<string name="choose_language">Оберіть мову</string>
 	<string name="choose_language_description">Ця мова використовуватиметься в застосунку та для слів, які ви вгадуватимете</string>
 	<string name="continue_button">Продовжити</string>
