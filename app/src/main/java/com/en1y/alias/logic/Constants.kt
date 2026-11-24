@@ -20,6 +20,6 @@ fun normalizeLanguage(lang: String) = when (lang) {
 val DeviceLanguage: String
     get() {
         var lang = normalizeLanguage(Resources.getSystem().configuration.locales[0].language)
-        if (lang !in SupportedLanguages) lang =  "en"
+        if (lang !in SupportedLanguages) lang = "en"
         return lang
     }

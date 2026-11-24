@@ -1,6 +1,5 @@
 package com.en1y.alias.data
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
@@ -16,11 +15,11 @@ class Round(
     var currentWord by mutableStateOf(words.random())
     var nextWord by mutableStateOf(generateWord())
     var counter by mutableIntStateOf(0)
-    private var guessable = false;
+    private var guessable = false
 
-    fun countPoints(): Int{
+    fun countPoints(): Int {
         var c = 0
-        for (i in roundWords.values){
+        for (i in roundWords.values) {
             if (i == GuessStatus.Guessed) c++
             else if (i == GuessStatus.Skipped && gameSetting.skippedWordSubtractsPoints) c--
         }
@@ -33,7 +32,7 @@ class Round(
 
     fun start() {
         generateWord()
-        guessable = true;
+        guessable = true
     }
 
     fun end() {
@@ -74,5 +73,5 @@ class Round(
         return (words - roundWords.keys - currentWord).randomOrNull() ?: words.random()
     }
 
-    enum class GuessStatus{Guessed, Skipped, Deleted}
+    enum class GuessStatus { Guessed, Skipped, Deleted }
 }

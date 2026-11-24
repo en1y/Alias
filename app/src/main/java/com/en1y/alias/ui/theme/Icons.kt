@@ -10,7 +10,7 @@ import androidx.compose.ui.res.painterResource
 import com.en1y.alias.R
 
 /** All app icons. To add one: drop a vector into res/drawable and add an entry here. */
-enum class AliasIcon(@DrawableRes val res: Int) {
+enum class AliasIcon(@param:DrawableRes val res: Int) {
     Back(R.drawable.ic_chevron_left),
     Forward(R.drawable.ic_chevron_right),
     Settings(R.drawable.ic_settings),

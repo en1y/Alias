@@ -63,33 +63,39 @@ class WelcomeActivity : AppCompatActivity() {
                     Toast.makeText(this, R.string.press_back_again, Toast.LENGTH_SHORT).show()
                 }
             }
-            AliasTheme { Crossfade(step, animationSpec = tween(250), label = "step") { s ->
-                when (s) {
-                    0 -> Greeting(onNext = {step = 1})
-                    1 -> ChooseLanguageScreen(onNext = { switchTo(GameActivity::class.java) })
+            AliasTheme {
+                Crossfade(step, animationSpec = tween(250), label = "step") { s ->
+                    when (s) {
+                        0 -> Greeting(onNext = { step = 1 })
+                        1 -> ChooseLanguageScreen(onNext = { switchTo(GameActivity::class.java) })
+                    }
                 }
-            } }
+            }
         }
     }
 }
 
-@Composable @Preview
+@Composable
+@Preview
 fun Greeting(modifier: Modifier = Modifier, onNext: () -> Unit = {}) {
     AliasTheme {
-        Row (
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
-            Column (
+        ) {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-            ){
+            ) {
                 Text(
                     text = stringResource(R.string.welcome_message),
-                    modifier = modifier, style = MaterialTheme.typography.headlineSmall)
+                    modifier = modifier, style = MaterialTheme.typography.headlineSmall
+                )
                 AliasButton(onClick = onNext, colors = ButtonDefaults.secondaryColors()) {
                     Text(stringResource(R.string.continue_button))
                 }
@@ -98,23 +104,30 @@ fun Greeting(modifier: Modifier = Modifier, onNext: () -> Unit = {}) {
     }
 }
 
-@Composable @Preview
+@Composable
+@Preview
 fun ChooseLanguageScreen(onNext: () -> Unit = {}) {
     var selectedLanguage by remember {
-        mutableStateOf(AppCompatDelegate.getApplicationLocales()[0]?.language?.let(::normalizeLanguage) ?: DeviceLanguage)
+        mutableStateOf(
+            AppCompatDelegate.getApplicationLocales()[0]?.language?.let(::normalizeLanguage) ?: DeviceLanguage
+        )
     }
     val context = LocalContext.current
 
     AliasTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.choose_language),
-                modifier = Modifier.padding(top = 20.dp), style = MaterialTheme.typography.headlineSmall) // because of camera in the top and the notifications
+            Text(
+                stringResource(R.string.choose_language),
+                modifier = Modifier.padding(top = 20.dp), style = MaterialTheme.typography.headlineSmall
+            ) // because of camera in the top and the notifications
             Text(stringResource(R.string.choose_language_description), style = MaterialTheme.typography.bodyMedium)
-            Panel (
+            Panel(
                 modifier = Modifier
                     .weight(1f)
                     .verticalScrollWithBar()
