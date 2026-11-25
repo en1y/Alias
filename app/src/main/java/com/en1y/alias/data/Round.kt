@@ -2,7 +2,6 @@ package com.en1y.alias.data
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
@@ -11,7 +10,8 @@ class Round(
     val gameSetting: GameSetting,
     val currentTeam: Team
 ) {
-    val roundWords = mutableStateMapOf<String, GuessStatus>()
+    var roundWords by mutableStateOf<Map<String, GuessStatus>>(emptyMap())
+        private set
     var currentWord by mutableStateOf(words.random())
     var nextWord by mutableStateOf(generateWord())
     var counter by mutableIntStateOf(0)
@@ -27,7 +27,7 @@ class Round(
     }
 
     fun updateByWord(word: String, guessStatus: GuessStatus) {
-        roundWords[word] = guessStatus
+        roundWords += word to guessStatus
     }
 
     fun start() {
@@ -57,7 +57,7 @@ class Round(
             if (gameSetting.lastWordCanBeGuessed && teamWhichGuessed != currentTeam && guessed) {
                 teamWhichGuessed.addPoints(1)
             } else {
-                roundWords[currentWord] = if (guessed) GuessStatus.Guessed else GuessStatus.Skipped
+                roundWords += currentWord to if (guessed) GuessStatus.Guessed else GuessStatus.Skipped
             }
             counter++
             nextWord()

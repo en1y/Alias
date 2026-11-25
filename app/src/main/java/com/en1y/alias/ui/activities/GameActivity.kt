@@ -1319,7 +1319,6 @@ fun PostRoundScreen(
                             Text(stringResource(R.string.round_review), style = MaterialTheme.typography.headlineSmall)
                             Text(stringResource(R.string.review_guesses), style = MaterialTheme.typography.bodyMedium)
                         }
-                        // roundWords is a state map, so this recomputes whenever a status is toggled
                         val points = round.countPoints()
                         Text("${if (points > 0) "+" else ""}$points", style = MaterialTheme.typography.headlineSmall)
                     }
