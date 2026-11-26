@@ -18,3 +18,5 @@ local.properties
 keystore.properties
 *.jks
 /testers.csv
+/words-querry/*
+!/words-querry/a.py

@@ -1,3 +1,5 @@
+from xml.sax.saxutils import escape
+
 from wordfreq import top_n_list
 
 languages = [
@@ -46,9 +48,10 @@ for l in languages:
     res[l] = lang_words
 
 
-def toXML(ws: list[str], name: str):
-    print(ws)
-    return f'\t<string-array name="{name}" tools:ignore="InconsistentArrays">\n\t\t<item>{"</item>\n\t\t<item>".join(ws)}</item>\n\t</string-array>\n'
+def toXML(ws: list[str], name: str) -> str:
+    return escape(
+        f'\t<string-array name="{name}" tools:ignore="InconsistentArrays">\n\t\t<item>{"</item>\n\t\t<item>".join(ws)}</item>\n\t</string-array>\n'
+    )
 
 
 for l in res:
