@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.ColorScheme
@@ -87,7 +88,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.en1y.alias.R
 import com.en1y.alias.data.Team
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -1342,15 +1345,23 @@ fun RoundScreen(
                 }
                 Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(12.dp), Alignment.CenterVertically) {
                     AliasButton(
-                        { fling(false) }, Modifier
+                        { fling(false) },
+                        Modifier
                             .weight(1f)
-                            .height(64.dp), shape = RoundedCornerShape(18.dp),
+                            .height(64.dp),
+                        shape = RoundedCornerShape(18.dp),
+                        contentPadding = PaddingValues(horizontal = 8.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = c.skipped,
                             contentColor = MaterialTheme.colorScheme.surface
                         )
                     ) {
-                        Text(stringResource(R.string.skip), style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            stringResource(R.string.skip),
+                            maxLines = 1,
+                            autoSize = TextAutoSize.StepBased(maxFontSize = 20.sp),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                     Text(
                         round.countPoints().toString(),
@@ -1359,15 +1370,23 @@ fun RoundScreen(
                         style = MaterialTheme.typography.headlineMedium
                     )
                     AliasButton(
-                        { fling(true) }, Modifier
+                        { fling(true) },
+                        Modifier
                             .weight(1f)
-                            .height(64.dp), shape = RoundedCornerShape(18.dp),
+                            .height(64.dp),
+                        shape = RoundedCornerShape(18.dp),
+                        contentPadding = PaddingValues(horizontal = 8.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = c.guessed,
                             contentColor = MaterialTheme.colorScheme.surface
                         )
                     ) {
-                        Text(stringResource(R.string.guessed), style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            stringResource(R.string.guessed),
+                            maxLines = 1,
+                            autoSize = TextAutoSize.StepBased(maxFontSize = 20.sp),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                 }
             }

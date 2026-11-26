@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -93,6 +94,7 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -242,6 +244,7 @@ fun AliasTheme(
         CompositionLocalProvider(
             LocalAliasColors provides if (darkTheme) DarkAliasColors else LightAliasColors,
             LocalRippleConfiguration provides if (ripple) LocalRippleConfiguration.current else null,
+            LocalDensity provides LocalDensity.current.let { Density(it.density, it.fontScale.coerceAtMost(1.3f)) },
         ) {
             // paints the screen background and makes every Text/Icon default to onBackground
             Surface(color = MaterialTheme.colorScheme.background, content = content)
@@ -405,6 +408,7 @@ fun AliasButton(
     colors: ButtonColors = ButtonDefaults.secondaryColors(),
     pressScale: Float = 0.95f,
     shape: Shape = ButtonDefaults.shape,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable RowScope.() -> Unit
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -416,6 +420,7 @@ fun AliasButton(
         enabled = enabled,
         colors = colors,
         shape = shape,
+        contentPadding = contentPadding,
         interactionSource = interaction,
         content = content
     )
