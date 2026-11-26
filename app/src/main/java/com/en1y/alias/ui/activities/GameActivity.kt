@@ -40,7 +40,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -94,8 +93,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SearchBar
-import androidx.compose.runtime.mutableStateListOf
 import com.en1y.alias.ui.theme.AliasButton
 import com.en1y.alias.ui.theme.AliasCheckbox
 import com.en1y.alias.ui.theme.AliasRadioButton
@@ -122,8 +119,7 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 import androidx.compose.ui.platform.LocalResources
-import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.tooling.preview.Preview
+import com.en1y.alias.ui.theme.ScrollBarHandle
 import com.en1y.alias.ui.theme.scrollBar
 
 private var step by mutableIntStateOf(0)
@@ -170,7 +166,7 @@ class GameActivity : AppCompatActivity() {
                         3 -> RoundScreen(game)
                         4 -> PostRoundScreen(game)
                         10 -> AppSettings()
-                        11 -> WordPacksSettings(game) {wordPackSettings = it}
+                        11 -> WordPacksSettings(game) { wordPackSettings = it }
                         101 -> ChooseLanguageScreen(onNext = { step = 10 })
                         102 -> ThemeChoosingScreen()
                         201 -> WordPackSettings(wordPackSettings)
@@ -547,12 +543,15 @@ fun WordPackSettings(
             val words = remember(wordPack) { wordPack.words(resources).withIndex().toList() }
 
             if (wordPack in WordPack.Pack1..WordPack.Pack5)
-                Text(stringResource(R.string.words_order_description, words.size), style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    stringResource(R.string.words_order_description, words.size),
+                    style = MaterialTheme.typography.bodyMedium
+                )
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = query,
-                onValueChange = {query = it},
+                onValueChange = { query = it },
                 placeholder = { Text(stringResource(R.string.search_hint)) },
                 shape = MaterialTheme.shapes.medium,
                 singleLine = true
@@ -565,11 +564,13 @@ fun WordPackSettings(
                     query.toIntOrNull() != null -> words.filter {
                         (it.index + 1).toString().startsWith(q)
                     }
+
                     else -> words.filter { it.value.contains(q, ignoreCase = true) }
                         .sortedBy {
                             if (it.value.equals(q, ignoreCase = true)) 0
                             else if (it.value.startsWith(q, ignoreCase = true)) 1
-                            else 2}
+                            else 2
+                        }
                 }
             }
 
@@ -578,18 +579,25 @@ fun WordPackSettings(
                 listState.scrollToItem(0)
             }
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .scrollBar(listState)
-                    .weight(1f),
-                state = listState,
-                verticalArrangement = Arrangement.spacedBy(2.dp),
-                horizontalAlignment = Alignment.Start
-            ) {
-                items(res, key = { it.index }) { (i, word) -> Text("${i + 1}. $word") }
+            var dragging by remember { mutableStateOf(false) }
+            Box(Modifier
+                .fillMaxWidth()
+                .weight(1f)) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .scrollBar(listState, dragging = dragging),
+                    state = listState,
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    items(res, key = { it.index }) { (i, word) -> Text("${i + 1}. $word") }
+                }
+                ScrollBarHandle(listState) { dragging = it }
             }
-            AliasButton( { step = 11 }, modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp) ) {
+            AliasButton({ step = 11 }, modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)) {
                 Text(stringResource(R.string.go_back))
             }
         }
@@ -668,7 +676,7 @@ fun WordPacksSettings(
                         }
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
-                        ){
+                        ) {
                             AliasCheckbox(checked = selected, onCheckedChange = null)
                             AliasButton({
                                 onOpenPackSettings(wordPack)

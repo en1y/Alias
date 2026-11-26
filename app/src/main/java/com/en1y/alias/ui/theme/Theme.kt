@@ -15,7 +15,10 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -25,13 +28,16 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -71,6 +77,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -86,10 +93,12 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import com.en1y.alias.R
+import kotlinx.coroutines.launch
 
 // ---------------------------------------------------------------- Colors
 
@@ -261,19 +270,63 @@ fun Modifier.scrollBar(
     state: ScrollableState,
     color: Color = LocalContentColor.current,
     width: Dp = 3.dp,
+    dragging: Boolean = false,
 ): Modifier {
-    val alpha by animateFloatAsState(if (state.isScrollInProgress) 0.8f else 0.3f, label = "scrollbarAlpha")
+    val alpha by animateFloatAsState(if (dragging || state.isScrollInProgress) 0.8f else 0.3f, label = "scrollbarAlpha")
     return drawWithContent {
         drawContent()
-        val s = state.scrollIndicatorState ?: return@drawWithContent
-        val max = s.contentSize - s.viewportSize
-        if (max <= 0) return@drawWithContent // content fits, no scrollbar
-        val w = width.toPx()
-        val barHeight = (size.height * s.viewportSize / s.contentSize).coerceAtLeast(24.dp.toPx())
-        val y = (s.scrollOffset.toFloat() / max).coerceIn(0f, 1f) * (size.height - barHeight)
-        // drawn in the padding right of the content so it never covers it; callers need ~10dp free there
-        drawRoundRect(color, Offset(size.width + 6.dp.toPx(), y), Size(w, barHeight), CornerRadius(w / 2), alpha = alpha)
+        val (y, barHeight) = thumb(state, size.height) ?: return@drawWithContent // content fits, no scrollbar
+        val w = (if (dragging) width * 2 else width).toPx()
+        // drawn in the padding right of the content so it never covers it
+        drawRoundRect(
+            color,
+            Offset(size.width + 7.5.dp.toPx() - w / 2, y),
+            Size(w, barHeight),
+            CornerRadius(w / 2),
+            alpha = alpha
+        )
     }
+}
+
+/** Top and height of the [scrollBar] line on a track [trackHeight] px tall, or null when the content fits. */
+private fun Density.thumb(state: ScrollableState, trackHeight: Float): Pair<Float, Float>? {
+    val s = state.scrollIndicatorState ?: return null
+    val max = s.contentSize - s.viewportSize
+    if (max <= 0) return null
+    val barHeight = (trackHeight * s.viewportSize / s.contentSize).coerceAtLeast(24.dp.toPx())
+    return (s.scrollOffset.toFloat() / max).coerceIn(0f, 1f) * (trackHeight - barHeight) to barHeight
+}
+
+/**
+ * Lets you grab the [scrollBar] line of a lazy list and drag it. Put it in a Box together with the list:
+ * it covers the line in the padding right of the list. [onDrag] reports when a drag starts and ends.
+ */
+@Composable
+fun BoxScope.ScrollBarHandle(state: LazyListState, onDrag: (Boolean) -> Unit) {
+    val scope = rememberCoroutineScope()
+    Box(
+        Modifier
+            .align(Alignment.TopEnd)
+            .offset(x = 18.dp)
+            .width(24.dp)
+            .fillMaxHeight()
+            .pointerInput(state) {
+                awaitEachGesture {
+                    val down = awaitFirstDown()
+                    val (top, bar) = thumb(state, size.height.toFloat()) ?: return@awaitEachGesture
+                    if (down.position.y - top !in -12.dp.toPx()..bar + 12.dp.toPx()) return@awaitEachGesture // missed the line
+                    val grab = down.position.y - top // keeps the line under the finger where it was grabbed
+                    onDrag(true)
+                    drag(down.id) { change ->
+                        change.consume()
+                        val s = state.scrollIndicatorState ?: return@drag
+                        val f = ((change.position.y - grab) / (size.height - bar)).coerceIn(0f, 1f)
+                        val rowHeight = s.contentSize.toFloat() / state.layoutInfo.totalItemsCount
+                        scope.launch { state.scrollToItem((f * (s.contentSize - s.viewportSize) / rowHeight).toInt()) }
+                    }
+                    onDrag(false)
+                }
+            })
 }
 
 /** A colored block (primary by default). Text/Icons inside automatically get the matching "on" color. */
@@ -311,11 +364,12 @@ fun BoxScope.Overlay(
     BackHandler(visible, onDismiss)
     val state = remember { MutableTransitionState(visible) }.apply { targetState = visible }
     AnimatedVisibility(state, Modifier.matchParentSize(), enter = fadeIn(), exit = fadeOut()) {
-        Box(Modifier
-            .fillMaxSize()
-            .background(scrim)
-            .pointerInput(Unit) { detectTapGestures { onDismiss() } }
-            .navigationBarsPadding(), alignment) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(scrim)
+                .pointerInput(Unit) { detectTapGestures { onDismiss() } }
+                .navigationBarsPadding(), alignment) {
             Box(
                 Modifier
                     .padding(16.dp)
@@ -384,9 +438,13 @@ fun AliasSlider(
 ) = Slider(
     value, onValueChange, modifier.padding(horizontal = 10.dp), steps = steps, valueRange = valueRange, colors = colors,
     onValueChangeFinished = onValueChangeFinished,
-    thumb = { Box(Modifier
-        .size(24.dp)
-        .background(colors.thumbColor, CircleShape)) },
+    thumb = {
+        Box(
+            Modifier
+                .size(24.dp)
+                .background(colors.thumbColor, CircleShape)
+        )
+    },
     track = {
         SliderDefaults.Track(
             it,
