@@ -77,6 +77,9 @@
 	<string name="search_hint">Введите слово или его номер</string>
 	<string name="words_order_description">Слова отсортированы по частоте: №1 — самое частое в этом наборе, №%d — самое редкое</string>
 	<string name="go_back">Назад</string>
+	<string name="new_word_hint">Новое слово</string>
+	<string name="save">Сохранить</string>
+	<string name="all_words_guessed">Ого! Вы угадали все слова!</string>
 	<string name="new_game_title">Начать новую игру?</string>
 	<string name="new_game_description">Игра будет полностью сброшена, включая очки и раунды</string>
 	<string name="new_game">Новая игра</string>
@@ -145,6 +148,8 @@
 	<string name="description5">Слова, которые редко используются, но всё же есть здесь</string>
 	<string name="name6">18+</string>
 	<string name="description6">Пикантная смесь слов</string>
+	<string name="name7">Ваши слова</string>
+	<string name="description7">Слова, которые вы создали! Управлять ими можно в настройках набора слов</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>время</item>
 		<item>года</item>

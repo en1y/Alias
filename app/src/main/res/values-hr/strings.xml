@@ -77,6 +77,9 @@
 	<string name="search_hint">Upišite riječ ili njezin broj</string>
 	<string name="words_order_description">Riječi su poredane po učestalosti: #1 je najčešća u ovom paketu, a #%d najrjeđa</string>
 	<string name="go_back">Natrag</string>
+	<string name="new_word_hint">Nova riječ</string>
+	<string name="save">Spremi</string>
+	<string name="all_words_guessed">Vau! Pogodili ste sve riječi koje su postojale!</string>
 	<string name="new_game_title">Započeti novu igru?</string>
 	<string name="new_game_description">Ovo će potpuno resetirati igru, uključujući bodove i runde</string>
 	<string name="new_game">Nova igra</string>
@@ -144,6 +147,8 @@
 	<string name="description5">Riječi koje se ne koriste često, ali ipak su tu</string>
 	<string name="name6">18+</string>
 	<string name="description6">Mješavina pikantnih riječi</string>
+	<string name="name7">Vaše vlastite riječi</string>
+	<string name="description7">Riječi koje ste stvorili! Možete ih urediti u postavkama paketa riječi</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>godine</item>
 		<item>sad</item>

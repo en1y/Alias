@@ -77,6 +77,9 @@
 	<string name="search_hint">Scrivi una parola o il suo numero</string>
 	<string name="words_order_description">Le parole sono ordinate per frequenza: la #1 è la più comune in questo pacchetto e la #%d la meno comune</string>
 	<string name="go_back">Indietro</string>
+	<string name="new_word_hint">Nuova parola</string>
+	<string name="save">Salva</string>
+	<string name="all_words_guessed">Wow! Avete indovinato tutte le parole!</string>
 	<string name="new_game_title">Iniziare una nuova partita?</string>
 	<string name="new_game_description">Questo azzererà completamente la partita, compresi punteggi e round</string>
 	<string name="new_game">Nuova partita</string>
@@ -144,6 +147,8 @@
 	<string name="description5">Parole poco usate, ma che ci sono comunque</string>
 	<string name="name6">18+</string>
 	<string name="description6">Un mix di parole piccanti</string>
+	<string name="name7">Le tue parole</string>
+	<string name="description7">Le parole che hai creato! Puoi gestirle nelle impostazioni del pacchetto di parole</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>solo</item>
 		<item>stato</item>

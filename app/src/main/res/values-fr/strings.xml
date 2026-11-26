@@ -77,6 +77,9 @@
 	<string name="search_hint">Tapez un mot ou son numéro</string>
 	<string name="words_order_description">Les mots sont classés par fréquence : le #1 est le plus courant de ce pack et le #%d le moins courant</string>
 	<string name="go_back">Retour</string>
+	<string name="new_word_hint">Nouveau mot</string>
+	<string name="save">Enregistrer</string>
+	<string name="all_words_guessed">Waouh ! Vous avez deviné tous les mots !</string>
 	<string name="new_game_title">Commencer une nouvelle partie ?</string>
 	<string name="new_game_description">Cela réinitialisera complètement la partie, y compris les scores et les manches</string>
 	<string name="new_game">Nouvelle partie</string>
@@ -144,6 +147,8 @@
 	<string name="description5">Des mots peu utilisés, mais qui sont bel et bien là</string>
 	<string name="name6">18+</string>
 	<string name="description6">Un mélange de mots coquins</string>
+	<string name="name7">Vos propres mots</string>
+	<string name="description7">Les mots que vous avez créés ! Vous pouvez les gérer dans les réglages du pack de mots</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>fait</item>
 		<item>être</item>

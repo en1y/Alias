@@ -78,6 +78,9 @@
 	<string name="search_hint">Type a word or its number</string>
 	<string name="words_order_description">Words are sorted by how common they are: #1 is the most common in this pack, #%d the least common</string>
 	<string name="go_back">Go back</string>
+	<string name="new_word_hint">New word</string>
+	<string name="save">Save</string>
+	<string name="all_words_guessed">Wow! You\'ve guessed all the words there were!</string>
 	<string name="new_game_title">Start a new game?</string>
 	<string name="new_game_description">This will reset this game completely, including both the scores and the rounds</string>
 	<string name="new_game">New game</string>
@@ -144,6 +147,8 @@
 	<string name="description5">Words that are not used so much even though they are in fact here</string>
 	<string name="name6">18+</string>
 	<string name="description6">A spicy mix of words</string>
+    <string name="name7">Words created by you</string>
+    <string name="description7">The words you created! You can manage them by going into the settings of the word pack</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>had</item>
 		<item>time</item>

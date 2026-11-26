@@ -77,6 +77,9 @@
 	<string name="search_hint">Scrie un cuvânt sau numărul lui</string>
 	<string name="words_order_description">Cuvintele sunt ordonate după frecvență: #1 este cel mai folosit din acest pachet, iar #%d cel mai rar</string>
 	<string name="go_back">Înapoi</string>
+	<string name="new_word_hint">Cuvânt nou</string>
+	<string name="save">Salvează</string>
+	<string name="all_words_guessed">Uau! Ați ghicit toate cuvintele!</string>
 	<string name="new_game_title">Începi un joc nou?</string>
 	<string name="new_game_description">Jocul va fi resetat complet, inclusiv scorurile și rundele</string>
 	<string name="new_game">Joc nou</string>
@@ -144,6 +147,8 @@
 	<string name="description5">Cuvinte care nu se folosesc prea des, dar sunt totuși aici</string>
 	<string name="name6">18+</string>
 	<string name="description6">Un amestec de cuvinte picante</string>
+	<string name="name7">Cuvintele tale</string>
+	<string name="description7">Cuvintele create de tine! Le poți gestiona din setările pachetului de cuvinte</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>mult</item>
 		<item>mare</item>

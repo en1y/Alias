@@ -26,6 +26,7 @@
         <activity
                 android:name=".ui.activities.GameActivity"
                 android:configChanges="locale|layoutDirection|screenLayout|uiMode|orientation|screenSize|smallestScreenSize"
+                android:windowSoftInputMode="adjustResize"
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.MainActivity"

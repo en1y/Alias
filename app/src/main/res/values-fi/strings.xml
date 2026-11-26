@@ -77,6 +77,9 @@
 	<string name="search_hint">Kirjoita sana tai sen numero</string>
 	<string name="words_order_description">Sanat on järjestetty yleisyyden mukaan: #1 on tämän paketin yleisin ja #%d harvinaisin</string>
 	<string name="go_back">Takaisin</string>
+	<string name="new_word_hint">Uusi sana</string>
+	<string name="save">Tallenna</string>
+	<string name="all_words_guessed">Vau! Arvasitte kaikki sanat!</string>
 	<string name="new_game_title">Aloitetaanko uusi peli?</string>
 	<string name="new_game_description">Tämä nollaa pelin kokonaan, mukaan lukien pisteet ja kierrokset</string>
 	<string name="new_game">Uusi peli</string>
@@ -143,6 +146,8 @@
 	<string name="description5">Sanoja, joita ei käytetä kovin usein, mutta jotka ovat silti mukana</string>
 	<string name="name6">18+</string>
 	<string name="description6">Sekoitus tuhmia sanoja</string>
+	<string name="name7">Omat sanasi</string>
+	<string name="description7">Luomasi sanat! Voit hallita niitä sanapaketin asetuksissa</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>olla</item>
 		<item>suomen</item>

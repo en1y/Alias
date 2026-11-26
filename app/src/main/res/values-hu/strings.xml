@@ -77,6 +77,9 @@
 	<string name="search_hint">Írj be egy szót vagy a számát</string>
 	<string name="words_order_description">A szavak gyakoriság szerint vannak rendezve: a #1 a leggyakoribb ebben a csomagban, a #%d a legritkább</string>
 	<string name="go_back">Vissza</string>
+	<string name="new_word_hint">Új szó</string>
+	<string name="save">Mentés</string>
+	<string name="all_words_guessed">Hűha! Kitaláltátok az összes szót!</string>
 	<string name="new_game_title">Új játékot kezdesz?</string>
 	<string name="new_game_description">Ez teljesen visszaállítja a játékot, a pontszámokat és a köröket is beleértve</string>
 	<string name="new_game">Új játék</string>
@@ -143,6 +146,8 @@
 	<string name="description5">Ritkán használt szavak, de azért itt vannak</string>
 	<string name="name6">18+</string>
 	<string name="description6">Pikáns szavak keveréke</string>
+	<string name="name7">Saját szavaid</string>
+	<string name="description7">Az általad létrehozott szavak! A szócsomag beállításaiban kezelheted őket</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>jó</item>
 		<item>most</item>

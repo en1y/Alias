@@ -77,6 +77,9 @@
 	<string name="search_hint">Введіть слово або його номер</string>
 	<string name="words_order_description">Слова впорядковано за частотою: №1 — найуживаніше в цьому наборі, №%d — найрідше</string>
 	<string name="go_back">Назад</string>
+	<string name="new_word_hint">Нове слово</string>
+	<string name="save">Зберегти</string>
+	<string name="all_words_guessed">Ого! Ви вгадали всі слова!</string>
 	<string name="new_game_title">Почати нову гру?</string>
 	<string name="new_game_description">Гру буде повністю скинуто, включно з очками та раундами</string>
 	<string name="new_game">Нова гра</string>
@@ -145,6 +148,8 @@
 	<string name="description5">Слова, які вживають нечасто, але вони все одно тут</string>
 	<string name="name6">18+</string>
 	<string name="description6">Пікантна суміш слів</string>
+	<string name="name7">Ваші слова</string>
+	<string name="description7">Слова, які ви створили! Керувати ними можна в налаштуваннях набору слів</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>україни</item>
 		<item>року</item>

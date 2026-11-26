@@ -77,6 +77,9 @@
 	<string name="search_hint">Napíšte slovo alebo jeho číslo</string>
 	<string name="words_order_description">Slová sú zoradené podľa frekvencie: #1 je v tomto balíčku najbežnejšie, #%d najmenej bežné</string>
 	<string name="go_back">Späť</string>
+	<string name="new_word_hint">Nové slovo</string>
+	<string name="save">Uložiť</string>
+	<string name="all_words_guessed">Wow! Uhádli ste všetky slová!</string>
 	<string name="new_game_title">Začať novú hru?</string>
 	<string name="new_game_description">Hra sa úplne resetuje vrátane skóre a kôl</string>
 	<string name="new_game">Nová hra</string>
@@ -145,6 +148,8 @@
 	<string name="description5">Slová, ktoré sa veľmi nepoužívajú, ale aj tak sú tu</string>
 	<string name="name6">18+</string>
 	<string name="description6">Zmes pikantných slov</string>
+	<string name="name7">Vaše vlastné slová</string>
+	<string name="description7">Slová, ktoré ste vytvorili! Spravovať ich môžete v nastaveniach balíčka slov</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>byť</item>
 		<item>roku</item>

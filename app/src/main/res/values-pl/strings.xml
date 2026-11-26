@@ -77,6 +77,9 @@
 	<string name="search_hint">Wpisz słowo lub jego numer</string>
 	<string name="words_order_description">Słowa są posortowane według częstości: #1 jest najczęstsze w tej paczce, a #%d najrzadsze</string>
 	<string name="go_back">Wróć</string>
+	<string name="new_word_hint">Nowe słowo</string>
+	<string name="save">Zapisz</string>
+	<string name="all_words_guessed">Wow! Odgadliście wszystkie słowa!</string>
 	<string name="new_game_title">Rozpocząć nową grę?</string>
 	<string name="new_game_description">Spowoduje to całkowite zresetowanie gry, w tym wyników i rund</string>
 	<string name="new_game">Nowa gra</string>
@@ -145,6 +148,8 @@
 	<string name="description5">Słowa, których rzadko się używa, ale i tak tu są</string>
 	<string name="name6">18+</string>
 	<string name="description6">Mieszanka pikantnych słów</string>
+	<string name="name7">Twoje własne słowa</string>
+	<string name="description7">Słowa stworzone przez Ciebie! Możesz nimi zarządzać w ustawieniach paczki słów</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>roku</item>
 		<item>lat</item>

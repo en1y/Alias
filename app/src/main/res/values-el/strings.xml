@@ -77,6 +77,9 @@
 	<string name="search_hint">Πληκτρολογήστε μια λέξη ή τον αριθμό της</string>
 	<string name="words_order_description">Οι λέξεις είναι ταξινομημένες κατά συχνότητα: η #1 είναι η πιο συχνή σε αυτό το πακέτο και η #%d η λιγότερο συχνή</string>
 	<string name="go_back">Πίσω</string>
+	<string name="new_word_hint">Νέα λέξη</string>
+	<string name="save">Αποθήκευση</string>
+	<string name="all_words_guessed">Ουάου! Μαντέψατε όλες τις λέξεις που υπήρχαν!</string>
 	<string name="new_game_title">Έναρξη νέου παιχνιδιού;</string>
 	<string name="new_game_description">Αυτό θα επαναφέρει πλήρως το παιχνίδι, μαζί με τους πόντους και τους γύρους</string>
 	<string name="new_game">Νέο παιχνίδι</string>
@@ -143,6 +146,8 @@
 	<string name="description5">Λέξεις που δεν χρησιμοποιούνται συχνά, αλλά είναι κι αυτές εδώ</string>
 	<string name="name6">18+</string>
 	<string name="description6">Ένα μείγμα από πικάντικες λέξεις</string>
+	<string name="name7">Οι δικές σας λέξεις</string>
+	<string name="description7">Οι λέξεις που δημιουργήσατε! Μπορείτε να τις διαχειριστείτε από τις ρυθμίσεις του πακέτου λέξεων</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>δύο</item>
 		<item>χρόνια</item>

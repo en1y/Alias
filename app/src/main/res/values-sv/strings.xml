@@ -77,6 +77,9 @@
 	<string name="search_hint">Skriv ett ord eller dess nummer</string>
 	<string name="words_order_description">Orden är sorterade efter hur vanliga de är: #1 är det vanligaste i det här paketet, #%d det minst vanliga</string>
 	<string name="go_back">Tillbaka</string>
+	<string name="new_word_hint">Nytt ord</string>
+	<string name="save">Spara</string>
+	<string name="all_words_guessed">Wow! Ni har gissat alla ord som fanns!</string>
 	<string name="new_game_title">Starta ett nytt spel?</string>
 	<string name="new_game_description">Detta återställer spelet helt, inklusive poäng och rundor</string>
 	<string name="new_game">Nytt spel</string>
@@ -143,6 +146,8 @@
 	<string name="description5">Ord som inte används så ofta, men som ändå finns med</string>
 	<string name="name6">18+</string>
 	<string name="description6">En blandning av fräcka ord</string>
+	<string name="name7">Dina egna ord</string>
+	<string name="description7">Orden du har skapat! Du kan hantera dem i ordpaketets inställningar</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>kommer</item>
 		<item>vara</item>

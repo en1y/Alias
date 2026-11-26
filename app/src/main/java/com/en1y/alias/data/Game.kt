@@ -10,20 +10,20 @@ class Game : ViewModel() { // ViewModel lets the game survive activity recreate
     val teamManager get() = settings.tm
     var isGameActive by mutableStateOf(false)
 
-    private var words: List<String> = emptyList()
+    private var words: List<List<String>> = emptyList()
     private var teamsOrder = mutableListOf<Team>()
 
     var currentRound by mutableStateOf<Round?>(null)
         private set
 
-    fun start(words: List<String>) {
+    fun start(words: List<List<String>>) {
         this.words = words
         if (!isGameActive) teamsOrder = teamManager.teams.toMutableList()
         currentRound = null
         isGameActive = true
     }
 
-    fun reset(words: List<String>) {
+    fun reset(words: List<List<String>>) {
         this.words = words
         teamsOrder = teamManager.teams.toMutableList()
         settings.tm.teams.forEach {

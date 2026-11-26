@@ -77,6 +77,9 @@
 	<string name="search_hint">Ketik kata atau nomornya</string>
 	<string name="words_order_description">Kata diurutkan berdasarkan seberapa sering digunakan: #1 paling umum dalam paket ini dan #%d paling jarang</string>
 	<string name="go_back">Kembali</string>
+	<string name="new_word_hint">Kata baru</string>
+	<string name="save">Simpan</string>
+	<string name="all_words_guessed">Wow! Kalian sudah menebak semua kata yang ada!</string>
 	<string name="new_game_title">Mulai permainan baru?</string>
 	<string name="new_game_description">Ini akan mengatur ulang permainan sepenuhnya, termasuk skor dan ronde</string>
 	<string name="new_game">Permainan baru</string>
@@ -142,6 +145,8 @@
 	<string name="description5">Kata-kata yang jarang dipakai, tapi tetap ada di sini</string>
 	<string name="name6">18+</string>
 	<string name="description6">Campuran kata-kata nakal</string>
+	<string name="name7">Kata buatanmu</string>
+	<string name="description7">Kata-kata yang kamu buat! Kamu bisa mengelolanya di pengaturan paket kata</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>ada</item>
 		<item>orang</item>

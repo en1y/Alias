@@ -77,6 +77,9 @@
 	<string name="search_hint">Typ een woord of het nummer</string>
 	<string name="words_order_description">Woorden zijn gesorteerd op hoe vaak ze voorkomen: #1 komt het vaakst voor in dit pakket, #%d het minst vaak</string>
 	<string name="go_back">Terug</string>
+	<string name="new_word_hint">Nieuw woord</string>
+	<string name="save">Opslaan</string>
+	<string name="all_words_guessed">Wauw! Jullie hebben alle woorden geraden!</string>
 	<string name="new_game_title">Nieuw spel starten?</string>
 	<string name="new_game_description">Dit zet het spel volledig terug, inclusief de scores en de rondes</string>
 	<string name="new_game">Nieuw spel</string>
@@ -143,6 +146,8 @@
 	<string name="description5">Woorden die niet vaak worden gebruikt, maar toch hier staan</string>
 	<string name="name6">18+</string>
 	<string name="description6">Een mix van pikante woorden</string>
+	<string name="name7">Je eigen woorden</string>
+	<string name="description7">De woorden die je hebt gemaakt! Je kunt ze beheren in de instellingen van het woordpakket</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>jaar</item>
 		<item>mensen</item>

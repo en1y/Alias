@@ -53,6 +53,8 @@ import com.en1y.alias.ui.theme.secondaryColors
 import com.en1y.alias.ui.theme.verticalScrollWithBar
 import androidx.compose.material3.ButtonDefaults
 import androidx.core.content.edit
+import com.en1y.alias.data.CustomWordPack
+import com.en1y.alias.logic.AppLanguage
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,9 +133,7 @@ fun Greeting(modifier: Modifier = Modifier, onNext: () -> Unit = {}) {
 @Preview
 fun ChooseLanguageScreen(onNext: () -> Unit = {}) {
     var selectedLanguage by remember {
-        mutableStateOf(
-            AppCompatDelegate.getApplicationLocales()[0]?.language?.let(::normalizeLanguage) ?: DeviceLanguage
-        )
+        mutableStateOf(AppLanguage)
     }
     val context = LocalContext.current
 
@@ -165,6 +165,7 @@ fun ChooseLanguageScreen(onNext: () -> Unit = {}) {
                             selectedLanguage = SupportedLanguages[i]
                             // reloads the activity in the new language
                             AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(selectedLanguage))
+                            CustomWordPack.load(context)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(

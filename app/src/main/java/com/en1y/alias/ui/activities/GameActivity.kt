@@ -2,6 +2,7 @@ package com.en1y.alias.ui.activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.media.SoundPool
 import android.os.Bundle
 import android.view.WindowManager
@@ -83,6 +84,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import com.en1y.alias.R
 import com.en1y.alias.data.Team
@@ -110,9 +114,11 @@ import com.en1y.alias.ui.theme.secondaryColors
 import com.en1y.alias.ui.theme.verticalScrollWithBar
 import androidx.core.content.edit
 import androidx.core.net.toUri
+import com.en1y.alias.data.CustomWordPack
 import com.en1y.alias.data.Game
 import com.en1y.alias.data.Round
 import com.en1y.alias.data.WordPack
+import com.en1y.alias.logic.AllWordsGuessed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -129,6 +135,7 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CustomWordPack.load(this)
         lockPortraitOnPhones()
         ThemeSettings.load(this)
         if (savedInstanceState == null) step = 0
@@ -540,7 +547,7 @@ fun WordPackSettings(
             Text(wordPack.description, style = MaterialTheme.typography.bodySmall)
 
             var query by remember { mutableStateOf("") }
-            val words = remember(wordPack) { wordPack.words(resources).withIndex().toList() }
+            val words = remember(wordPack, CustomWordPack.words.size) { wordPack.words(resources).withIndex().toList() }
 
             if (wordPack in WordPack.Pack1..WordPack.Pack5)
                 Text(
@@ -580,9 +587,11 @@ fun WordPackSettings(
             }
 
             var dragging by remember { mutableStateOf(false) }
-            Box(Modifier
-                .fillMaxWidth()
-                .weight(1f)) {
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -591,14 +600,56 @@ fun WordPackSettings(
                     verticalArrangement = Arrangement.spacedBy(2.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    items(res, key = { it.index }) { (i, word) -> Text("${i + 1}. $word") }
+                    if (wordPack == WordPack.Pack7) {
+                        items(res, key = { it.index }) { (i, word) ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("${i + 1}. $word")
+                                IconButton(
+                                    {
+                                        CustomWordPack.remove(word)
+                                    }, colors = IconButtonDefaults.iconButtonColors(
+                                        containerColor = MaterialTheme.colorScheme.surface,
+                                        contentColor = MaterialTheme.aliasColors.skipped
+                                    )
+                                ) {
+                                    Icon(
+                                        AliasIcon.Close,
+                                        stringResource(R.string.skip)
+                                    )
+                                }
+                            }
+                        }
+                    } else
+                        items(res, key = { it.index }) { (i, word) -> Text("${i + 1}. $word") }
                 }
                 ScrollBarHandle(listState) { dragging = it }
             }
-            AliasButton({ step = 11 }, modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp)) {
-                Text(stringResource(R.string.go_back))
+            var newWord by remember { mutableStateOf("") }
+            val save = { CustomWordPack.add(newWord); newWord = "" }
+            if (wordPack == WordPack.Pack7)
+                OutlinedTextField(
+                    newWord, { newWord = it }, Modifier.fillMaxWidth(),
+                    placeholder = { Text(stringResource(R.string.new_word_hint)) },
+                    shape = MaterialTheme.shapes.medium, singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(onDone = { save() }) // keyboard stays open for the next word
+                )
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp), Arrangement.spacedBy(10.dp)
+            ) {
+                AliasButton({ step = 11 }, Modifier.weight(1f)) {
+                    Text(stringResource(R.string.go_back))
+                }
+                if (wordPack == WordPack.Pack7)
+                    AliasButton(save, Modifier.weight(1f)) {
+                        Text(stringResource(R.string.save))
+                    }
             }
         }
     }
@@ -689,17 +740,22 @@ fun WordPacksSettings(
                 }
             }
             Column(
-                modifier = Modifier.fillMaxWidth().verticalScrollWithBar().weight(1f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScrollWithBar()
+                    .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 WordPack.entries.forEach {
                     WordPackElement(it, it.title, it.description, remember(it) { it.words(res).size })
                 }
             }
-            AliasButton({ step = 1 }, modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp)) {
-                Text("Save")
+            AliasButton(
+                { step = 1 }, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp)
+            ) {
+                Text(stringResource(R.string.save))
             }
         }
     }
@@ -893,8 +949,8 @@ fun GameSettings(
                 AliasButton(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        if (s.canStartUpGame()) {
-                            game.start(s.wordPacks.flatMap { it.words(resources) })
+                        if (s.canStartUpGame(resources)) {
+                            game.start(s.wordPacks.map { it.words(resources) })
                             step = 2
                         } else {
                             errorLabel = s.gameStartupCheck(context)
@@ -906,7 +962,7 @@ fun GameSettings(
                 }
             }
             NewGameDialog(showDialog, { showDialog = false }) {
-                game.reset(s.wordPacks.flatMap { it.words(resources) })
+                game.reset(s.wordPacks.map { it.words(resources) })
                 showDialog = false
             }
         }
@@ -936,7 +992,7 @@ fun BoxScope.NewGameDialog(visible: Boolean, onDismiss: () -> Unit, onConfirm: (
 
 @Composable
 fun PreRoundScreen(
-    game: Game = remember { Game().apply { start(listOf("a")) } }
+    game: Game = remember { Game().apply { start(listOf(listOf("a"))) } }
 ) {
     val t = game.gameOver()
     val team: Team = remember { game.getCurrentTeam() }
@@ -1028,7 +1084,7 @@ fun PreRoundScreen(
                 }
             }
             NewGameDialog(showDialog, { showDialog = false }) {
-                game.reset(game.settings.wordPacks.flatMap { it.words(resources) })
+                game.reset(game.settings.wordPacks.map { it.words(resources) })
                 showDialog = false
                 step = 1
             }
@@ -1103,7 +1159,7 @@ private fun ArrowHint(
 
 @Composable
 fun RoundScreen(
-    game: Game = remember { Game().apply { start(listOf("a")); createRound() } }
+    game: Game = remember { Game().apply { start(listOf(listOf("a"))); createRound() } }
 ) {
     val round = game.currentRound ?: return
 
@@ -1244,6 +1300,9 @@ fun RoundScreen(
                         .weight(1f)
                         .fillMaxWidth(), contentAlignment = Alignment.Center
                 ) {
+                    // Round hands out AllWordsGuessed when the words run out; show it in the app's language
+                    val allGuessed = stringResource(R.string.all_words_guessed)
+                    fun shown(word: String) = if (word == AllWordsGuessed) allGuessed else word
                     key(round.nextWord) {
                         val appear = remember { Animatable(0f) }
                         LaunchedEffect(Unit) { appear.animateTo(1f, tween(350)) }
@@ -1251,7 +1310,7 @@ fun RoundScreen(
                             scaleX = 0.92f + 0.08f * abs(progress); scaleY = scaleX
                             translationY = 12.dp.toPx() * (1 - abs(progress))
                             alpha = appear.value
-                        }, if (started) round.nextWord else "", round.counter + 1)
+                        }, if (started) shown(round.nextWord) else "", round.counter + 1)
                     }
                     WordCard(
                         Modifier
@@ -1272,7 +1331,7 @@ fun RoundScreen(
                                 rotationZ = drag.value.x / limit * 6f
                                 alpha = 1f - ((drag.value.getDistance() - 1.5f * limit) / limit).coerceIn(0f, 1f)
                             },
-                        if (started) round.currentWord else stringResource(R.string.word),
+                        if (started) shown(round.currentWord) else stringResource(R.string.word),
                         round.counter,
                         lerp(
                             MaterialTheme.colorScheme.primaryContainer,

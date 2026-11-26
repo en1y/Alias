@@ -1,9 +1,16 @@
 package com.en1y.alias.logic
 
 import android.content.res.Resources
+import androidx.appcompat.app.AppCompatDelegate
 
 const val MaxTeamsSize = 8
 const val MinTeamsSize = 1
+
+val AppLanguage: String
+    get() = AppCompatDelegate.getApplicationLocales()[0]?.language?.let(::normalizeLanguage) ?: DeviceLanguage
+
+// placeholder word Round returns when the words run out; the round screen shows R.string.all_words_guessed instead
+val AllWordsGuessed = "Wow! You've guessed all the words there were!"
 
 val SupportedLanguages = listOf(
     "hr", "cs", "da", "nl", "en", "fi", "fr", "de", "el", "hu", "id",

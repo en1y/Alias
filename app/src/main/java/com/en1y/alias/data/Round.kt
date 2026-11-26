@@ -4,17 +4,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.en1y.alias.logic.AllWordsGuessed
 
 class Round(
-    val words: List<String>,
+    val words: List<List<String>>,
     val gameSetting: GameSetting,
     val currentTeam: Team
 ) {
+    val allWords = words.flatten()
     var roundWords by mutableStateOf<Map<String, GuessStatus>>(emptyMap())
         private set
-    var currentWord by mutableStateOf(words.random())
+    var currentWord by mutableStateOf(allWords.random())
     var nextWord by mutableStateOf(generateWord())
     var counter by mutableIntStateOf(0)
+
     private var guessable = false
 
     fun countPoints(): Int {
@@ -70,7 +73,7 @@ class Round(
     }
 
     private fun generateWord(): String {
-        return (words - roundWords.keys - currentWord).randomOrNull() ?: words.random()
+        return (allWords - roundWords.keys - currentWord).randomOrNull() ?: AllWordsGuessed
     }
 
     enum class GuessStatus { Guessed, Skipped, Deleted }

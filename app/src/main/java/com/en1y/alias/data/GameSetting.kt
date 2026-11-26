@@ -1,6 +1,7 @@
 package com.en1y.alias.data
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -18,8 +19,9 @@ class GameSetting {
     var lastWordCanBeGuessed by mutableStateOf(false)
     var skippedWordSubtractsPoints by mutableStateOf(true)
 
-    fun canStartUpGame(): Boolean {
-        return wordPacks.isNotEmpty() && tm.teams.size in MinTeamsSize..MaxTeamsSize
+    fun canStartUpGame(res: Resources): Boolean {
+        return wordPacks.isNotEmpty() && tm.teams.size in MinTeamsSize..MaxTeamsSize && wordPacks.flatMap { it.words(res) }
+            .isNotEmpty()
     }
 
     fun gameStartupCheck(context: Context): String {

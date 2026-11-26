@@ -77,6 +77,9 @@
 	<string name="search_hint">Napište slovo nebo jeho číslo</string>
 	<string name="words_order_description">Slova jsou seřazena podle četnosti: #1 je v tomto balíčku nejběžnější, #%d nejméně běžné</string>
 	<string name="go_back">Zpět</string>
+	<string name="new_word_hint">Nové slovo</string>
+	<string name="save">Uložit</string>
+	<string name="all_words_guessed">Páni! Uhodli jste všechna slova, která tu byla!</string>
 	<string name="new_game_title">Začít novou hru?</string>
 	<string name="new_game_description">Hra se úplně resetuje včetně skóre a kol</string>
 	<string name="new_game">Nová hra</string>
@@ -145,6 +148,8 @@
 	<string name="description5">Slova, která se moc nepoužívají, ale přesto tu jsou</string>
 	<string name="name6">18+</string>
 	<string name="description6">Směs pikantních slov</string>
+	<string name="name7">Vaše vlastní slova</string>
+	<string name="description7">Slova, která jste vytvořili! Spravovat je můžete v nastavení balíčku slov</string>
 	<string-array name="words1" tools:ignore="InconsistentArrays">
 		<item>první</item>
 		<item>další</item>
