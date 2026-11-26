@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Vyberte jeden alebo viac balíčkov slov</string>
 	<string name="add_all">Pridať všetky</string>
 	<string name="remove_all">Odobrať všetky</string>
+	<string name="search_hint">Napíšte slovo alebo jeho číslo</string>
+	<string name="words_order_description">Slová sú zoradené podľa frekvencie: #1 je v tomto balíčku najbežnejšie, #%d najmenej bežné</string>
+	<string name="go_back">Späť</string>
 	<string name="new_game_title">Začať novú hru?</string>
 	<string name="new_game_description">Hra sa úplne resetuje vrátane skóre a kôl</string>
 	<string name="new_game">Nová hra</string>

@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Válassz egy vagy több szócsomagot</string>
 	<string name="add_all">Összes hozzáadása</string>
 	<string name="remove_all">Összes eltávolítása</string>
+	<string name="search_hint">Írj be egy szót vagy a számát</string>
+	<string name="words_order_description">A szavak gyakoriság szerint vannak rendezve: a #1 a leggyakoribb ebben a csomagban, a #%d a legritkább</string>
+	<string name="go_back">Vissza</string>
 	<string name="new_game_title">Új játékot kezdesz?</string>
 	<string name="new_game_description">Ez teljesen visszaállítja a játékot, a pontszámokat és a köröket is beleértve</string>
 	<string name="new_game">Új játék</string>

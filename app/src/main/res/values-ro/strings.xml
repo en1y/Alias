@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Alege unul sau mai multe pachete de cuvinte</string>
 	<string name="add_all">Adaugă toate</string>
 	<string name="remove_all">Elimină toate</string>
+	<string name="search_hint">Scrie un cuvânt sau numărul lui</string>
+	<string name="words_order_description">Cuvintele sunt ordonate după frecvență: #1 este cel mai folosit din acest pachet, iar #%d cel mai rar</string>
+	<string name="go_back">Înapoi</string>
 	<string name="new_game_title">Începi un joc nou?</string>
 	<string name="new_game_description">Jocul va fi resetat complet, inclusiv scorurile și rundele</string>
 	<string name="new_game">Joc nou</string>

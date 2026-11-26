@@ -75,6 +75,9 @@
 	<string name="word_packs_description">Choose one or multiple word packs</string>
 	<string name="add_all">Add all</string>
 	<string name="remove_all">Remove all</string>
+	<string name="search_hint">Type a word or its number</string>
+	<string name="words_order_description">Words are sorted by how common they are: #1 is the most common in this pack, #%d the least common</string>
+	<string name="go_back">Go back</string>
 	<string name="new_game_title">Start a new game?</string>
 	<string name="new_game_description">This will reset this game completely, including both the scores and the rounds</string>
 	<string name="new_game">New game</string>

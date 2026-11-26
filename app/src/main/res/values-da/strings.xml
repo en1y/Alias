@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Vælg en eller flere ordpakker</string>
 	<string name="add_all">Tilføj alle</string>
 	<string name="remove_all">Fjern alle</string>
+	<string name="search_hint">Skriv et ord eller dets nummer</string>
+	<string name="words_order_description">Ordene er sorteret efter, hvor almindelige de er: #1 er det mest almindelige i denne pakke, #%d det mindst almindelige</string>
+	<string name="go_back">Tilbage</string>
 	<string name="new_game_title">Start et nyt spil?</string>
 	<string name="new_game_description">Dette nulstiller spillet helt, inklusive point og runder</string>
 	<string name="new_game">Nyt spil</string>

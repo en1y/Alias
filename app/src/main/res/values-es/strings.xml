@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Elige uno o varios paquetes de palabras</string>
 	<string name="add_all">Añadir todos</string>
 	<string name="remove_all">Quitar todos</string>
+	<string name="search_hint">Escribe una palabra o su número</string>
+	<string name="words_order_description">Las palabras están ordenadas por frecuencia: la #1 es la más común de este paquete y la #%d, la menos común</string>
+	<string name="go_back">Volver</string>
 	<string name="new_game_title">¿Empezar una nueva partida?</string>
 	<string name="new_game_description">Esto reiniciará la partida por completo, incluidas las puntuaciones y las rondas</string>
 	<string name="new_game">Nueva partida</string>

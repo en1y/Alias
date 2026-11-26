@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Επιλέξτε ένα ή περισσότερα πακέτα λέξεων</string>
 	<string name="add_all">Προσθήκη όλων</string>
 	<string name="remove_all">Αφαίρεση όλων</string>
+	<string name="search_hint">Πληκτρολογήστε μια λέξη ή τον αριθμό της</string>
+	<string name="words_order_description">Οι λέξεις είναι ταξινομημένες κατά συχνότητα: η #1 είναι η πιο συχνή σε αυτό το πακέτο και η #%d η λιγότερο συχνή</string>
+	<string name="go_back">Πίσω</string>
 	<string name="new_game_title">Έναρξη νέου παιχνιδιού;</string>
 	<string name="new_game_description">Αυτό θα επαναφέρει πλήρως το παιχνίδι, μαζί με τους πόντους και τους γύρους</string>
 	<string name="new_game">Νέο παιχνίδι</string>

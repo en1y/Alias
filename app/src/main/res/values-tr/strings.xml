@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Bir veya birden fazla kelime paketi seç</string>
 	<string name="add_all">Tümünü ekle</string>
 	<string name="remove_all">Tümünü kaldır</string>
+	<string name="search_hint">Bir kelime ya da numarasını yaz</string>
+	<string name="words_order_description">Kelimeler kullanım sıklığına göre sıralanmıştır: #1 bu paketteki en yaygın, #%d en az yaygın kelimedir</string>
+	<string name="go_back">Geri dön</string>
 	<string name="new_game_title">Yeni oyun başlatılsın mı?</string>
 	<string name="new_game_description">Bu işlem skorlar ve turlar dahil oyunu tamamen sıfırlar</string>
 	<string name="new_game">Yeni oyun</string>

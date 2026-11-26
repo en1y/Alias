@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Выберите один или несколько наборов слов</string>
 	<string name="add_all">Добавить все</string>
 	<string name="remove_all">Убрать все</string>
+	<string name="search_hint">Введите слово или его номер</string>
+	<string name="words_order_description">Слова отсортированы по частоте: №1 — самое частое в этом наборе, №%d — самое редкое</string>
+	<string name="go_back">Назад</string>
 	<string name="new_game_title">Начать новую игру?</string>
 	<string name="new_game_description">Игра будет полностью сброшена, включая очки и раунды</string>
 	<string name="new_game">Новая игра</string>

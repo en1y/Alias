@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Odaberite jedan ili više paketa riječi</string>
 	<string name="add_all">Dodaj sve</string>
 	<string name="remove_all">Ukloni sve</string>
+	<string name="search_hint">Upišite riječ ili njezin broj</string>
+	<string name="words_order_description">Riječi su poredane po učestalosti: #1 je najčešća u ovom paketu, a #%d najrjeđa</string>
+	<string name="go_back">Natrag</string>
 	<string name="new_game_title">Započeti novu igru?</string>
 	<string name="new_game_description">Ovo će potpuno resetirati igru, uključujući bodove i runde</string>
 	<string name="new_game">Nova igra</string>

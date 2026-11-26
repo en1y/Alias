@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Välj ett eller flera ordpaket</string>
 	<string name="add_all">Lägg till alla</string>
 	<string name="remove_all">Ta bort alla</string>
+	<string name="search_hint">Skriv ett ord eller dess nummer</string>
+	<string name="words_order_description">Orden är sorterade efter hur vanliga de är: #1 är det vanligaste i det här paketet, #%d det minst vanliga</string>
+	<string name="go_back">Tillbaka</string>
 	<string name="new_game_title">Starta ett nytt spel?</string>
 	<string name="new_game_description">Detta återställer spelet helt, inklusive poäng och rundor</string>
 	<string name="new_game">Nytt spel</string>

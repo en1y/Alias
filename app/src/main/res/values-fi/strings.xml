@@ -74,6 +74,9 @@
 	<string name="word_packs_description">Valitse yksi tai useampi sanapaketti</string>
 	<string name="add_all">Lisää kaikki</string>
 	<string name="remove_all">Poista kaikki</string>
+	<string name="search_hint">Kirjoita sana tai sen numero</string>
+	<string name="words_order_description">Sanat on järjestetty yleisyyden mukaan: #1 on tämän paketin yleisin ja #%d harvinaisin</string>
+	<string name="go_back">Takaisin</string>
 	<string name="new_game_title">Aloitetaanko uusi peli?</string>
 	<string name="new_game_description">Tämä nollaa pelin kokonaan, mukaan lukien pisteet ja kierrokset</string>
 	<string name="new_game">Uusi peli</string>

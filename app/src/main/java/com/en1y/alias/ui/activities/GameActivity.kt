@@ -38,6 +38,10 @@ import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.selection.selectable
@@ -80,7 +84,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.en1y.alias.R
 import com.en1y.alias.data.Team
@@ -90,6 +93,9 @@ import com.en1y.alias.ui.theme.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SearchBar
+import androidx.compose.runtime.mutableStateListOf
 import com.en1y.alias.ui.theme.AliasButton
 import com.en1y.alias.ui.theme.AliasCheckbox
 import com.en1y.alias.ui.theme.AliasRadioButton
@@ -116,6 +122,9 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.en1y.alias.ui.theme.scrollBar
 
 private var step by mutableIntStateOf(0)
 
@@ -143,10 +152,14 @@ class GameActivity : AppCompatActivity() {
                     }
                 } else if (step in 10..20) {
                     step = 1
-                } else if (step in 100..200) {
+                } else if (step in 101..200) {
                     step = 10
+                } else if (step in 201..300) {
+                    step = 11
                 } else step--
             }
+
+            var wordPackSettings by remember { mutableStateOf(WordPack.Pack1) }
 
             AliasTheme {
                 Crossfade(step, animationSpec = tween(250), label = "step") { s ->
@@ -157,9 +170,10 @@ class GameActivity : AppCompatActivity() {
                         3 -> RoundScreen(game)
                         4 -> PostRoundScreen(game)
                         10 -> AppSettings()
-                        11 -> WordPacksSettings(game)
+                        11 -> WordPacksSettings(game) {wordPackSettings = it}
                         101 -> ChooseLanguageScreen(onNext = { step = 10 })
                         102 -> ThemeChoosingScreen()
+                        201 -> WordPackSettings(wordPackSettings)
                     }
                 }
             }
@@ -169,10 +183,10 @@ class GameActivity : AppCompatActivity() {
 
 @Composable
 fun TeamIcon(
+    modifier: Modifier = Modifier,
     team: Team = Team(),
     isRemovable: Boolean = true,
     highlighted: Boolean = false,
-    modifier: Modifier = Modifier,
     remove: () -> Unit = {}
 ) {
     Panel(
@@ -510,8 +524,82 @@ fun AppSettings() {
 }
 
 @Composable
+fun WordPackSettings(
+    wordPack: WordPack = WordPack.Pack1
+) {
+    val resources = LocalResources.current
+
+    AliasTheme {
+        Column(
+            modifier = Modifier.screen(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween, Alignment.CenterVertically) {
+                AliasButton(onClick = { step = 11 }) {
+                    Icon(AliasIcon.Back, null)
+                }
+            }
+            Text(wordPack.title, style = MaterialTheme.typography.headlineSmall)
+            Text(wordPack.description, style = MaterialTheme.typography.bodySmall)
+
+            var query by remember { mutableStateOf("") }
+            val words = remember(wordPack) { wordPack.words(resources).withIndex().toList() }
+
+            if (wordPack in WordPack.Pack1..WordPack.Pack5)
+                Text(stringResource(R.string.words_order_description, words.size), style = MaterialTheme.typography.bodyMedium)
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = query,
+                onValueChange = {query = it},
+                placeholder = { Text(stringResource(R.string.search_hint)) },
+                shape = MaterialTheme.shapes.medium,
+                singleLine = true
+            )
+
+            val res = remember(words, query) {
+                val q = query.trim().lowercase()
+                when {
+                    q.isEmpty() -> words
+                    query.toIntOrNull() != null -> words.filter {
+                        (it.index + 1).toString().startsWith(q)
+                    }
+                    else -> words.filter { it.value.contains(q, ignoreCase = true) }
+                        .sortedBy {
+                            if (it.value.equals(q, ignoreCase = true)) 0
+                            else if (it.value.startsWith(q, ignoreCase = true)) 1
+                            else 2}
+                }
+            }
+
+            val listState = rememberLazyListState()
+            LaunchedEffect(query) {
+                listState.scrollToItem(0)
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .scrollBar(listState)
+                    .weight(1f),
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
+                items(res, key = { it.index }) { (i, word) -> Text("${i + 1}. $word") }
+            }
+            AliasButton( { step = 11 }, modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp) ) {
+                Text(stringResource(R.string.go_back))
+            }
+        }
+    }
+}
+
+@Composable
 fun WordPacksSettings(
-    game: Game = remember { Game() }
+    game: Game = remember { Game() },
+    onOpenPackSettings: (WordPack) -> Unit = {}
 ) {
     val s = game.settings
     val res = LocalResources.current
@@ -578,7 +666,17 @@ fun WordPacksSettings(
                             }
                             Text(description, style = MaterialTheme.typography.bodyMedium)
                         }
-                        AliasCheckbox(checked = selected, onCheckedChange = null)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ){
+                            AliasCheckbox(checked = selected, onCheckedChange = null)
+                            AliasButton({
+                                onOpenPackSettings(wordPack)
+                                step = 201
+                            }) {
+                                Icon(AliasIcon.Forward, null)
+                            }
+                        }
                     }
                 }
             }
@@ -986,7 +1084,6 @@ private fun ArrowHint(
 )
 
 @Composable
-@Preview
 fun RoundScreen(
     game: Game = remember { Game().apply { start(listOf("a")); createRound() } }
 ) {
@@ -1273,7 +1370,6 @@ fun RoundScreen(
 }
 
 @Composable
-@Preview
 fun PostRoundScreen(
     game: Game = remember { Game() }
 ) {

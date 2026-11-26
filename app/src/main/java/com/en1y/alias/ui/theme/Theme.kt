@@ -14,6 +14,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -31,6 +32,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -251,23 +253,27 @@ fun Modifier.verticalScrollWithBar(
     state: ScrollState = rememberScrollState(),
     color: Color = LocalContentColor.current,
     width: Dp = 3.dp,
+) = scrollBar(state, color, width).verticalScroll(state)
+
+/** Just the bar, for lists that scroll on their own: LazyColumn(Modifier.scrollBar(listState), listState). */
+@Composable
+fun Modifier.scrollBar(
+    state: ScrollableState,
+    color: Color = LocalContentColor.current,
+    width: Dp = 3.dp,
 ): Modifier {
     val alpha by animateFloatAsState(if (state.isScrollInProgress) 0.8f else 0.3f, label = "scrollbarAlpha")
     return drawWithContent {
         drawContent()
-        if (state.maxValue == 0) return@drawWithContent // content fits, no scrollbar
+        val s = state.scrollIndicatorState ?: return@drawWithContent
+        val max = s.contentSize - s.viewportSize
+        if (max <= 0) return@drawWithContent // content fits, no scrollbar
         val w = width.toPx()
-        val barHeight = (size.height * size.height / (size.height + state.maxValue)).coerceAtLeast(24.dp.toPx())
-        val y = state.value.toFloat() / state.maxValue * (size.height - barHeight)
+        val barHeight = (size.height * s.viewportSize / s.contentSize).coerceAtLeast(24.dp.toPx())
+        val y = (s.scrollOffset.toFloat() / max).coerceIn(0f, 1f) * (size.height - barHeight)
         // drawn in the padding right of the content so it never covers it; callers need ~10dp free there
-        drawRoundRect(
-            color,
-            Offset(size.width + 6.dp.toPx(), y),
-            Size(w, barHeight),
-            CornerRadius(w / 2),
-            alpha = alpha
-        )
-    }.verticalScroll(state)
+        drawRoundRect(color, Offset(size.width + 6.dp.toPx(), y), Size(w, barHeight), CornerRadius(w / 2), alpha = alpha)
+    }
 }
 
 /** A colored block (primary by default). Text/Icons inside automatically get the matching "on" color. */
