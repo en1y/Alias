@@ -25,7 +25,7 @@
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.GameActivity"
-                android:configChanges="locale|layoutDirection|screenLayout|uiMode"
+                android:configChanges="locale|layoutDirection|screenLayout|uiMode|orientation|screenSize|smallestScreenSize"
                 android:exported="false"/>
         <activity
                 android:name=".ui.activities.MainActivity"

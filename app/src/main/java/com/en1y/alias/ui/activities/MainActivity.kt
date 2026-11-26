@@ -2,6 +2,7 @@ package com.en1y.alias.ui.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -22,4 +23,9 @@ fun Activity.switchTo(target: Class<out Activity>) {
         ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out).toBundle()
     )
     finish()
+}
+
+fun Activity.lockPortraitOnPhones() {
+    if (resources.configuration.smallestScreenWidthDp < 600) // tablets are 600dp+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 }

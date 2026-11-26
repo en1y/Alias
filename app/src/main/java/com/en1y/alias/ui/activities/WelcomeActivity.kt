@@ -57,6 +57,7 @@ import androidx.core.content.edit
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lockPortraitOnPhones()
         ThemeSettings.load(this)
         enableEdgeToEdge()
         setContent {
@@ -102,8 +103,17 @@ fun Greeting(modifier: Modifier = Modifier, onNext: () -> Unit = {}) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Box {
-                    Image(painterResource(R.drawable.logo_letters), stringResource(R.string.app_name), Modifier.width(320.dp).aspectRatio(63 / 27.5f), colorFilter = ColorFilter.tint(LocalContentColor.current))
-                    Image(painterResource(R.drawable.logo_dot), null, Modifier.width(320.dp).aspectRatio(63 / 27.5f))
+                    Image(
+                        painterResource(R.drawable.logo_letters),
+                        stringResource(R.string.app_name),
+                        Modifier
+                            .width(320.dp)
+                            .aspectRatio(63 / 27.5f),
+                        colorFilter = ColorFilter.tint(LocalContentColor.current)
+                    )
+                    Image(painterResource(R.drawable.logo_dot), null, Modifier
+                        .width(320.dp)
+                        .aspectRatio(63 / 27.5f))
                 }
                 Text(
                     text = stringResource(R.string.welcome_message),
