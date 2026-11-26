@@ -688,8 +688,18 @@ fun WordPacksSettings(
                     }
                 }
             }
-            WordPack.entries.forEach {
-                WordPackElement(it, it.title, it.description, remember(it) { it.words(res).size })
+            Column(
+                modifier = Modifier.fillMaxWidth().verticalScrollWithBar().weight(1f),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                WordPack.entries.forEach {
+                    WordPackElement(it, it.title, it.description, remember(it) { it.words(res).size })
+                }
+            }
+            AliasButton({ step = 1 }, modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)) {
+                Text("Save")
             }
         }
     }
