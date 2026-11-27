@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 бал за кожне пропущене слово</string>
 	<string name="start_game">Почати гру</string>
 	<string name="error_no_word_packs">Потрібно обрати хоча б один набір слів</string>
+	<string name="error_no_words">У вибраних наборах слів немає жодного слова</string>
 	<string name="error_too_few_teams">Команд має бути щонайменше %d</string>
 	<string name="error_too_many_teams">Команд не може бути більше ніж %d</string>
 	<string name="end_game">Завершити гру</string>

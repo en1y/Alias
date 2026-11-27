@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 bod za každé preskočené slovo</string>
 	<string name="start_game">Začať hru</string>
 	<string name="error_no_word_packs">Musí byť vybraný aspoň jeden balíček slov</string>
+	<string name="error_no_words">Vybrané balíčky slov neobsahujú žiadne slová</string>
 	<string name="error_too_few_teams">Počet tímov musí byť aspoň %d</string>
 	<string name="error_too_many_teams">Počet tímov nesmie byť vyšší ako %d</string>
 	<string name="end_game">Ukončiť hru</string>

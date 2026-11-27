@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 punt voor elk overgeslagen woord</string>
 	<string name="start_game">Spel starten</string>
 	<string name="error_no_word_packs">Selecteer minstens één woordpakket</string>
+	<string name="error_no_words">De geselecteerde woordpakketten bevatten geen woorden</string>
 	<string name="error_too_few_teams">Er moeten minstens %d teams zijn</string>
 	<string name="error_too_many_teams">Er mogen niet meer dan %d teams zijn</string>
 	<string name="end_game">Spel beëindigen</string>

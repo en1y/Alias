@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 πόντος για κάθε λέξη που παραλείπεται</string>
 	<string name="start_game">Έναρξη παιχνιδιού</string>
 	<string name="error_no_word_packs">Πρέπει να επιλεγεί τουλάχιστον ένα πακέτο λέξεων</string>
+	<string name="error_no_words">Τα επιλεγμένα πακέτα λέξεων δεν περιέχουν λέξεις</string>
 	<string name="error_too_few_teams">Οι ομάδες πρέπει να είναι τουλάχιστον %d</string>
 	<string name="error_too_many_teams">Οι ομάδες δεν μπορούν να είναι πάνω από %d</string>
 	<string name="end_game">Τέλος παιχνιδιού</string>

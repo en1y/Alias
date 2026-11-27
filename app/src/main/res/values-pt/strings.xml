@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 ponto para cada palavra pulada</string>
 	<string name="start_game">Começar jogo</string>
 	<string name="error_no_word_packs">Selecione pelo menos um pacote de palavras</string>
+	<string name="error_no_words">Os pacotes de palavras selecionados não contêm palavras</string>
 	<string name="error_too_few_teams">O número de times deve ser pelo menos %d</string>
 	<string name="error_too_many_teams">O número de times não pode passar de %d</string>
 	<string name="end_game">Encerrar jogo</string>

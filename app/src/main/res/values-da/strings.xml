@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 point for hvert sprunget ord</string>
 	<string name="start_game">Start spil</string>
 	<string name="error_no_word_packs">Mindst én ordpakke skal vælges</string>
+	<string name="error_no_words">De valgte ordpakker indeholder ingen ord</string>
 	<string name="error_too_few_teams">Der skal være mindst %d hold</string>
 	<string name="error_too_many_teams">Der kan ikke være mere end %d hold</string>
 	<string name="end_game">Afslut spil</string>

@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 pont minden kihagyott szóért</string>
 	<string name="start_game">Játék indítása</string>
 	<string name="error_no_word_packs">Legalább egy szócsomagot ki kell választani</string>
+	<string name="error_no_words">A kiválasztott szócsomagok nem tartalmaznak szavakat</string>
 	<string name="error_too_few_teams">Legalább %d csapat szükséges</string>
 	<string name="error_too_many_teams">Legfeljebb %d csapat lehet</string>
 	<string name="end_game">Játék befejezése</string>

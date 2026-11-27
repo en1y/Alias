@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 piste jokaisesta ohitetusta sanasta</string>
 	<string name="start_game">Aloita peli</string>
 	<string name="error_no_word_packs">Vähintään yksi sanapaketti on valittava</string>
+	<string name="error_no_words">Valituissa sanapaketeissa ei ole sanoja</string>
 	<string name="error_too_few_teams">Joukkueita on oltava vähintään %d</string>
 	<string name="error_too_many_teams">Joukkueita voi olla enintään %d</string>
 	<string name="end_game">Lopeta peli</string>

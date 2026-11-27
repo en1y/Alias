@@ -956,7 +956,7 @@ fun GameSettings(
                             game.start(s.wordPacks.map { it.words(resources) })
                             step = 2
                         } else {
-                            errorLabel = s.gameStartupCheck(context)
+                            errorLabel = s.gameStartupCheck(context, resources)
                             errorVisible = true
                         }
                     }

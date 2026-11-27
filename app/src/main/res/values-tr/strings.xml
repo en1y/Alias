@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">Geçilen her kelime için −1 puan</string>
 	<string name="start_game">Oyunu başlat</string>
 	<string name="error_no_word_packs">En az bir kelime paketi seçilmelidir</string>
+	<string name="error_no_words">Seçilen kelime paketlerinde hiç kelime yok</string>
 	<string name="error_too_few_teams">Takım sayısı en az %d olmalıdır</string>
 	<string name="error_too_many_teams">Takım sayısı en fazla %d olabilir</string>
 	<string name="end_game">Oyunu bitir</string>

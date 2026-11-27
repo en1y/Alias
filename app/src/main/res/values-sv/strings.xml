@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 poäng för varje överhoppat ord</string>
 	<string name="start_game">Starta spelet</string>
 	<string name="error_no_word_packs">Minst ett ordpaket måste väljas</string>
+	<string name="error_no_words">De valda ordpaketen innehåller inga ord</string>
 	<string name="error_too_few_teams">Antalet lag måste vara minst %d</string>
 	<string name="error_too_many_teams">Antalet lag får inte vara fler än %d</string>
 	<string name="end_game">Avsluta spelet</string>

@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 point pour chaque mot passé</string>
 	<string name="start_game">Commencer la partie</string>
 	<string name="error_no_word_packs">Au moins un pack de mots doit être sélectionné</string>
+	<string name="error_no_words">Les packs de mots sélectionnés ne contiennent aucun mot</string>
 	<string name="error_too_few_teams">Il faut au moins %d équipes</string>
 	<string name="error_too_many_teams">Il ne peut pas y avoir plus de %d équipes</string>
 	<string name="end_game">Terminer la partie</string>

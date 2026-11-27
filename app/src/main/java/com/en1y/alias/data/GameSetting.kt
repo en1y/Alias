@@ -24,13 +24,16 @@ class GameSetting {
             .isNotEmpty()
     }
 
-    fun gameStartupCheck(context: Context): String {
+    fun gameStartupCheck(context: Context, res: Resources): String {
         if (wordPacks.isEmpty())
             return context.getString(R.string.error_no_word_packs)
         if (tm.teams.size < MinTeamsSize)
             return context.getString(R.string.error_too_few_teams, MinTeamsSize)
         if (tm.teams.size > MaxTeamsSize)
             return context.getString(R.string.error_too_many_teams, MaxTeamsSize)
+        if (wordPacks.flatMap { it.words(res) }
+                .isEmpty())
+            return context.getString(R.string.error_no_words)
         return ""
     }
 

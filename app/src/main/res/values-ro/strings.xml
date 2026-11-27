@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 punct pentru fiecare cuvânt sărit</string>
 	<string name="start_game">Începe jocul</string>
 	<string name="error_no_word_packs">Trebuie selectat cel puțin un pachet de cuvinte</string>
+	<string name="error_no_words">Pachetele de cuvinte selectate nu conțin niciun cuvânt</string>
 	<string name="error_too_few_teams">Numărul de echipe trebuie să fie cel puțin %d</string>
 	<string name="error_too_many_teams">Numărul de echipe nu poate depăși %d</string>
 	<string name="end_game">Încheie jocul</string>

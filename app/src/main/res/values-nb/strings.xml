@@ -99,6 +99,7 @@
 	<string name="skipped_word_description">−1 poeng for hvert ord som hoppes over</string>
 	<string name="start_game">Start spillet</string>
 	<string name="error_no_word_packs">Minst én ordpakke må velges</string>
+	<string name="error_no_words">De valgte ordpakkene inneholder ingen ord</string>
 	<string name="error_too_few_teams">Antall lag må være minst %d</string>
 	<string name="error_too_many_teams">Antall lag kan ikke være over %d</string>
 	<string name="end_game">Avslutt spillet</string>
